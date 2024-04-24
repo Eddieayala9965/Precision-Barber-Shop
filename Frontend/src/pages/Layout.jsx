@@ -5,11 +5,12 @@ const Layout = () => {
   // dynamically have the bookings on the front of the page gives the user the ability to instanly book
   // gallery for babers to have their bio and all that. but link this in the home page and stuff like that/ potentially have a barber that has their own page when clicked on so almost like a bio page
   // admin page i want it to where we can get to the page but it pops up with the login
-  // i have to create a link to payments as well like for the booking
+
   const primaryNav = [
     { title: "Home", path: "/" },
     { title: "Contact", path: "/contact" },
     { title: "Admin", path: "/admin" },
+    { title: "stripe-test", path: "/stripe-test" },
   ];
   return (
     <>

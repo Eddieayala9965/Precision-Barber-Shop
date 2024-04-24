@@ -4,7 +4,7 @@ const Nav = ({ navItems }) => {
   return (
     <>
       <ul>
-        <li>
+        <li className="flex gap-5">
           {navItems.map((link, index) => {
             return (
               <Link key={`${link.title}-${index}`} to={link.path}>
