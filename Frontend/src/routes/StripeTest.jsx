@@ -8,16 +8,21 @@ const StripeTest = () => {
   const [clientSecret, setClientSecret] = useState("");
 
   const fetchData = async () => {
-    const url = "http://127.0.0.1:4242/create-payment-intent";
+    const items = [
+      { name: "Product 1", amount: 1099, quantity: 2 },
+      { name: "Product 2", amount: 599, quantity: 1 },
+    ];
+    const url = "http://127.0.0.1:8000/create-payment-intent";
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+      body: JSON.stringify(items),
     };
     const response = await fetch(url, options);
     const data = await response.json();
+    console.log(data);
     setClientSecret(data.clientSecret);
   };
 
@@ -33,7 +38,7 @@ const StripeTest = () => {
     appearance,
   };
   return (
-    <div>
+    <div className="">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />

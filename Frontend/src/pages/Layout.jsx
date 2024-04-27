@@ -9,6 +9,7 @@ const Layout = () => {
   const primaryNav = [
     { title: "Home", path: "/" },
     { title: "Contact", path: "/contact" },
+    { title: "About", path: "/about" },
     { title: "Admin", path: "/admin" },
     { title: "stripe-test", path: "/stripe-test" },
   ];
