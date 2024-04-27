@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import {
-  CardElement,
   PaymentElement,
   useStripe,
   useElements,
-  Elements,
 } from "@stripe/react-stripe-js";
 
 const CheckoutForm = () => {
@@ -53,7 +51,7 @@ const CheckoutForm = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000",
+        return_url: "http://localhost:5173/",
       },
     });
     if (error.type === "card_error" || error.type === "validation_error") {
@@ -64,7 +62,7 @@ const CheckoutForm = () => {
     setIsLoading(false);
   };
   const paymentElementOptions = {
-    layout: "taabs",
+    layout: "tabs",
   };
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
