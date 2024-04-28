@@ -4,6 +4,9 @@ import ErrorPage from "./pages/ErrorPage";
 import StripeTest from "./routes/StripeTest";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
+import AdminLogin from "./routes/AdminLogin";
+import AdminSignUp from "./routes/AdminSignUp";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,21 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/admin/login",
+        element: <AdminLogin />,
+      },
+      {
+        path: "/admin/signup",
+        element: <AdminSignUp />,
       },
     ],
   },

@@ -7,8 +7,8 @@ const Contact = () => {
         Email:
         <a
           href="mailto:
-
             "
+          // this will be a gallery where the barbers can upload thier images, there can be more then one
         ></a>
       </p>
     </div>
