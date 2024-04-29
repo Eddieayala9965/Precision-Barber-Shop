@@ -15,7 +15,10 @@ const Admin = () => {
     { title: "Appointments", path: "/admin/appointments" },
     { title: "Login", path: "/admin/login" },
     { title: "Sign Up", path: "/admin/signup" },
-  ];
+  ].map((item) => ({
+    ...item,
+    title: <span style={{ fontSize: "16px" }}>{item.title}</span>,
+  }));
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
