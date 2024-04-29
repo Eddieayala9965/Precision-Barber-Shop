@@ -1,19 +1,47 @@
+import * as React from "react";
 import { Outlet } from "react-router-dom";
-import Nav from "../components/Nav";
+import NavAdmin from "../components/NavAdmin";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+const drawerWidth = 240;
 
 const Admin = () => {
   const primaryNav = [
+    { title: "Barbers", path: "/admin/barbers" },
+    { title: "Services", path: "/admin/services" },
+    { title: "Appointments", path: "/admin/appointments" },
     { title: "Login", path: "/admin/login" },
     { title: "Sign Up", path: "/admin/signup" },
   ];
-  return (
-    <div className={`flex flex-col min-h-screen`}>
-      <div className="flex justify-center text-center items-center gap-14">
-        <Nav navItems={primaryNav}></Nav>
-      </div>
 
-      <Outlet className={`flex-grow`} />
-    </div>
+  return (
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+      <CssBaseline />
+
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
+        }}
+        variant="permanent"
+        anchor="left"
+      >
+        <Toolbar />
+        <NavAdmin navItems={primaryNav} orientation="vertical" />
+      </Drawer>
+
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Toolbar />
+        <Outlet />
+      </Box>
+    </Box>
   );
 };
 
