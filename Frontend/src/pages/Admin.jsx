@@ -1,12 +1,6 @@
-import * as React from "react";
 import { Outlet } from "react-router-dom";
 import NavAdmin from "../components/NavAdmin";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-const drawerWidth = 240;
 
 const Admin = () => {
   const primaryNav = [
@@ -20,27 +14,8 @@ const Admin = () => {
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      <CssBaseline />
-
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <NavAdmin navItems={primaryNav} orientation="vertical" />
-      </Drawer>
-
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        <Outlet />
-      </Box>
+      <NavAdmin navItems={primaryNav} />
+      <Outlet />
     </Box>
   );
 };

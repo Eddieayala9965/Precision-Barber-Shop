@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import AdminLogin from "./routes/AdminLogin";
-import AdminSignUp from "./routes/AdminSignUp";
+import AdminSignUp, { action as signUpAction } from "./routes/AdminSignUp";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +39,7 @@ const router = createBrowserRouter([
       {
         path: "/admin/signup",
         element: <AdminSignUp />,
+        action: signUpAction,
       },
     ],
   },
