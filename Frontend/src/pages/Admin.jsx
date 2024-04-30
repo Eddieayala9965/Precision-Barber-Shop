@@ -14,11 +14,9 @@ const Admin = () => {
     { title: "Services", path: "/admin/services" },
     { title: "Appointments", path: "/admin/appointments" },
     { title: "Login", path: "/admin/login" },
+    { title: "Logout", path: "/admin/logout" },
     { title: "Sign Up", path: "/admin/signup" },
-  ].map((item) => ({
-    ...item,
-    title: <span style={{ fontSize: "16px" }}>{item.title}</span>,
-  }));
+  ];
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
@@ -36,7 +34,6 @@ const Admin = () => {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
         <NavAdmin navItems={primaryNav} orientation="vertical" />
       </Drawer>
 

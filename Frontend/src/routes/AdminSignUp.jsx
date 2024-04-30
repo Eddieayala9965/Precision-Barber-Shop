@@ -1,4 +1,6 @@
 import { Form, Link, redirect } from "react-router-dom";
+import { TextField, Button, Container, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -31,7 +33,49 @@ export const action = async ({ request }) => {
   return signUp ? redirect("/admin/login") : redirect("/admin/signup");
 };
 const AdminSignUp = () => {
-  return <></>;
+  return (
+    <Container maxWidth="sm">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography variant="h4" component="h1" gutterBottom>
+          Sign Up
+        </Typography>
+
+        <Form method="POST">
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            required
+            fullWidth
+            margin="normal"
+            autoFocus
+          />
+
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            required
+            fullWidth
+            margin="normal"
+          />
+
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            Sign Up
+          </Button>
+
+          <Button component={Link} to="/admin/login" variant="text">
+            Already have an account? Login here
+          </Button>
+        </Form>
+      </Box>
+    </Container>
+  );
 };
 
 export default AdminSignUp;
