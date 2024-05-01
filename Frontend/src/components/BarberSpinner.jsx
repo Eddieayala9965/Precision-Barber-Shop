@@ -1,17 +1,6 @@
-import React from "react";
 import { keyframes } from "@emotion/react";
+import { Box } from "@mui/material";
 
-// Define the spin keyframes for rotation
-const spin = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-// Define the animatedBackground keyframes for background scrolling
 const animatedBackground = keyframes`
   from {
     background-position: 0 0;
@@ -23,17 +12,17 @@ const animatedBackground = keyframes`
 
 const BarberPoleSpinner = () => {
   const stripesStyle = {
-    width: "300px", // Width of the spinner
-    height: "300px", // Height of the spinner
-    borderRadius: "1em", // Rounded corners
+    width: "200px",
+    height: "30px",
+    borderRadius: "20px",
     padding: "0.5em 1em",
     background:
-      "repeating-linear-gradient(120deg, red 33%, white 33.5%, white 66%, blue 66.5%)",
-    backgroundSize: "5000%", // Ensures a smooth gradient repeat
-    animation: `${spin} 2s linear infinite, ${animatedBackground} 10s linear infinite`,
+      "repeating-linear-gradient(120deg, #FF0000, #FF0000 20px, #FFFFFF 20px, #FFFFFF 40px, #0000FF 40px, #0000FF 60px, #FFFFFF 60px, #FFFFFF 80px)",
+    backgroundSize: "1500%",
+    animation: ` ${animatedBackground} 10s linear infinite`,
   };
 
-  return <div style={stripesStyle}></div>;
+  return <Box sx={stripesStyle}></Box>;
 };
 
 export default BarberPoleSpinner;

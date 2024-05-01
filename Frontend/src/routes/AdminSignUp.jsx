@@ -5,6 +5,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import GlobalLoadingSpinner from "../components/GlobalLoadingSpinner";
 import { useLoading } from "../context/LoadingContext";
+
 import Box from "@mui/material/Box";
 
 export const action = async ({ request }) => {
@@ -48,13 +49,12 @@ const AdminSignUp = () => {
   const { isLoading, setIsLoading } = useLoading();
 
   useEffect(() => {
-    // Set the loading state to true when the component mounts
     setIsLoading(true);
 
     // Simulate a data loading process
     const timeout = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 1500);
 
     // Clean up the timeout when the component unmounts
     return () => clearTimeout(timeout);

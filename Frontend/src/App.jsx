@@ -5,8 +5,11 @@ import StripeTest from "./routes/StripeTest";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
-import AdminLogin from "./routes/AdminLogin";
+import AdminLogin, { action as loginAction } from "./routes/AdminLogin";
 import AdminSignUp, { action as signUpAction } from "./routes/AdminSignUp";
+import Appointments from "./pages/Appointments";
+import Barbers from "./pages/Barbers";
+import Services from "./pages/Services";
 
 const router = createBrowserRouter([
   {
@@ -35,11 +38,24 @@ const router = createBrowserRouter([
       {
         path: "/admin/login",
         element: <AdminLogin />,
+        action: loginAction,
       },
       {
         path: "/admin/signup",
         element: <AdminSignUp />,
         action: signUpAction,
+      },
+      {
+        path: "/admin/appointments",
+        element: <Appointments />,
+      },
+      {
+        path: "/admin/services",
+        element: <Services />,
+      },
+      {
+        path: "/admin/barbers",
+        element: <Barbers />,
       },
     ],
   },
