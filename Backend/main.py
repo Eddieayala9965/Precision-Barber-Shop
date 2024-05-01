@@ -1,11 +1,12 @@
 import stripe
 import os
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, Depends, Response, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List
+from typing import List, Annotated
 from supabase import create_client, Client
 from models import Item, Barber
 
@@ -17,6 +18,7 @@ stripe.api_key = os.getenv("STRIPE_APIKEY_BACKEND")
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 app.add_middleware(
@@ -39,31 +41,8 @@ def hello_world():
     return {"message": "hello world"}
 
 
-@app.get("/barbers")
-def get_barbers():
-  response = supabase.table('barbers').select("*").execute()
-  return response
+def get_current_user(token: )
 
-# make sure to filter and grab client name and phone number
-@app.get("/appointments")
-def get_appointments():
-  response = supabase.table('appointments').select("*").execute()
-  return response
-
-@app.get("/customers")
-def get_customers():
-    response = supabase.table("customers").select("*").execute()
-    return response
-
-@app.get("/services")
-def get_services():
-    response = supabase.table("services").select("*").execute()
-    return response
-
-@app.get("/bookings")
-def get_bookings():
-    response = supabase.table("bookings").select("*").execute()
-    return response
 
         
 @app.post("/register")
