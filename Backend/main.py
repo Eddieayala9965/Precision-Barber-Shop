@@ -35,16 +35,59 @@ origins = [
     ]
 
 
+auth_properties = dir(supabase.auth)
+
+
+public_properties  = [prop for prop in auth_properties if not prop.startswith("_")]
+
+public_properties.sort()
+
+print("Public properties and methods of auth objects: ")
+print(public_properties)
 
 @app.get("/")
 def hello_world():
     return {"message": "hello world"}
 
 
-def get_current_user(token: )
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    user = supabase.auth.get_user()
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password",
+        )
+    supabase.postgrest.auth(
+        token=token
+    )  
+    return user
+
+    
+@app.post("/refresh")
+async def refresh_token(request: Request):
+    data = await request.json()
+    token = data.get("refresh_token")
+    
+    session = supabase.auth.refresh_session(token)
+    if session is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid session",
+        )
+    return session
+
+@app.get("/protected")
+async def protected_route(user: Barber = Depends(get_current_user)):
+    if user is not None:
+        return {"detail": "PROTECTED ROUTE IS ACCESSIBLE!"}
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized",
+        )
 
 
-        
+
 @app.post("/register")
 def register_user(request: Barber):
     email = request.email
