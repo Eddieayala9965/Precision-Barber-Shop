@@ -86,6 +86,12 @@ def login_user(request: Barber):
     })
     return response
 
+@app.post("/logout")
+def logout_user():
+    response = supabase.auth.sign_out()
+    return response
+
+
 
 
 
