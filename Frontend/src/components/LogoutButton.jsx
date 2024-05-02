@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
@@ -37,7 +37,17 @@ const LogoutButton = () => {
   }
 
   return (
-    <Button startIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>
+    <Button
+      startIcon={<LogoutOutlinedIcon />}
+      onClick={handleLogout}
+      style={{
+        textTransform: "none",
+        width: "100%",
+        color: "white",
+        backgroundColor: "red",
+        fontSize: "15px",
+      }}
+    >
       Logout
     </Button>
   );

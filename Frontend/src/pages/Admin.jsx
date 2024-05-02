@@ -8,7 +8,6 @@ const Admin = () => {
     { title: "Services", path: "/admin/services" },
     { title: "Appointments", path: "/admin/appointments" },
     { title: "Login", path: "/admin/login" },
-    { title: "Sign Up", path: "/admin/signup" },
   ];
 
   return (

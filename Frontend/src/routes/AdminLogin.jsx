@@ -1,10 +1,11 @@
-import { Form, redirect } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import GlobalLoadingSpinner from "../components/GlobalLoadingSpinner";
 import { useLoading } from "../context/LoadingContext";
+
 import Box from "@mui/material/Box";
 
 export const action = async ({ request }) => {
@@ -55,12 +56,10 @@ const AdminLogin = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    // Simulate a data loading process
     const timeout = setTimeout(() => {
       setIsLoading(false);
     }, 1500);
 
-    // Clean up the timeout when the component unmounts
     return () => clearTimeout(timeout);
   }, [setIsLoading]);
   return (
@@ -107,6 +106,9 @@ const AdminLogin = () => {
 
             <Button type="submit" variant="contained" color="primary" fullWidth>
               Login
+            </Button>
+            <Button component={Link} to="/admin/signup" variant="text">
+              Dont have an account? Sign Up here
             </Button>
           </Form>
         </Box>

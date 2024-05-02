@@ -13,7 +13,7 @@ import {
   IconButton,
 } from "@mui/material";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
-import HistoryEduOutlinedIcon from "@mui/icons-material/HistoryEduOutlined";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import BadgeAvatars from "./BadgeAvatar";
 import BarberIcon from "./Icons/BarberIcon";
@@ -21,6 +21,7 @@ import ServiceIcon from "./Icons/ServiceIcon";
 import AppointmentIcon from "./Icons/AppointmentIcon";
 import Logo from "../assets/Logo.png";
 import LogoutButton from "./LogoutButton";
+
 import "@fontsource/roboto/500.css";
 
 const NavAdmin = ({ navItems }) => {
@@ -58,7 +59,6 @@ const NavAdmin = ({ navItems }) => {
                   <ListItemButton component={Link} to={link.path}>
                     <ListItemIcon>
                       {link.title === "Login" && <LoginOutlinedIcon />}
-                      {link.title === "Sign Up" && <HistoryEduOutlinedIcon />}
                       {link.title === "Barbers" && <BarberIcon />}
                       {link.title === "Services" && <ServiceIcon />}
                       {link.title === "Logout" && <LogoutButton />}
@@ -72,7 +72,8 @@ const NavAdmin = ({ navItems }) => {
               </div>
             ))}
             <Divider />
-            {<LogoutButton />}
+            <div className="mt-5">{<LogoutButton />}</div>
+
             <div className="flex justify-center mt-12">
               <BadgeAvatars />
             </div>
