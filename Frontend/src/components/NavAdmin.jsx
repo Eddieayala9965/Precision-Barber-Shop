@@ -11,16 +11,18 @@ import {
   Divider,
   Box,
   IconButton,
+  Container,
 } from "@mui/material";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import BadgeAvatars from "./BadgeAvatar";
+
 import BarberIcon from "./Icons/BarberIcon";
 import ServiceIcon from "./Icons/ServiceIcon";
 import AppointmentIcon from "./Icons/AppointmentIcon";
-import Logo from "../assets/Logo.png";
+import Logo from "../images/Logo.png";
 import LogoutButton from "./LogoutButton";
+import BarberChair from "./Icons/BarberChair";
 
 import "@fontsource/roboto/500.css";
 
@@ -32,8 +34,7 @@ const NavAdmin = ({ navItems }) => {
   };
 
   return (
-    <div>
-      {/* Add an icon button to toggle the drawer */}
+    <div className="block">
       <IconButton onClick={toggleDrawer}>
         <MenuIcon />
       </IconButton>
@@ -59,7 +60,8 @@ const NavAdmin = ({ navItems }) => {
                   <ListItemButton component={Link} to={link.path}>
                     <ListItemIcon>
                       {link.title === "Login" && <LoginOutlinedIcon />}
-                      {link.title === "Barbers" && <BarberIcon />}
+                      {link.title === "Barbers" && <BarberChair />}
+                      {link.title === "Profile" && <BarberIcon />}
                       {link.title === "Services" && <ServiceIcon />}
                       {link.title === "Logout" && <LogoutButton />}
                       {link.title === "Appointments" && <AppointmentIcon />}
@@ -73,10 +75,6 @@ const NavAdmin = ({ navItems }) => {
             ))}
             <Divider />
             <div className="mt-5">{<LogoutButton />}</div>
-
-            <div className="flex justify-center mt-12">
-              <BadgeAvatars />
-            </div>
           </List>
         </Box>
       </Drawer>

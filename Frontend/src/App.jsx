@@ -10,6 +10,7 @@ import AdminSignUp, { action as signUpAction } from "./routes/AdminSignUp";
 import Appointments from "./pages/Appointments";
 import Barbers from "./pages/Barbers";
 import Services from "./pages/Services";
+import Profile, { loader as profileLoader } from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
       {
         path: "/admin/barbers",
         element: <Barbers />,
+      },
+      {
+        path: "/admin/profile",
+        element: <Profile />,
+        loader: profileLoader,
       },
     ],
   },

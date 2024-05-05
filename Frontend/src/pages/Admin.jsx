@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 
 const Admin = () => {
   const primaryNav = [
+    { title: "Profile", path: "/admin/profile" },
     { title: "Barbers", path: "/admin/barbers" },
     { title: "Services", path: "/admin/services" },
     { title: "Appointments", path: "/admin/appointments" },
