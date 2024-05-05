@@ -1,6 +1,6 @@
 import stripe
 import os
-from fastapi import FastAPI, Request, HTTPException, Depends, Response, status
+from fastapi import FastAPI, Request, HTTPException, Depends, Response, status, File, UploadFile
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
@@ -50,6 +50,12 @@ def hello_world():
     return {"message": "hello world"}
 
 
+
+@app.get("/barbers")
+def get_barbers():
+    response = supabase.table("barbers").select("*").execute()
+    return response
+
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user = supabase.auth.get_user()
     if user is None:
@@ -62,6 +68,57 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     )  
     return user
 
+@app.post("/register")
+def register_user(request: Barber):
+    email = request.email
+    password = request.password
+    response = supabase.auth.sign_up({
+        "email": email, 
+        "password": password,
+    })
+    return response
+
+@app.post("/login")
+def login_user(request: Barber):
+    email = request.email
+    password = request.password
+    response = supabase.auth.sign_in_with_password({
+        "email": email, 
+        "password": password,
+    })
+    return response
+
+@app.post("/logout")
+def logout_user():
+    response = supabase.auth.sign_out()
+    return response
+
+@app.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+    path_on_server = f"Photos/{file.filename}"
+    
+    file_options = {
+        "content_type": file.content_type
+    }
+    
+    try:
+        with file.file as f:
+            response = supabase.storage.from_("gallery").upload(
+                file=f, 
+                path=path_on_server,
+                file_options=file_options
+            )
+        
+        if response['status code'] == 200:
+            return JSONResponse({"Message": "File uploaded successfully", "path": path_on_server})
+        else:
+            raise HTTPException(status_code=400, detail="File upload failed")
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+            
+    
+    
     
 @app.post("/refresh")
 async def refresh_token(request: Request):
@@ -88,30 +145,6 @@ async def protected_route(user: Barber = Depends(get_current_user)):
 
 
 
-@app.post("/register")
-def register_user(request: Barber):
-    email = request.email
-    password = request.password
-    response = supabase.auth.sign_up({
-        "email": email, 
-        "password": password,
-    })
-    return response
-
-@app.post("/login")
-def login_user(request: Barber):
-    email = request.email
-    password = request.password
-    response = supabase.auth.sign_in_with_password({
-        "email": email, 
-        "password": password,
-    })
-    return response
-
-@app.post("/logout")
-def logout_user():
-    response = supabase.auth.sign_out()
-    return response
 
 
 
