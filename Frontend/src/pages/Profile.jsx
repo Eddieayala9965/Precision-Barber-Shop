@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Logo2 from "../images/Logo2.png";
 import HeadShot from "../images/headshot.jpeg";
+import UploadImage from "../components/UploadImage";
 import BarberPhoto from "../images/Elbee.png";
 import BarberPhoto2 from "../images/Elbee2.png";
 import BarberPhoto3 from "../images/Person1.jpeg";
@@ -119,6 +120,7 @@ const Profile = () => {
         justifyContent: "space-evenly",
       }}
     >
+      <UploadImage />
       {user.map((userInfo, index) => (
         <Container
           key={index}
