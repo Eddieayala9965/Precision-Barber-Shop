@@ -25,8 +25,8 @@ const UploadImage = () => {
     let file = e.target.files[0];
 
     const { data, error } = await supabase.storage
-      .from("gallery")
-      .upload(userId + "/" + uuidv4(), file);
+      .from("img")
+      .upload(`${userId}/${uuidv4()}`, file);
 
     if (data) {
       getMedia();
@@ -37,7 +37,7 @@ const UploadImage = () => {
 
   async function getMedia() {
     const { data, error } = await supabase.storage
-      .from("gallery")
+      .from("img")
       .list(userId + "/", {
         limit: 10,
         offset: 0,
@@ -67,9 +67,7 @@ const UploadImage = () => {
       {media.map((item) => {
         return (
           <div key={item.id}>
-            <img
-              src={`https://juowekkvvwyquoqoarfr.supabase.co/storage/v1/object/public/gallery/d3b44b10-8842-4d5d-8064-06b2c6f97a21/Elbee.png/${item.name}`}
-            />
+            <img src={`d3b44b10-8842-4d5d-8064-06b2c6f97a21/${item.name}`} />
           </div>
         );
       })}
