@@ -89,8 +89,13 @@ import {
 import Uppy from "@uppy/core";
 import { Dashboard } from "@uppy/react";
 
+import "@uppy/core/dist/style.min.css";
+import "@uppy/dashboard/dist/style.min.css";
+
+import { useState, useEffect } from "react";
+
 const UploadImage = () => {
-  const [uppy] = useState(() => new Uppy().use(Webcam));
+  const [uppy] = useState(() => new Uppy());
   return (
     <Dialog>
       <DialogTrigger>
@@ -104,6 +109,10 @@ const UploadImage = () => {
             account and remove your data from our servers.
           </DialogDescription>
         </DialogHeader>
+        {/*  */}
+        <div>
+          <Dashboard uppy={uppy} />;
+        </div>
       </DialogContent>
     </Dialog>
   );
