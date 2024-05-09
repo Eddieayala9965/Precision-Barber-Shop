@@ -84,7 +84,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@shadcn/ui";
+} from "@/components/ui/dialog";
 
 import Uppy from "@uppy/core";
 import { Dashboard } from "@uppy/react";
