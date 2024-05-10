@@ -1,81 +1,4 @@
-// import { useEffect, useState } from "react";
-// import { supabase } from "../utils/Supabase";
-// import { v4 as uuidv4 } from "uuid";
-
-// const UploadImage = () => {
-//   const [userId, setUserId] = useState("");
-//   const [media, setMedia] = useState([]);
-
-//   const getUser = async () => {
-//     try {
-//       const {
-//         data: { user },
-//       } = await supabase.auth.getUser();
-//       if (user !== null) {
-//         setUserId(user.id);
-//       } else {
-//         setUserId("");
-//       }
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-
-//   async function uploadImage(e) {
-//     let file = e.target.files[0];
-
-//     const { data, error } = await supabase.storage
-//       .from("img")
-//       .upload(`${userId}/${uuidv4()}`, file);
-
-//     if (data) {
-//       getMedia();
-//     } else {
-//       console.log(error);
-//     }
-//   }
-
-//   async function getMedia() {
-//     const { data, error } = await supabase.storage
-//       .from("img")
-//       .list(userId + "/", {
-//         limit: 10,
-//         offset: 0,
-//         sortBy: {
-//           column: "name",
-//           order: "asc",
-//         },
-//       });
-
-//     if (data) {
-//       setMedia(data);
-//     } else {
-//       console.log("Error fetching media:", error);
-//     }
-//   }
-
-//   useEffect(() => {
-//     getUser();
-//     getMedia();
-//   }, [userId]);
-
-//   return (
-//     <div className="mt-5">
-//       <input type="file" onChange={(e) => uploadImage(e)} />
-//       <div className="mt-5">My Uploads</div>
-
-//       {media.map((item) => {
-//         return (
-//           <div key={item.id}>
-//             <img src={`d3b44b10-8842-4d5d-8064-06b2c6f97a21/${item.name}`} />
-//           </div>
-//         );
-//       })}
-//     </div>
-//   );
-// };
-
-// export default UploadImage;
+import Tus from "@uppy/tus";
 
 import {
   Dialog,
@@ -96,13 +19,21 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState, useEffect } from "react";
 
 const UploadImage = () => {
-  const [uppy] = useState(() => new Uppy());
+  const [uppy] = useState(() =>
+    new Uppy({
+      restrictions: {
+        maxNumberOfFiles: 6,
+        allowedFileTypes: ["image/*"],
+        maxFileSize: 5 * 1000 * 1000,
+      },
+    }).use(Tus, { endpoint: "https://tusd.tusdemo.net/files/" })
+  );
   return (
     <Dialog className="sm:p-4 md:p-8">
       <DialogTrigger className="flex align-start">
         <Button
           sx={{ width: 100 }}
-          variant="outlined"
+          variant="contained"
           role="undefined"
           tabIndex={-1}
           startIcon={<CloudUploadIcon />}
@@ -112,15 +43,15 @@ const UploadImage = () => {
       </DialogTrigger>
       <DialogContent className="sm:p-4 md:p-8 sm:max-w-screen-sm md:max-w-screen-lg flex flex-col justify-center items-center">
         <DialogHeader className="flex flex-col items-center">
-          <DialogTitle className="flex flex-wrap">
-            Are you absolutely sure?
-          </DialogTitle>
+          <DialogTitle className="flex flex-wrap">Gallery Upload</DialogTitle>
           <DialogDescription className="flex flex-wrap">
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Begin uploading your images
           </DialogDescription>
-          <Dashboard className="custom-width" uppy={uppy} />
+          <Dashboard className="custom-width" uppy={uppy} hideUploadButton />
         </DialogHeader>
+        <Button variant="contained" className=" w-2/5">
+          Upload
+        </Button>
       </DialogContent>
     </Dialog>
   );

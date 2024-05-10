@@ -93,21 +93,6 @@ const itemData = [
     title: "Mushrooms",
     author: "@silverdalex",
   },
-  {
-    img: BarberPhoto10,
-    title: "Tomato basil",
-    author: "@shelleypauls",
-  },
-  {
-    img: BarberPhoto11,
-    title: "Sea star",
-    author: "@peterlaster",
-  },
-  {
-    img: BarberPhoto12,
-    title: "Bike",
-    author: "@southside_customs",
-  },
 ];
 
 const Profile = () => {
