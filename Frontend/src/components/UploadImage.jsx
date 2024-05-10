@@ -16,9 +16,11 @@ import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import useUser from "@/app/hook/useUser";
 import { useState, useEffect } from "react";
 
 const UploadImage = () => {
+  const { user } = useUser();
   const [uppy] = useState(() =>
     new Uppy({
       restrictions: {
@@ -26,8 +28,31 @@ const UploadImage = () => {
         allowedFileTypes: ["image/*"],
         maxFileSize: 5 * 1000 * 1000,
       },
-    }).use(Tus, { endpoint: "https://tusd.tusdemo.net/files/" })
+    }).use(Tus, {
+      endpoint:
+        import.meta.env.VITE_SUPABASE_URL + "/storage/v1/upload/resumable",
+      allowedMetaFields: [
+        "bucketName",
+        "objectName",
+        "contentType",
+        "cacheControl",
+      ],
+    })
   );
+  uppy.on("file-added", (file) => {
+    file.meta = {
+      ...file.meta,
+      bucketName: "img",
+      contentType: file.type,
+    };
+  });
+  const handleUpload = () => {
+    uppy.setFileMeta(uppy.getFiles()[0].id, {
+      objectName: user?.id + "/" + uppy.getFiles()[0].name,
+    });
+    uppy.upload();
+  };
+
   return (
     <Dialog className="sm:p-4 md:p-8">
       <DialogTrigger className="flex align-start">
@@ -49,7 +74,7 @@ const UploadImage = () => {
           </DialogDescription>
           <Dashboard className="custom-width" uppy={uppy} hideUploadButton />
         </DialogHeader>
-        <Button variant="contained" className=" w-2/5">
+        <Button onClick={handleUpload} variant="contained" className=" w-2/5">
           Upload
         </Button>
       </DialogContent>
