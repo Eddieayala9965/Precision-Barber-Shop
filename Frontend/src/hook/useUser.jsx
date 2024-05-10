@@ -12,6 +12,7 @@ const initUser = {
 };
 
 const useUser = () => {
+  console.log("Rendering component that uses useQuery");
   return useQuery({
     queryKey: ["user"],
     queryFn: async () => {
