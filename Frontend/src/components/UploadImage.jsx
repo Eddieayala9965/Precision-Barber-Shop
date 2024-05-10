@@ -91,28 +91,36 @@ import { Dashboard } from "@uppy/react";
 
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
-
+import Button from "@mui/material/Button";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState, useEffect } from "react";
 
 const UploadImage = () => {
   const [uppy] = useState(() => new Uppy());
   return (
-    <Dialog>
-      <DialogTrigger>
-        <button id="upload-trigger"></button>
+    <Dialog className="sm:p-4 md:p-8">
+      <DialogTrigger className="flex align-start">
+        <Button
+          sx={{ width: 100 }}
+          variant="outlined"
+          role="undefined"
+          tabIndex={-1}
+          startIcon={<CloudUploadIcon />}
+        >
+          Upload
+        </Button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:p-4 md:p-8 sm:max-w-screen-sm md:max-w-screen-lg flex flex-col justify-center items-center">
+        <DialogHeader className="flex flex-col items-center">
+          <DialogTitle className="flex flex-wrap">
+            Are you absolutely sure?
+          </DialogTitle>
+          <DialogDescription className="flex flex-wrap">
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
           </DialogDescription>
+          <Dashboard className="custom-width" uppy={uppy} />
         </DialogHeader>
-        {/*  */}
-        <div>
-          <Dashboard uppy={uppy} />;
-        </div>
       </DialogContent>
     </Dialog>
   );
