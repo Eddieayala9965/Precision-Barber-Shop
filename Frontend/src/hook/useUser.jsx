@@ -1,4 +1,4 @@
-import supabaseSSR from "..
+import { supabaseSSR } from "../utils/SupabaseBrowser";
 import { useQuery } from "@tanstack/react-query";
 
 const initUser = {
@@ -11,7 +11,7 @@ const initUser = {
   profile_image: "",
 };
 
-export default function useUser() {
+const useUser = () => {
   return useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -29,4 +29,5 @@ export default function useUser() {
       return initUser;
     },
   });
-}
+};
+export default useUser;

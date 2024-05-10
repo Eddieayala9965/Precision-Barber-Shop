@@ -16,7 +16,7 @@ import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import useUser from "@/app/hook/useUser";
+import useUser from "@/hook/useUser";
 import { useState, useEffect } from "react";
 
 const UploadImage = () => {
@@ -59,7 +59,6 @@ const UploadImage = () => {
         <Button
           sx={{ width: 100 }}
           variant="contained"
-          role="undefined"
           tabIndex={-1}
           startIcon={<CloudUploadIcon />}
         >
