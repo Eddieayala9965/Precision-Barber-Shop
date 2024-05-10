@@ -93,30 +93,7 @@ def logout_user():
     response = supabase.auth.sign_out()
     return response
 
-@app.post("/upload")
-async def upload_file(file: UploadFile = File(...)):
-    path_on_server = f"Photos/{file.filename}"
-    
-    file_options = {
-        "content_type": file.content_type
-    }
-    
-    try:
-        with file.file as f:
-            response = supabase.storage.from_("gallery").upload(
-                file=f, 
-                path=path_on_server,
-                file_options=file_options
-            )
-        
-        if response['status code'] == 200:
-            return JSONResponse({"Message": "File uploaded successfully", "path": path_on_server})
-        else:
-            raise HTTPException(status_code=400, detail="File upload failed")
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-            
+
     
     
     
