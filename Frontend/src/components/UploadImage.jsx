@@ -15,40 +15,46 @@ import { Dashboard } from "@uppy/react";
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import Button from "@mui/material/Button";
+import { supabase } from "../utils/Supabase";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import useUser from "@/hook/useUser";
+
 import { useState, useEffect } from "react";
 
 const UploadImage = () => {
-  const { user } = useUser();
   const [uppy] = useState(() =>
     new Uppy({
       restrictions: {
-        maxNumberOfFiles: 6,
+        maxNumberOfFiles: 1,
         allowedFileTypes: ["image/*"],
         maxFileSize: 5 * 1000 * 1000,
       },
     }).use(Tus, {
       endpoint:
         import.meta.env.VITE_SUPABASE_URL + "/storage/v1/upload/resumable",
+
       allowedMetaFields: [
         "bucketName",
         "objectName",
         "contentType",
         "cacheControl",
       ],
+      onBeforeRequest: async (req) => {
+        const token = localStorage.getItem("access_token");
+        req.setHeader("Authorization", `Bearer ${token}`);
+      },
     })
   );
   uppy.on("file-added", (file) => {
-    file.meta = {
-      ...file.meta,
+    uppy.setFileMeta(file.id, {
       bucketName: "img",
       contentType: file.type,
-    };
+    });
   });
+
   const handleUpload = () => {
     uppy.setFileMeta(uppy.getFiles()[0].id, {
-      objectName: user?.id + "/" + uppy.getFiles()[0].name,
+      objectName:
+        `${localStorage.getItem("user_id")}` + "/" + uppy.getFiles()[0].name,
     });
     uppy.upload();
   };
@@ -80,5 +86,6 @@ const UploadImage = () => {
     </Dialog>
   );
 };
+// all we need to do now is append this on the page we want to use it, so profile.jsx
 
 export default UploadImage;

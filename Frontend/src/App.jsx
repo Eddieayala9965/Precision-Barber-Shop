@@ -11,9 +11,6 @@ import Appointments from "./pages/Appointments";
 import Barbers from "./pages/Barbers";
 import Services from "./pages/Services";
 import Profile, { loader as profileLoader } from "./pages/Profile";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -71,11 +68,7 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;
