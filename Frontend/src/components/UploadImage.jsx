@@ -86,6 +86,5 @@ const UploadImage = () => {
     </Dialog>
   );
 };
-// all we need to do now is append this on the page we want to use it, so profile.jsx
 
 export default UploadImage;

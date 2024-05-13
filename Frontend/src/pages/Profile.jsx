@@ -5,7 +5,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Logo2 from "../images/Logo2.png";
-import HeadShot from "../images/headshot.jpeg";
 import UploadImage from "../components/UploadImage";
 import BarberPhoto from "../images/Elbee.png";
 import BarberPhoto2 from "../images/Elbee2.png";
@@ -16,19 +15,10 @@ import BarberPhoto6 from "../images/Person4.jpeg";
 import BarberPhoto7 from "../images/Person5.png";
 import BarberPhoto8 from "../images/Person6.png";
 import BarberPhoto9 from "../images/Person7.jpeg";
-import BarberPhoto10 from "../images/Person8.png";
-import BarberPhoto11 from "../images/Person9.png";
-import BarberPhoto12 from "../images/Person10.png";
 import { CardActionArea } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-
-import Box from "@mui/material/Box";
+import Gallery from "../components/Gallery";
 
 export const loader = async () => {
   const url = "http://127.0.0.1:8000/barbers";
@@ -237,87 +227,14 @@ const Profile = () => {
                     color="text.secondary"
                     sx={{ overflow: "auto", maxHeight: "150px" }}
                   >
-                    With over a decade of experience in the art of barbering, I
-                    specialize in classic cuts, modern fades, and detailed beard
-                    trims. My approach combines traditional techniques with
-                    contemporary styling, ensuring each client leaves not just
-                    looking good, but feeling great. I believe a haircut is not
-                    just a service, but an experience - one that should be
-                    relaxing and tailored to individual needs. My passion for
-                    barbering drives me to stay updated with the latest trends
-                    and techniques, ensuring I can offer the best solutions to
-                    my clients. Whether you're looking for a subtle change or a
-                    complete transformation, I'm here to make it happen with
-                    precision and care.
+                    {userInfo.bio}
                   </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
           </Container>
 
-          <Container
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 2,
-              width: "100%",
-              boxSizing: "border-box",
-              gap: 2,
-              overflow: "hidden",
-              "@media (max-width: 1000px)": {
-                width: "500px",
-              },
-              "@media (max-width: 800px)": {
-                width: "400px",
-              },
-              "@media (max-width: 600px)": {
-                width: "350px",
-              },
-              "@media (max-width: 400px)": {
-                width: "330px",
-              },
-            }}
-            maxWidth="md"
-          >
-            <Grid container spacing={2}>
-              {itemData.map((item, index) => (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  key={index}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  <Card sx={{ width: "100%", maxWidth: 400 }}>
-                    <Box
-                      sx={{
-                        width: "100%",
-                        paddingTop: "100%",
-                        position: "relative",
-                      }}
-                    >
-                      <CardMedia
-                        component="img"
-                        sx={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                        image={item.img}
-                        alt={item.title}
-                      />
-                    </Box>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
+          <Gallery />
         </Container>
       ))}
     </Container>
