@@ -16,9 +16,9 @@ import BarberPhoto7 from "../images/Person5.png";
 import BarberPhoto8 from "../images/Person6.png";
 import BarberPhoto9 from "../images/Person7.jpeg";
 import { CardActionArea } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Gallery from "../components/Gallery";
+import UploadAvatar from "../components/UploadAvatar";
 
 export const loader = async () => {
   const url = "http://127.0.0.1:8000/barbers";
@@ -34,56 +34,6 @@ export const loader = async () => {
   console.log(user.data);
   return { user: user.data };
 };
-
-const itemData = [
-  {
-    img: BarberPhoto,
-    title: "Breakfast",
-    author: "@bkristastucchio",
-    featured: true,
-  },
-  {
-    img: BarberPhoto2,
-    title: "Burger",
-    author: "@rollelflex_graphy726",
-  },
-  {
-    img: BarberPhoto3,
-    title: "Camera",
-    author: "@helloimnik",
-  },
-  {
-    img: BarberPhoto4,
-    title: "Coffee",
-    author: "@nolanissac",
-  },
-  {
-    img: BarberPhoto5,
-    title: "Hats",
-    author: "@hjrc33",
-  },
-  {
-    img: BarberPhoto6,
-    title: "Honey",
-    author: "@arwinneil",
-    featured: true,
-  },
-  {
-    img: BarberPhoto7,
-    title: "Basketball",
-    author: "@tjdragotta",
-  },
-  {
-    img: BarberPhoto8,
-    title: "Fern",
-    author: "@katie_wasserman",
-  },
-  {
-    img: BarberPhoto9,
-    title: "Mushrooms",
-    author: "@silverdalex",
-  },
-];
 
 const Profile = () => {
   const { user } = useLoaderData();
@@ -137,7 +87,7 @@ const Profile = () => {
                 <CardMedia
                   component="img"
                   height="275"
-                  src={userInfo.profilePicture || Logo2}
+                  src={Logo2}
                   alt="Profile Picture"
                   sx={{
                     width: "100%",
@@ -154,18 +104,8 @@ const Profile = () => {
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Avatar
-                      alt={userInfo.first_name}
-                      src={userInfo.profile_image}
-                      sx={{
-                        position: "absolute",
-                        width: 80,
-                        height: 80,
-                        bottom: 45,
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                      }}
-                    />
+                    <UploadAvatar />
+
                     <Typography
                       variant="h5"
                       component="div"

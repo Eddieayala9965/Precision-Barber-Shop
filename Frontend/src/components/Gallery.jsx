@@ -16,8 +16,6 @@ const Gallery = () => {
     const fetchGallery = async () => {
       const userId = localStorage.getItem("user_id");
       const token = localStorage.getItem("access_token");
-      console.log("User ID:", userId);
-      console.log("Access Token:", token);
 
       try {
         const { data, error } = await supabase.storage

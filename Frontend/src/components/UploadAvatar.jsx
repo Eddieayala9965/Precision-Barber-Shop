@@ -12,15 +12,14 @@ import { Dashboard } from "@uppy/react";
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import Button from "@mui/material/Button";
+import Avatars from "../components/Avatars";
 import { supabase } from "../utils/Supabase";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState, useEffect } from "react";
-
-const UploadImage = () => {
+const UploadAvatar = () => {
   const [uppy] = useState(() =>
     new Uppy({
       restrictions: {
-        maxNumberOfFiles: 9,
+        maxNumberOfFiles: 1,
         allowedFileTypes: ["image/*"],
         maxFileSize: 5 * 1000 * 1000,
       },
@@ -42,7 +41,7 @@ const UploadImage = () => {
   );
   uppy.on("file-added", (file) => {
     uppy.setFileMeta(file.id, {
-      bucketName: "img",
+      bucketName: "avatars",
       contentType: file.type,
     });
   });
@@ -58,18 +57,11 @@ const UploadImage = () => {
   return (
     <Dialog className="sm:p-4 md:p-8">
       <DialogTrigger className="flex align-start">
-        <Button
-          sx={{ width: 100 }}
-          variant="contained"
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-        >
-          Upload
-        </Button>
+        <Avatars />
       </DialogTrigger>
       <DialogContent className="sm:p-4 md:p-8 sm:max-w-screen-sm md:max-w-screen-lg flex flex-col justify-center items-center">
         <DialogHeader className="flex flex-col items-center">
-          <DialogTitle className="flex flex-wrap">Gallery Upload</DialogTitle>
+          <DialogTitle className="flex flex-wrap">Avatar Upload</DialogTitle>
           <DialogDescription className="flex flex-wrap">
             Begin uploading your images
           </DialogDescription>
@@ -82,5 +74,4 @@ const UploadImage = () => {
     </Dialog>
   );
 };
-
-export default UploadImage;
+export default UploadAvatar;
