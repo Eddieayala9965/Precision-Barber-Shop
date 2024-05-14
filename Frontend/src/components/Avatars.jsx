@@ -1,6 +1,5 @@
 import { supabase } from "../utils/Supabase";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 
 const Avatars = () => {
@@ -12,6 +11,7 @@ const Avatars = () => {
     const fetchGallery = async () => {
       const userId = localStorage.getItem("user_id");
       const token = localStorage.getItem("access_token");
+      console.log("Fetching avatar for user:", userId);
 
       try {
         const { data, error } = await supabase.storage
@@ -51,7 +51,6 @@ const Avatars = () => {
       {avatar.map((item, index) => (
         <Avatar
           key={index}
-          onClick={() => console.log("Avatar clicked!", item.name)}
           sx={{
             position: "absolute",
             width: 80,
@@ -61,7 +60,6 @@ const Avatars = () => {
             transform: "translateX(-50%)",
           }}
           src={`${supbaseUrl}/${userId}/${item.name}`}
-          alt={"Avatar"}
         />
       ))}
     </>

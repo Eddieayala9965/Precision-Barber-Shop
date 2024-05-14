@@ -46,16 +46,18 @@ const Profile = () => {
         justifyContent: "space-evenly",
       }}
     >
-      <UploadImage />
       {user.map((userInfo, index) => (
         <Container
           key={index}
           sx={{
+            borderRadius: 15,
             display: "flex",
-
+            backgroundColor: "white",
+            boxShadow: 5,
             justifyContent: "space-evenly",
             alignItems: "center",
             gap: 2,
+            padding: 2,
             width: "100%",
             "@media (max-width: 1000px)": {
               flexDirection: "column",
@@ -75,12 +77,17 @@ const Profile = () => {
             }}
             maxWidth="md"
           >
+            <div className="flex self-start">
+              <UploadImage />
+            </div>
+
             <Card
               sx={{
                 width: "100%",
                 maxWidth: 500,
                 overflow: "hidden",
-                borderRadius: "3%",
+                borderRadius: 10,
+                boxShadow: 5,
               }}
             >
               <CardActionArea sx={{ position: "relative" }}>
@@ -112,7 +119,7 @@ const Profile = () => {
                       sx={{
                         margin: 0,
                         textAlign: "center",
-                        "&.MuiTypography-root": { margin: 0 },
+                        "&.MuiTypography-root": { margin: 0, marginTop: 2 },
                       }}
                     >
                       {userInfo.first_name} {userInfo.last_name}
@@ -125,8 +132,9 @@ const Profile = () => {
               sx={{
                 width: "100%",
                 maxWidth: 500,
-                height: 260,
-                borderRadius: "3%",
+                height: 280,
+                borderRadius: 10,
+                boxShadow: 7,
               }}
             >
               <CardActionArea
@@ -149,8 +157,8 @@ const Profile = () => {
                 >
                   <Typography
                     gutterBottom
-                    variant="body1"
-                    component="div"
+                    variant="body2"
+                    component="p"
                     sx={{ whiteSpace: "pre-line" }}
                   >
                     Contact Information:

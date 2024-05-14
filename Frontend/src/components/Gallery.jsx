@@ -55,6 +55,7 @@ const Gallery = () => {
       <Container
         sx={{
           display: "flex",
+          paddingRight: 2,
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
@@ -86,7 +87,12 @@ const Gallery = () => {
               sm={6}
               md={4}
               key={index}
-              sx={{ display: "flex", justifyContent: "center" }}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+
+                padding: 2,
+              }}
             >
               <Card sx={{ width: "100%", maxWidth: 400 }}>
                 <Box

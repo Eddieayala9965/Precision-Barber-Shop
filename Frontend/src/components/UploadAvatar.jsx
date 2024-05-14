@@ -57,7 +57,9 @@ const UploadAvatar = () => {
   return (
     <Dialog className="sm:p-4 md:p-8">
       <DialogTrigger className="flex align-start">
-        <Avatars />
+        <button>
+          <Avatars />
+        </button>
       </DialogTrigger>
       <DialogContent className="sm:p-4 md:p-8 sm:max-w-screen-sm md:max-w-screen-lg flex flex-col justify-center items-center">
         <DialogHeader className="flex flex-col items-center">

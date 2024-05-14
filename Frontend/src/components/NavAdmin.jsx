@@ -34,8 +34,13 @@ const NavAdmin = ({ navItems }) => {
   };
 
   return (
-    <div className="block">
-      <IconButton onClick={toggleDrawer}>
+    <div className="flex flex-col ">
+      <IconButton
+        sx={{
+          position: "fixed",
+        }}
+        onClick={toggleDrawer}
+      >
         <MenuIcon />
       </IconButton>
 
