@@ -45,17 +45,6 @@ public_properties.sort()
 print("Public properties and methods of auth objects: ")
 print(public_properties)
 
-@app.get("/")
-def hello_world():
-    return {"message": "hello world"}
-
-
-
-@app.get("/barbers")
-def get_barbers():
-    response = supabase.table("barbers").select("*").execute()
-    return response
-
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user = supabase.auth.get_user()
     if user is None:
@@ -67,6 +56,23 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         token=token
     )  
     return user
+
+@app.get("/")
+def hello_world():
+    return {"message": "hello world"}
+
+@app.get("/gallery")
+def get_gallery():
+    res = supabase.storage.from_('img').list()
+    return res
+
+@app.get("/barbers")
+def get_barbers():
+    response = supabase.table("barbers").select("*").execute()
+    return response
+
+
+
 
 @app.post("/register")
 def register_user(request: Barber):
