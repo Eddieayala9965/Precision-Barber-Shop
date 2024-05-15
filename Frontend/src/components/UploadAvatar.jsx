@@ -65,7 +65,7 @@ const UploadAvatar = () => {
         <DialogHeader className="flex flex-col items-center">
           <DialogTitle className="flex flex-wrap">Avatar Upload</DialogTitle>
           <DialogDescription className="flex flex-wrap">
-            Begin uploading your images
+            Begin uploading your avatar
           </DialogDescription>
           <Dashboard className="custom-width" uppy={uppy} hideUploadButton />
         </DialogHeader>

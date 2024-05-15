@@ -67,7 +67,6 @@ const NavAdmin = ({ navItems }) => {
                       {link.title === "Login" && <LoginOutlinedIcon />}
                       {link.title === "Barbers" && <BarberChair />}
                       {link.title === "Profile" && <BarberIcon />}
-                      {link.title === "Services" && <ServiceIcon />}
                       {link.title === "Logout" && <LogoutButton />}
                       {link.title === "Appointments" && <AppointmentIcon />}
                     </ListItemIcon>

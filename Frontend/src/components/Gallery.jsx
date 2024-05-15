@@ -55,15 +55,16 @@ const Gallery = () => {
       <Container
         sx={{
           display: "flex",
-          paddingRight: 2,
+
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          padding: 2,
+
           width: "100%",
           boxSizing: "border-box",
           gap: 2,
-          overflow: "hidden",
+          "&.MuiContainer-root": { margin: 0, padding: 2, marginLeft: 3 },
+
           "@media (max-width: 1000px)": {
             width: "500px",
           },

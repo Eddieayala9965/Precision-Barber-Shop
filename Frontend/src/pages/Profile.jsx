@@ -17,6 +17,7 @@ import BarberPhoto8 from "../images/Person6.png";
 import BarberPhoto9 from "../images/Person7.jpeg";
 import { CardActionArea } from "@mui/material";
 import Stack from "@mui/material/Stack";
+import Services from "../components/Services";
 import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
 
@@ -42,22 +43,26 @@ const Profile = () => {
     <Container
       sx={{
         display: "flex",
+        backgorundColor: "white",
+        borderRadius: 15,
+        boxShadow: 5,
         flexDirection: "column",
         justifyContent: "space-evenly",
+        alignItems: "center",
+        padding: 2,
+        marginBottom: 2,
+        marginTop: 2,
       }}
     >
       {user.map((userInfo, index) => (
         <Container
           key={index}
           sx={{
-            borderRadius: 15,
             display: "flex",
-            backgroundColor: "white",
-            boxShadow: 5,
+
             justifyContent: "space-evenly",
             alignItems: "center",
             gap: 2,
-            padding: 2,
             width: "100%",
             "@media (max-width: 1000px)": {
               flexDirection: "column",
@@ -185,6 +190,7 @@ const Profile = () => {
           <Gallery />
         </Container>
       ))}
+      <Services />
     </Container>
   );
 };
