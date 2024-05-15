@@ -20,6 +20,7 @@ import Stack from "@mui/material/Stack";
 import Services from "../components/Services";
 import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
+import Box from "@mui/material/Box";
 
 export const loader = async () => {
   const url = "http://127.0.0.1:8000/barbers";

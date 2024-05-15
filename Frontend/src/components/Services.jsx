@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { Container, Card, CardMedia, Typography, Box } from "@mui/material";
+import {
+  Container,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -23,54 +32,57 @@ const Services = () => {
   }, []);
 
   return (
-    <Container
-      sx={{
-        display: "flex",
-        backgorundColor: "white",
-        borderRadius: 15,
-        boxShadow: 5,
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        padding: 2,
-        marginBottom: 2,
-        marginTop: 2,
-      }}
-    >
-      {services.map((service, index) => (
-        <Card
-          key={index}
+    <Container sx={{ mt: 2, mb: 2 }}>
+      <TableContainer
+        component={Paper}
+        sx={{ boxShadow: 3, borderRadius: 2, width: "100%", overflowX: "auto" }}
+      >
+        <Table
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-
+            minWidth: 650,
             width: "100%",
-            marginBottom: 2,
+            "@media (max-width: 750px)": {
+              minWidth: "100%",
+            },
           }}
+          aria-label="styled table"
         >
-          <CardMedia
-            component="img"
-            height="140"
-            image={service.image}
-            alt={service.name}
-          />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 2,
-              width: "100%",
-            }}
-          >
-            <Typography variant="h5">{service.service}</Typography>
-            <Typography variant="body2">{service.price}</Typography>
-          </Box>
-        </Card>
-      ))}
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "#f5f5f5" }}>
+              <TableCell sx={{ fontWeight: "bold", color: "#3f51b5" }}>
+                Service
+              </TableCell>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", color: "#3f51b5" }}
+              >
+                Price
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {services.map((service, index) => (
+              <TableRow
+                key={index}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:nth-of-type(odd)": { backgroundColor: "#f9f9f9" },
+                }}
+              >
+                <TableCell component="th" scope="row" sx={{ color: "#333" }}>
+                  {service.service}
+                </TableCell>
+                <TableCell align="right" sx={{ color: "#333" }}>
+                  {service.price.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Container>
   );
 };

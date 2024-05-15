@@ -2,6 +2,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
+import Services from "../components/Services";
 import Box from "@mui/material/Box";
 
 import { supabase } from "../utils/Supabase";
