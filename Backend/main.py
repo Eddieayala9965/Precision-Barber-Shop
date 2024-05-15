@@ -71,6 +71,10 @@ def get_barbers():
     response = supabase.table("barbers").select("*").execute()
     return response
 
+@app.get("/services")
+def get_services():
+    response = supabase.table("services").select("*").execute()
+    return response
 
 
 
