@@ -14,8 +14,15 @@ import "@uppy/dashboard/dist/style.min.css";
 import Button from "@mui/material/Button";
 import Avatars from "../components/Avatars";
 import { supabase } from "../utils/Supabase";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 const UploadAvatar = () => {
+  const clearUppyTusLocalStorage = () => {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith("tus::tus-uppy")) {
+        localStorage.removeItem(key);
+      }
+    });
+  };
   const [uppy] = useState(() =>
     new Uppy({
       restrictions: {
@@ -48,10 +55,10 @@ const UploadAvatar = () => {
 
   const handleUpload = () => {
     uppy.setFileMeta(uppy.getFiles()[0].id, {
-      objectName:
-        `${localStorage.getItem("user_id")}` + "/" + uppy.getFiles()[0].name,
+      objectName: `${localStorage.getItem("user_id")}` + "/" + "avatar.jpg",
     });
     uppy.upload();
+    clearUppyTusLocalStorage();
   };
 
   return (
@@ -65,7 +72,7 @@ const UploadAvatar = () => {
         <DialogHeader className="flex flex-col items-center">
           <DialogTitle className="flex flex-wrap">Avatar Upload</DialogTitle>
           <DialogDescription className="flex flex-wrap">
-            Begin uploading your avatar
+            Begin by selecting an image to upload as your avatar.
           </DialogDescription>
           <Dashboard className="custom-width" uppy={uppy} hideUploadButton />
         </DialogHeader>

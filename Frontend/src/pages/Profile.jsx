@@ -20,6 +20,7 @@ import Stack from "@mui/material/Stack";
 import Services from "../components/Services";
 import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
+import DeleteAvatarButton from "../components/DeleteAvatarButton";
 import Box from "@mui/material/Box";
 
 export const loader = async () => {
@@ -83,8 +84,9 @@ const Profile = () => {
             }}
             maxWidth="md"
           >
-            <div className="flex self-start">
+            <div className="flex self-start gap-3">
               <UploadImage />
+              <DeleteAvatarButton />
             </div>
 
             <Card

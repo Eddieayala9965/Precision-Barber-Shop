@@ -16,6 +16,14 @@ import { supabase } from "../utils/Supabase";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState, useEffect } from "react";
 
+const clearUppyTusLocalStorage = () => {
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith("tus::tus-uppy")) {
+      localStorage.removeItem(key);
+    }
+  });
+};
+
 const UploadImage = () => {
   const [uppy] = useState(() =>
     new Uppy({
@@ -53,6 +61,7 @@ const UploadImage = () => {
         `${localStorage.getItem("user_id")}` + "/" + uppy.getFiles()[0].name,
     });
     uppy.upload();
+    clearUppyTusLocalStorage();
   };
 
   return (
