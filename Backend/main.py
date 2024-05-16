@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Annotated
 from supabase import create_client, Client
-from models import Item, Barber
+from models import Item, Barber, Barbers
 
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
@@ -61,10 +61,6 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
 def hello_world():
     return {"message": "hello world"}
 
-@app.get("/gallery")
-def get_gallery():
-    res = supabase.storage.from_('img').list()
-    return res
 
 @app.get("/barbers")
 def get_barbers():
@@ -76,6 +72,12 @@ def get_services():
     response = supabase.table("services").select("*").execute()
     return response
 
+@app.put("/update_user/{id}")
+def update_user(request: Barbers):
+    data, count = (supabase.table('barbers')
+                   .update({'first_name': request.first_name, 'last_name': request.last_name, 'email': request.email, 'phone': request.phone, 'bio': request.bio})
+                   .eq('id', "d3b44b10-8842-4d5d-8064-06b2c6f97a21")
+                   .execute())
 
 
 @app.post("/register")
