@@ -21,6 +21,7 @@ import Services from "../components/Services";
 import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
 import DeleteAvatarButton from "../components/DeleteAvatarButton";
+import UpdateBarberButton from "../components/UpdateProfileButton";
 import Box from "@mui/material/Box";
 
 export const loader = async () => {
@@ -87,6 +88,7 @@ const Profile = () => {
             <div className="flex self-start gap-3">
               <UploadImage />
               <DeleteAvatarButton />
+              <UpdateBarberButton />
             </div>
 
             <Card
