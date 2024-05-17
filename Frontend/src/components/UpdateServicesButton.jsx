@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 
-const UpdateServiceButton = () => {
+const UpdateServiceButton = ({ serviceId }) => {
   const [service, setService] = useState("");
   const [price, setPrice] = useState("");
   const [open, setOpen] = useState(false);
@@ -24,7 +24,6 @@ const UpdateServiceButton = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Adjust the body to include 'services' field with both 'service' and 'price'
     const serviceData = {
       service: service,
       price: price,
@@ -32,9 +31,7 @@ const UpdateServiceButton = () => {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/update_services?service=${encodeURIComponent(
-          service
-        )}`,
+        `http://127.0.0.1:8000/update_service/${serviceId}`,
         {
           method: "PUT",
           headers: {
@@ -46,12 +43,14 @@ const UpdateServiceButton = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to update service");
+        const errorText = await response.text();
+        throw new Error(`Failed to update service: ${errorText}`);
       }
 
       handleClose();
     } catch (error) {
       console.error("Failed to update service:", error);
+      alert(error.message); // Display error to the user
     }
   };
 

@@ -196,7 +196,7 @@ const Profile = () => {
           <Gallery />
         </Container>
       ))}
-      <UpdateServiceButton />
+
       <Services />
     </Container>
   );

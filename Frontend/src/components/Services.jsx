@@ -9,6 +9,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import UpdateServiceButton from "../components/UpdateServicesButton";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -58,12 +59,18 @@ const Services = () => {
               >
                 Price
               </TableCell>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", color: "#3f51b5" }}
+              >
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {services.map((service, index) => (
+            {services.map((service) => (
               <TableRow
-                key={index}
+                key={service.id}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                   "&:nth-of-type(odd)": { backgroundColor: "#f9f9f9" },
@@ -77,6 +84,9 @@ const Services = () => {
                     style: "currency",
                     currency: "USD",
                   })}
+                </TableCell>
+                <TableCell align="right">
+                  <UpdateServiceButton serviceId={service.id} />
                 </TableCell>
               </TableRow>
             ))}
