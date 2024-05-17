@@ -18,4 +18,9 @@ class Barbers(BaseModel):
     phone: str
     bio: str
     
+class Services(BaseModel):
+    service: str
+    price: int
+
+    
     

@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Annotated
 from supabase import create_client, Client
-from models import Item, Barber, Barbers
+from models import Item, Barber, Barbers, Services
 
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
@@ -73,12 +73,22 @@ def get_services():
     return response
 
 @app.put("/update_user/{id}")
-def update_user(request: Barbers):
+def update_user(id: str, request: Barbers):
     data, count = (supabase.table('barbers')
                    .update({'first_name': request.first_name, 'last_name': request.last_name, 'email': request.email, 'phone': request.phone, 'bio': request.bio})
-                   .eq('id', "d3b44b10-8842-4d5d-8064-06b2c6f97a21")
+                   .eq('id', id)
                    .execute())
+    return data
 
+@app.put("/update_service/{id}")
+def update_service(id: str, request: Services):
+    data, count = (supabase.table('services')
+                   .update({'service': request.service, 'price': request.price})
+                   .eq('id', id)
+                   .execute())
+    if count == 0:
+        raise HTTPException(status_code=404, detail="Service not found")
+    return data
 
 @app.post("/register")
 def register_user(request: Barber):
@@ -132,11 +142,7 @@ async def protected_route(user: Barber = Depends(get_current_user)):
             detail="Unauthorized",
         )
 
-
-
-
-
-
-
-
+class ServiceUpdateRequest(BaseModel):
+    name: str
+    price: float
 
