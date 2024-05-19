@@ -72,14 +72,6 @@ def get_services():
     response = supabase.table("services").select("*").execute()
     return response
 
-@app.put("/update_user/{id}")
-def update_user(id: str, request: Barbers):
-    data, count = (supabase.table('barbers')
-                   .update({'first_name': request.first_name, 'last_name': request.last_name, 'email': request.email, 'phone': request.phone, 'bio': request.bio})
-                   .eq('id', id)
-                   .execute())
-    return data
-
 @app.put("/update_service/{id}")
 def update_service(id: str, request: Services):
     data, count = (supabase.table('services')
@@ -89,6 +81,17 @@ def update_service(id: str, request: Services):
     if count == 0:
         raise HTTPException(status_code=404, detail="Service not found")
     return data
+
+@app.put("/update_user/{id}")
+def update_user(id: str, request: Barbers):
+    data, count = (supabase.table('barbers')
+                   .update({'first_name': request.first_name, 'last_name': request.last_name, 'email': request.email, 'phone': request.phone, 'bio': request.bio})
+                   .eq('id', id)
+                   .execute())
+    return data
+
+
+
 
 @app.post("/register")
 def register_user(request: Barber):

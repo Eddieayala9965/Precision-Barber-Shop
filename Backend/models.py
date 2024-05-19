@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import List
+from uuid import UUID
 
 
 class Item(BaseModel):
@@ -10,6 +11,7 @@ class Item(BaseModel):
 class Barber(BaseModel):
     email: str
     password: str
+
 
 class Barbers(BaseModel):
     first_name: str
@@ -22,5 +24,6 @@ class Services(BaseModel):
     service: str
     price: int
 
+    
     
     
