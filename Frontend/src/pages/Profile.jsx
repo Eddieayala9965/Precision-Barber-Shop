@@ -23,6 +23,7 @@ import UploadAvatar from "../components/UploadAvatar";
 import DeleteAvatarButton from "../components/DeleteAvatarButton";
 import UpdateBarberButton from "../components/UpdateProfileButton";
 import UpdateServiceButton from "../components/UpdateServicesButton";
+import AddServiceButton from "../components/AddServiceButton";
 import Box from "@mui/material/Box";
 
 export const loader = async () => {
@@ -196,7 +197,7 @@ const Profile = () => {
           <Gallery />
         </Container>
       ))}
-
+      <AddServiceButton />
       <Services />
     </Container>
   );
