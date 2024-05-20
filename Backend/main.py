@@ -82,6 +82,16 @@ def update_service(id: str, request: Services):
         raise HTTPException(status_code=404, detail="Service not found")
     return data
 
+@app.delete("/delete_service/{id}")
+def delete_service(id: str):
+    data, count = (supabase.table('services')
+                   .delete()
+                   .eq('id', id)
+                   .execute())
+    if count == 0:
+        raise HTTPException(status_code=404, detail="Service not found")
+    return data
+
 @app.put("/update_user/{id}")
 def update_user(id: str, request: Barbers):
     data, count = (supabase.table('barbers')
@@ -119,9 +129,7 @@ def logout_user():
     return response
 
 
-    
-    
-    
+
 @app.post("/refresh")
 async def refresh_token(request: Request):
     data = await request.json()
