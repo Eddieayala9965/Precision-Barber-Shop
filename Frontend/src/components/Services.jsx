@@ -10,6 +10,7 @@ import {
   Paper,
 } from "@mui/material";
 import UpdateServiceButton from "../components/UpdateServicesButton";
+import DeleteServiceButton from "../components/DeleteServiceButton";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -44,6 +45,7 @@ const Services = () => {
             width: "100%",
             "@media (max-width: 750px)": {
               minWidth: "100%",
+              tableLayout: "auto", // Allows table to adjust column width based on content
             },
           }}
           aria-label="styled table"
@@ -85,8 +87,17 @@ const Services = () => {
                     currency: "USD",
                   })}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell
+                  align="right"
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    flexWrap: "wrap",
+                    minWidth: 160,
+                  }}
+                >
                   <UpdateServiceButton serviceId={service.id} />
+                  <DeleteServiceButton serviceId={service.id} />
                 </TableCell>
               </TableRow>
             ))}

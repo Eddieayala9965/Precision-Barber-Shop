@@ -79,28 +79,13 @@ const Gallery = () => {
       <Container
         sx={{
           display: "flex",
-
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-
-          width: "100%",
+          width: "100%", // Ensures the container takes full width
           boxSizing: "border-box",
           gap: 2,
-          "&.MuiContainer-root": { margin: 0, padding: 2, marginLeft: 3 },
-
-          "@media (max-width: 1000px)": {
-            width: "500px",
-          },
-          "@media (max-width: 800px)": {
-            width: "400px",
-          },
-          "@media (max-width: 600px)": {
-            width: "350px",
-          },
-          "@media (max-width: 400px)": {
-            width: "330px",
-          },
+          padding: 2, // Adjust padding as needed
         }}
         maxWidth="md"
       >
@@ -115,15 +100,16 @@ const Gallery = () => {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-
                 padding: 2,
               }}
             >
-              <Card sx={{ width: "100%", maxWidth: 400 }}>
+              <Card sx={{ width: "100%", maxWidth: "100%" }}>
+                {" "}
+                {/* Adjusted maxWidth to 100% */}
                 <Box
                   sx={{
                     width: "100%",
-                    paddingTop: "100%",
+                    paddingTop: "100%", // Maintains aspect ratio
                     position: "relative",
                   }}
                 >

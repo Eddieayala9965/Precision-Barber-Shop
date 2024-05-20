@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Modal, Box, Button, TextField, Typography } from "@mui/material";
 import { supabase } from "../utils/Supabase";
 
+// Updated style for a more modern and minimalistic look
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  width: "auto", // Adjust width to fit content
+  bgcolor: "white", // Lighter background
+  border: "1px solid #ccc", // Softer border
   boxShadow: 24,
   p: 4,
+  borderRadius: 2, // Rounded corners
 };
 
 const AddServiceButton = () => {
@@ -22,7 +24,6 @@ const AddServiceButton = () => {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Retrieve access token and user ID from local storage
     const accessToken = localStorage.getItem("access_token");
     const userId = localStorage.getItem("user_id");
     if (accessToken && userId) {
