@@ -24,10 +24,9 @@ const UpdateServiceButton = ({ serviceId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const serviceData = {
-      service: service,
-      price: price,
-    };
+    const serviceData = {};
+    if (service) serviceData.service = service;
+    if (price) serviceData.price = parseFloat(price);
 
     try {
       const response = await fetch(
@@ -50,7 +49,7 @@ const UpdateServiceButton = ({ serviceId }) => {
       handleClose();
     } catch (error) {
       console.error("Failed to update service:", error);
-      alert(error.message); // Display error to the user
+      alert(error.message);
     }
   };
 

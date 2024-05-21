@@ -27,13 +27,12 @@ const UpdateBarberButton = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const barberData = {
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      phone: phone,
-      bio: bio,
-    };
+    const barberData = {};
+    if (firstName.trim()) barberData.first_name = firstName;
+    if (lastName.trim()) barberData.last_name = lastName;
+    if (email.trim()) barberData.email = email;
+    if (phone.trim()) barberData.phone = phone;
+    if (bio.trim()) barberData.bio = bio;
 
     const user_id = localStorage.getItem("user_id");
 
@@ -51,12 +50,14 @@ const UpdateBarberButton = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to update barber");
+        const errorText = await response.text();
+        throw new Error(`Failed to update barber: ${errorText}`);
       }
 
       handleClose();
     } catch (error) {
       console.error("Failed to update barber:", error);
+      alert(error.message);
     }
   };
 
