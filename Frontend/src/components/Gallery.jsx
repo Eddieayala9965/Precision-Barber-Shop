@@ -82,10 +82,8 @@ const Gallery = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          width: "100%", // Ensures the container takes full width
           boxSizing: "border-box",
           gap: 2,
-          padding: 2, // Adjust padding as needed
         }}
         maxWidth="md"
       >
@@ -109,7 +107,7 @@ const Gallery = () => {
                 <Box
                   sx={{
                     width: "100%",
-                    paddingTop: "100%", // Maintains aspect ratio
+                    paddingTop: "100%",
                     position: "relative",
                   }}
                 >

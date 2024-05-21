@@ -149,55 +149,45 @@ const Profile = () => {
                 boxShadow: 7,
               }}
             >
-              <CardActionArea
+              <CardContent
                 sx={{
-                  height: 260,
                   display: "flex",
+                  justifyContent: "center",
                   flexDirection: "column",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
+                  textAlign: "center",
+                  padding: 2,
                 }}
               >
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    padding: 2,
-                  }}
+                <Typography
+                  gutterBottom
+                  variant="body2"
+                  component="p"
+                  sx={{ whiteSpace: "pre-line" }}
                 >
-                  <Typography
-                    gutterBottom
-                    variant="body2"
-                    component="p"
-                    sx={{ whiteSpace: "pre-line" }}
-                  >
-                    Contact Information:
-                    <br />
-                    Email: {userInfo.email}
-                    <br />
-                    Phone: {userInfo.phone}
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Bio:
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ overflow: "auto", maxHeight: "150px" }}
-                  >
-                    {userInfo.bio}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
+                  Contact Information:
+                  <br />
+                  Email: {userInfo.email}
+                  <br />
+                  Phone: {userInfo.phone}
+                </Typography>
+                <Typography gutterBottom variant="h5" component="div">
+                  Bio:
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ overflow: "auto", maxHeight: "150px" }}
+                >
+                  {userInfo.bio}
+                </Typography>
+              </CardContent>
             </Card>
           </Container>
 
           <Gallery />
         </Container>
       ))}
-      <div className=" flex self-start ml-8">
+      <div className=" ml-6 flex self-start ml-">
         <AddServiceButton />
       </div>
 

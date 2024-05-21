@@ -48,9 +48,24 @@ const Avatars = () => {
 
   return (
     <>
-      {avatar.map((item, index) => (
+      {avatar.length > 0 ? (
+        avatar.map((item, index) => (
+          <Avatar
+            key={index}
+            sx={{
+              position: "absolute",
+              width: 80,
+              height: 80,
+              bottom: 48,
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+            src={`${supbaseUrl}/${userId}/${item.name}`}
+            alt={item.name || "Default Avatar"}
+          />
+        ))
+      ) : (
         <Avatar
-          key={index}
           sx={{
             position: "absolute",
             width: 80,
@@ -59,9 +74,9 @@ const Avatars = () => {
             left: "50%",
             transform: "translateX(-50%)",
           }}
-          src={`${supbaseUrl}/${userId}/${item.name}`}
+          alt={"Avatar"}
         />
-      ))}
+      )}
     </>
   );
 };

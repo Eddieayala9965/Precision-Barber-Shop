@@ -11,6 +11,7 @@ import Uppy from "@uppy/core";
 import { Dashboard } from "@uppy/react";
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Avatars from "../components/Avatars";
 import { supabase } from "../utils/Supabase";
