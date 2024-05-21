@@ -103,6 +103,12 @@ def update_user(id: str, request: Barbers):
 
 
 
+
+
+
+
+
+
 @app.post("/register")
 def register_user(request: Barber):
     email = request.email

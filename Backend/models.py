@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 
 
@@ -21,9 +21,10 @@ class Barbers(BaseModel):
     bio: str
     
 class Services(BaseModel):
-    service: str
-    price: int
+    service: Optional[str] = None
+    price: Optional[float] = None
 
+    
     
     
     
