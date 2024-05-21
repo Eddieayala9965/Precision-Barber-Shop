@@ -83,6 +83,7 @@ const Gallery = () => {
           justifyContent: "center",
           alignItems: "center",
           boxSizing: "border-box",
+          marginLeft: 1,
           gap: 2,
         }}
         maxWidth="md"
