@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 from uuid import UUID
 
@@ -14,15 +14,18 @@ class Barber(BaseModel):
 
 
 class Barbers(BaseModel):
-    first_name: str
-    last_name: str
-    email: str
-    phone: str
-    bio: str
+    first_name: Optional[str] = Field(default=None, exclude_none=True)
+    last_name: Optional[str] = Field(default=None, exclude_none=True)
+    email: Optional[str] = Field(default=None, exclude_none=True)
+    phone: Optional[str] = Field(default=None, exclude_none=True)
+    bio: Optional[str] = Field(default=None, exclude_none=True)
     
+
 class Services(BaseModel):
-    service: Optional[str] = None
-    price: Optional[float] = None
+    service: Optional[str] = Field(default=None, exclude_none=True)
+    price: Optional[int] = Field(default=None, exclude_none=True)
+
+
 
     
     

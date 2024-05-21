@@ -72,15 +72,22 @@ def get_services():
     response = supabase.table("services").select("*").execute()
     return response
 
+
+
 @app.put("/update_service/{id}")
 def update_service(id: str, request: Services):
+    update_data = request.model_dump(exclude_unset=True, exclude_none=True)
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No data provided for update")
+    
     data, count = (supabase.table('services')
-                   .update({'service': request.service, 'price': request.price})
+                   .update(update_data)
                    .eq('id', id)
                    .execute())
     if count == 0:
         raise HTTPException(status_code=404, detail="Service not found")
     return data
+
 
 @app.delete("/delete_service/{id}")
 def delete_service(id: str):
@@ -92,15 +99,28 @@ def delete_service(id: str):
         raise HTTPException(status_code=404, detail="Service not found")
     return data
 
+# @app.put("/update_user/{id}")
+# def update_user(id: str, request: Barbers):
+#     data, count = (supabase.table('barbers')
+#                    .update({'first_name': request.first_name, 'last_name': request.last_name, 'email': request.email, 'phone': request.phone, 'bio': request.bio})
+#                    .eq('id', id)
+#                    .execute())
+#     return data
+
+
 @app.put("/update_user/{id}")
 def update_user(id: str, request: Barbers):
+    update_data = request.model_dump(exclude_unset=True, exclude_none=True)
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No data provided for update")
+    
     data, count = (supabase.table('barbers')
-                   .update({'first_name': request.first_name, 'last_name': request.last_name, 'email': request.email, 'phone': request.phone, 'bio': request.bio})
+                   .update(update_data)
                    .eq('id', id)
                    .execute())
+    if count == 0:
+        raise HTTPException(status_code=404, detail="User not found")
     return data
-
-
 
 
 
