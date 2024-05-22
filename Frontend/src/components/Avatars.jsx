@@ -61,7 +61,7 @@ const Avatars = () => {
               transform: "translateX(-50%)",
             }}
             src={`${supbaseUrl}/${userId}/${item.name}`}
-            alt={item.name || "Default Avatar"}
+            alt={"Avatar"}
           />
         ))
       ) : (

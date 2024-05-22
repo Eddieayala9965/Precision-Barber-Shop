@@ -6,12 +6,17 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 const UpdateServiceButton = ({ serviceId }) => {
   const [service, setService] = useState("");
   const [price, setPrice] = useState("");
   const [open, setOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,10 +51,18 @@ const UpdateServiceButton = ({ serviceId }) => {
         throw new Error(`Failed to update service: ${errorText}`);
       }
 
+      setSnackbarMessage("Service updated successfully!");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
       handleClose();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error("Failed to update service:", error);
-      alert(error.message);
+      setSnackbarMessage(error.message);
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
     }
   };
 
@@ -94,6 +107,19 @@ const UpdateServiceButton = ({ serviceId }) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

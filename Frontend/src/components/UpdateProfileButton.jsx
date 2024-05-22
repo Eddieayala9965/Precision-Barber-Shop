@@ -6,6 +6,8 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 const UpdateBarberButton = () => {
@@ -15,6 +17,9 @@ const UpdateBarberButton = () => {
   const [phone, setPhone] = useState("");
   const [bio, setBio] = useState("");
   const [open, setOpen] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -54,10 +59,18 @@ const UpdateBarberButton = () => {
         throw new Error(`Failed to update barber: ${errorText}`);
       }
 
-      handleClose();
+      setSnackbarMessage("Barber updated successfully!");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
+      handleClose(); // Close the dialog
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error("Failed to update barber:", error);
-      alert(error.message);
+      setSnackbarMessage(error.message);
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
     }
   };
 
@@ -131,6 +144,19 @@ const UpdateBarberButton = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

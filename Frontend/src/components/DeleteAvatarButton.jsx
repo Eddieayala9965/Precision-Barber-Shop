@@ -1,11 +1,21 @@
 import Button from "@mui/material/Button";
+import { useState } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const DeleteAvatarButton = () => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("info");
+  const [avatarDeleted, setAvatarDeleted] = useState(false);
+
   const handleDelete = async () => {
     const userId = localStorage.getItem("user_id");
     if (!userId) {
       console.error("User ID is missing.");
-      alert("User ID is missing.");
+      setSnackbarMessage("User ID is missing.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
       return;
     }
 
@@ -25,16 +35,39 @@ const DeleteAvatarButton = () => {
     if (!response.ok) {
       const message = `An error has occured: ${response.status}`;
       console.error(message);
-      alert("Failed to delete avatar: " + message);
+      setSnackbarMessage(`Failed to delete avatar: ${message}`);
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
     } else {
-      alert("Avatar deleted successfully!");
+      setSnackbarMessage("Avatar deleted successfully!");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
+      setAvatarDeleted(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   };
 
   return (
-    <Button onClick={handleDelete} variant="contained" color="error">
-      Delete Avatar
-    </Button>
+    <>
+      <Button onClick={handleDelete} variant="contained" color="error">
+        Delete Avatar
+      </Button>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 

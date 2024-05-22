@@ -104,7 +104,6 @@ const Gallery = () => {
             >
               <Card sx={{ width: "100%", maxWidth: "100%" }}>
                 {" "}
-                {/* Adjusted maxWidth to 100% */}
                 <Box
                   sx={{
                     width: "100%",

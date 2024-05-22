@@ -54,12 +54,18 @@ const UploadAvatar = () => {
     });
   });
 
+  uppy.on("upload-progress", (file, progress) => {
+    console.log(`File ${file.name} is ${progress}% uploaded`);
+  });
+
   const handleUpload = () => {
     uppy.setFileMeta(uppy.getFiles()[0].id, {
       objectName: `${localStorage.getItem("user_id")}` + "/" + "avatar.jpg",
     });
-    uppy.upload();
-    clearUppyTusLocalStorage();
+    uppy.upload().then(() => {
+      clearUppyTusLocalStorage();
+      window.location.reload();
+    });
   };
 
   return (
