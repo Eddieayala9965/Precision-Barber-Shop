@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom";
+import { useEffect } from "react";
 import Card from "@mui/material/Card";
 import Container from "@mui/material/Container";
 import CardContent from "@mui/material/CardContent";
@@ -24,6 +25,7 @@ import DeleteAvatarButton from "../components/DeleteAvatarButton";
 import UpdateBarberButton from "../components/UpdateProfileButton";
 import UpdateServiceButton from "../components/UpdateServicesButton";
 import AddServiceButton from "../components/AddServiceButton";
+
 import Box from "@mui/material/Box";
 
 export const loader = async () => {
@@ -187,7 +189,7 @@ const Profile = () => {
           <Gallery />
         </Container>
       ))}
-      <div className=" ml-6 flex self-start ml-">
+      <div className=" ml-5 flex self-start ml-">
         <AddServiceButton />
       </div>
 

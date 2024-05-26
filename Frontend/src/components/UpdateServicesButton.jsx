@@ -10,7 +10,7 @@ import {
   Alert,
 } from "@mui/material";
 
-const UpdateServiceButton = ({ serviceId }) => {
+const UpdateServiceButton = ({ serviceId, refetch }) => {
   const [service, setService] = useState("");
   const [price, setPrice] = useState("");
   const [open, setOpen] = useState(false);
@@ -51,13 +51,12 @@ const UpdateServiceButton = ({ serviceId }) => {
         throw new Error(`Failed to update service: ${errorText}`);
       }
 
+      refetch();
+
       setSnackbarMessage("Service updated successfully!");
       setSnackbarSeverity("success");
       setOpenSnackbar(true);
       handleClose();
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     } catch (error) {
       console.error("Failed to update service:", error);
       setSnackbarMessage(error.message);

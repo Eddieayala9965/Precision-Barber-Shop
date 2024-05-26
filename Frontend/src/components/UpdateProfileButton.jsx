@@ -62,10 +62,7 @@ const UpdateBarberButton = () => {
       setSnackbarMessage("Barber updated successfully!");
       setSnackbarSeverity("success");
       setOpenSnackbar(true);
-      handleClose(); // Close the dialog
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      handleClose();
     } catch (error) {
       console.error("Failed to update barber:", error);
       setSnackbarMessage(error.message);

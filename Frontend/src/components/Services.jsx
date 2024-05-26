@@ -1,37 +1,57 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   Container,
-  Table,
-  TableBody,
-  TableCell,
   TableContainer,
+  Paper,
+  Table,
   TableHead,
   TableRow,
-  Paper,
+  TableCell,
+  TableBody,
+  CircularProgress,
 } from "@mui/material";
-import UpdateServiceButton from "../components/UpdateServicesButton";
-import DeleteServiceButton from "../components/DeleteServiceButton";
+import UpdateServiceButton from "./UpdateServicesButton";
+import DeleteServiceButton from "./DeleteServiceButton";
+
+const fetchServices = async () => {
+  const response = await fetch("http://127.0.0.1:8000/services", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  const data = await response.json();
+  console.log("Fetched data:", data);
+  return data;
+};
 
 const Services = () => {
-  const [services, setServices] = useState([]);
+  const {
+    data: servicesData,
+    refetch,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["services"],
+    queryFn: fetchServices,
+    select: (data) => {
+      console.log("Selecting data:", data);
+      return Array.isArray(data.data) ? data.data : [];
+    },
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://127.0.0.1:8000/services";
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      };
-      const response = await fetch(url, options);
-      const data = await response.json();
-      setServices(data.data);
-    };
+  if (isLoading) {
+    return <CircularProgress />;
+  }
 
-    fetchData();
-  }, []);
+  if (isError) {
+    return <p>Error fetching services: {error.message}</p>;
+  }
 
   return (
     <Container sx={{ mt: 2, mb: 2 }}>
@@ -45,7 +65,7 @@ const Services = () => {
             width: "100%",
             "@media (max-width: 750px)": {
               minWidth: "100%",
-              tableLayout: "auto", // Allows table to adjust column width based on content
+              tableLayout: "auto",
             },
           }}
           aria-label="styled table"
@@ -70,37 +90,48 @@ const Services = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {services.map((service) => (
-              <TableRow
-                key={service.id}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  "&:nth-of-type(odd)": { backgroundColor: "#f9f9f9" },
-                }}
-              >
-                <TableCell component="th" scope="row" sx={{ color: "#333" }}>
-                  {service.service}
-                </TableCell>
-                <TableCell align="right" sx={{ color: "#333" }}>
-                  {service.price.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                  })}
-                </TableCell>
-                <TableCell
-                  align="right"
+            {Array.isArray(servicesData) && servicesData.length > 0 ? (
+              servicesData.map((service) => (
+                <TableRow
+                  key={service.id}
                   sx={{
-                    display: "flex",
-                    gap: 2,
-                    flexWrap: "wrap",
-                    minWidth: 160,
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    "&:nth-of-type(odd)": { backgroundColor: "#f9f9f9" },
                   }}
                 >
-                  <UpdateServiceButton serviceId={service.id} />
-                  <DeleteServiceButton serviceId={service.id} />
+                  <TableCell component="th" scope="row" sx={{ color: "#333" }}>
+                    {service.service}
+                  </TableCell>
+                  <TableCell align="right" sx={{ color: "#333" }}>
+                    {service.price.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{
+                      display: "flex",
+                      gap: 2,
+                      flexWrap: "wrap",
+                      minWidth: 160,
+                    }}
+                  >
+                    <UpdateServiceButton
+                      serviceId={service.id}
+                      refetch={refetch}
+                    />
+                    <DeleteServiceButton serviceId={service.id} />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3} align="center">
+                  No services available
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
