@@ -10,7 +10,7 @@ import {
   Alert,
 } from "@mui/material";
 
-const UpdateBarberButton = () => {
+const UpdateBarberButton = ({ refetch }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -63,6 +63,8 @@ const UpdateBarberButton = () => {
       setSnackbarSeverity("success");
       setOpenSnackbar(true);
       handleClose();
+
+      refetch();
     } catch (error) {
       console.error("Failed to update barber:", error);
       setSnackbarMessage(error.message);

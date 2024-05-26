@@ -24,7 +24,7 @@ const clearUppyTusLocalStorage = () => {
   });
 };
 
-const UploadImage = () => {
+const UploadImage = ({ fetchGallery }) => {
   const [uppy] = useState(() =>
     new Uppy({
       restrictions: {
@@ -60,8 +60,12 @@ const UploadImage = () => {
       objectName:
         `${localStorage.getItem("user_id")}` + "/" + uppy.getFiles()[0].name,
     });
-    uppy.upload();
-    clearUppyTusLocalStorage();
+    uppy.upload().then(() => {
+      clearUppyTusLocalStorage();
+      if (fetchGallery) {
+        fetchGallery();
+      }
+    });
   };
 
   return (

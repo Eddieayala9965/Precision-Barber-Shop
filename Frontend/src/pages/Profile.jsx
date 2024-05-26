@@ -1,5 +1,4 @@
-import { useLoaderData } from "react-router-dom";
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Card from "@mui/material/Card";
 import Container from "@mui/material/Container";
 import CardContent from "@mui/material/CardContent";
@@ -7,15 +6,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Logo2 from "../images/Logo2.png";
 import UploadImage from "../components/UploadImage";
-import BarberPhoto from "../images/Elbee.png";
-import BarberPhoto2 from "../images/Elbee2.png";
-import BarberPhoto3 from "../images/Person1.jpeg";
-import BarberPhoto4 from "../images/Person2.jpeg";
-import BarberPhoto5 from "../images/Person3.jpg";
-import BarberPhoto6 from "../images/Person4.jpeg";
-import BarberPhoto7 from "../images/Person5.png";
-import BarberPhoto8 from "../images/Person6.png";
-import BarberPhoto9 from "../images/Person7.jpeg";
 import { CardActionArea } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Services from "../components/Services";
@@ -23,34 +13,48 @@ import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
 import DeleteAvatarButton from "../components/DeleteAvatarButton";
 import UpdateBarberButton from "../components/UpdateProfileButton";
-import UpdateServiceButton from "../components/UpdateServicesButton";
 import AddServiceButton from "../components/AddServiceButton";
 
-import Box from "@mui/material/Box";
-
-export const loader = async () => {
-  const url = "http://127.0.0.1:8000/barbers";
-  const options = {
+const fetchProfile = async () => {
+  const response = await fetch("http://127.0.0.1:8000/barbers", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("access_token")}`,
     },
-  };
-  const response = await fetch(url, options);
-  const user = await response.json();
-  console.log(user.data);
-  return { user: user.data };
+  });
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  const data = await response.json();
+  console.log("Fetched profile data:", data);
+  return data;
 };
 
 const Profile = () => {
-  const { user } = useLoaderData();
+  const {
+    data: profileData,
+    refetch,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["barbers"],
+    queryFn: fetchProfile,
+    select: (data) => {
+      console.log("Selecting profile data:", data);
+      return Array.isArray(data.data) ? data.data : [];
+    },
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
 
   return (
     <Container
       sx={{
         display: "flex",
-        backgorundColor: "white",
+        backgroundColor: "white",
         borderRadius: 15,
         boxShadow: 5,
         flexDirection: "column",
@@ -61,12 +65,11 @@ const Profile = () => {
         marginTop: 2,
       }}
     >
-      {user.map((userInfo, index) => (
+      {profileData.map((userInfo, index) => (
         <Container
           key={index}
           sx={{
             display: "flex",
-
             justifyContent: "space-evenly",
             alignItems: "center",
             gap: 2,
@@ -90,9 +93,8 @@ const Profile = () => {
             maxWidth="md"
           >
             <div className="flex self-start gap-3">
-              <UploadImage />
               <DeleteAvatarButton />
-              <UpdateBarberButton />
+              <UpdateBarberButton refetch={refetch} />
             </div>
 
             <Card
@@ -189,7 +191,7 @@ const Profile = () => {
           <Gallery />
         </Container>
       ))}
-      <div className=" ml-5 flex self-start ml-">
+      <div className=" ml-7 flex self-start ml-">
         <AddServiceButton />
       </div>
 

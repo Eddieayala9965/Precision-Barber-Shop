@@ -14,7 +14,7 @@ import "@uppy/dashboard/dist/style.min.css";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Avatars from "../components/Avatars";
-import { supabase } from "../utils/Supabase";
+
 import { useState } from "react";
 const UploadAvatar = () => {
   const clearUppyTusLocalStorage = () => {

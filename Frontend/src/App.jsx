@@ -10,7 +10,7 @@ import AdminSignUp, { action as signUpAction } from "./routes/AdminSignUp";
 import Appointments from "./pages/Appointments";
 import Barbers from "./pages/Barbers";
 
-import Profile, { loader as profileLoader } from "./pages/Profile";
+import Profile from "./pages/Profile";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -61,7 +61,6 @@ const router = createBrowserRouter([
       {
         path: "/admin/profile",
         element: <Profile />,
-        loader: profileLoader,
       },
     ],
   },

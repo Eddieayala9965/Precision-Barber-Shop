@@ -4,41 +4,40 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import UploadImage from "./UploadImage";
 import Box from "@mui/material/Box";
 import { supabase } from "../utils/Supabase";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const Gallery = () => {
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchGallery = async () => {
-      const userId = localStorage.getItem("user_id");
-      try {
-        const { data, error } = await supabase.storage
-          .from("img")
-          .list(userId, {
-            limit: 9,
-            offset: 0,
-            sortBy: {
-              column: "name",
-              order: "desc",
-            },
-          });
-        if (error) throw error;
-        setGallery(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching gallery:", error.message);
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-
-    fetchGallery();
+  const fetchGallery = useCallback(async () => {
+    const userId = localStorage.getItem("user_id");
+    try {
+      const { data, error } = await supabase.storage.from("img").list(userId, {
+        limit: 9,
+        offset: 0,
+        sortBy: {
+          column: "name",
+          order: "desc",
+        },
+      });
+      if (error) throw error;
+      setGallery(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching gallery:", error.message);
+      setError(error.message);
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchGallery();
+  }, [fetchGallery]);
 
   const handleDelete = async (imageName) => {
     const userId = localStorage.getItem("user_id");
@@ -88,6 +87,10 @@ const Gallery = () => {
         }}
         maxWidth="md"
       >
+        <div className="flex self-start">
+          <UploadImage fetchGallery={fetchGallery} />
+        </div>
+
         <Grid container spacing={2}>
           {gallery.map((item, index) => (
             <Grid
