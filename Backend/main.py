@@ -72,7 +72,10 @@ def get_services():
     response = supabase.table("services").select("*").execute()
     return response
 
-
+@app.get("/appointments")
+def get_appointments():
+    response = supabase.table("appointments").select("*").execute()
+    return response
 
 @app.put("/update_service/{id}")
 def update_service(id: str, request: Services):
@@ -99,13 +102,6 @@ def delete_service(id: str):
         raise HTTPException(status_code=404, detail="Service not found")
     return data
 
-# @app.put("/update_user/{id}")
-# def update_user(id: str, request: Barbers):
-#     data, count = (supabase.table('barbers')
-#                    .update({'first_name': request.first_name, 'last_name': request.last_name, 'email': request.email, 'phone': request.phone, 'bio': request.bio})
-#                    .eq('id', id)
-#                    .execute())
-#     return data
 
 
 @app.put("/update_user/{id}")
