@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import multiMonthPlugin from "@fullcalendar/multimonth";
@@ -13,8 +13,27 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 
 const Appointments = () => {
+
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [eventDetails, setEventDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/appointments", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        });
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    
+      }
+    }
+  }
 
   const handleEventClick = (clickInfo) => {
     setEventDetails(clickInfo.event);
@@ -23,6 +42,32 @@ const Appointments = () => {
   const handleClose = () => {
     setEventDetails(null);
   };
+
+  const events = [
+    {
+      id: "1",
+      title: "Doctor Appointment",
+      start: new Date().toISOString().substring(0, 10) + "T10:00:00",
+      end: new Date().toISOString().substring(0, 10) + "T11:00:00",
+      allDay: false,
+    },
+    {
+      id: "2",
+      title: "Meeting",
+      start: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+        .toISOString()
+        .substring(0, 10),
+      allDay: true,
+    },
+    {
+      id: "3",
+      title: "Lunch",
+      start: new Date(new Date().getTime() + 48 * 60 * 60 * 1000)
+        .toISOString()
+        .substring(0, 10),
+      allDay: true,
+    },
+  ];
 
   return (
     <Container maxWidth="md" style={{ padding: "10px" }}>
@@ -56,7 +101,7 @@ const Appointments = () => {
         height="auto"
         contentHeight="100%"
         aspectRatio={1.5}
-        events={[{ title: "Appointment", date: "2024-5-27", time: "10:00" }]}
+        events={events}
         eventClick={handleEventClick}
       />
       {eventDetails && (
