@@ -74,8 +74,8 @@ def get_services():
 
 @app.get("/appointments")
 def get_appointments():
-    response = supabase.table("appointments").select("*").execute()
-    return response
+    response = supabase.table("appointment_details").select("*").execute()
+    return response.data
 
 @app.put("/update_service/{id}")
 def update_service(id: str, request: Services):
