@@ -13,9 +13,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 
 const Appointments = () => {
-
   const [currentView, setCurrentView] = useState("dayGridMonth");
-  const [eventDetails, setEventDetails] = useState(null);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,52 +25,45 @@ const Appointments = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
+          body: JSON.stringify(),
         });
+        const data = await response.json();
+        console.log("lets see if we are getting anything back", data);
+        const formattedEvents = data.map((appointment) => ({
+          title: "Appointment",
+          haircut: appointment.service_name,
+          start: appointment.appointment_date,
+          name: appointment.client_name,
+          phone: appointment.client_phone,
+          email: appointment.client_email,
+        }));
+        setEvents(formattedEvents);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
-    
-      }
-    }
-  }
+    };
+
+    fetchData();
+  }, []);
 
   const handleEventClick = (clickInfo) => {
-    setEventDetails(clickInfo.event);
+    setEventDetails({
+      ...clickInfo.event.extendedProps,
+      title: clickInfo.event.title,
+      start: clickInfo.event.start,
+      end: clickInfo.event.end,
+    });
   };
 
   const handleClose = () => {
     setEventDetails(null);
   };
 
-  const events = [
-    {
-      id: "1",
-      title: "Doctor Appointment",
-      start: new Date().toISOString().substring(0, 10) + "T10:00:00",
-      end: new Date().toISOString().substring(0, 10) + "T11:00:00",
-      allDay: false,
-    },
-    {
-      id: "2",
-      title: "Meeting",
-      start: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-        .toISOString()
-        .substring(0, 10),
-      allDay: true,
-    },
-    {
-      id: "3",
-      title: "Lunch",
-      start: new Date(new Date().getTime() + 48 * 60 * 60 * 1000)
-        .toISOString()
-        .substring(0, 10),
-      allDay: true,
-    },
-  ];
+  const [eventDetails, setEventDetails] = useState(null);
 
   return (
     <Container maxWidth="md" style={{ padding: "10px" }}>
-      <div>
+      <div className="flex gap-5">
         <Button
           variant="contained"
           color="primary"
@@ -111,12 +103,20 @@ const Appointments = () => {
             <DialogContentText>
               Title: {eventDetails.title}
               <br />
-              Start: {eventDetails.start.toISOString()}
+              Start:{" "}
+              {eventDetails.start.toLocaleString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })}
               <br />
-              End:{" "}
-              {eventDetails.end
-                ? eventDetails.end.toISOString()
-                : "No end time"}
+              Name: {eventDetails.name}
+              <br />
+              Phone: {eventDetails.phone}
+              <br />
+              Email: {eventDetails.email}
+              <br />
+              Haircut: {eventDetails.haircut}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

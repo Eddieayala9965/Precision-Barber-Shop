@@ -12,9 +12,8 @@ import { Dashboard } from "@uppy/react";
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import Button from "@mui/material/Button";
-import { supabase } from "../utils/Supabase";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const clearUppyTusLocalStorage = () => {
   Object.keys(localStorage).forEach((key) => {
@@ -35,7 +34,6 @@ const UploadImage = ({ fetchGallery }) => {
     }).use(Tus, {
       endpoint:
         import.meta.env.VITE_SUPABASE_URL + "/storage/v1/upload/resumable",
-
       allowedMetaFields: [
         "bucketName",
         "objectName",
@@ -48,22 +46,23 @@ const UploadImage = ({ fetchGallery }) => {
       },
     })
   );
+
   uppy.on("file-added", (file) => {
     uppy.setFileMeta(file.id, {
       bucketName: "img",
       contentType: file.type,
+      objectName: `${localStorage.getItem("user_id")}/${file.name}`,
     });
   });
 
   const handleUpload = () => {
-    uppy.setFileMeta(uppy.getFiles()[0].id, {
-      objectName:
-        `${localStorage.getItem("user_id")}` + "/" + uppy.getFiles()[0].name,
-    });
-    uppy.upload().then(() => {
-      clearUppyTusLocalStorage();
-      if (fetchGallery) {
-        fetchGallery();
+    // Upload all files at once
+    uppy.upload().then((result) => {
+      if (result.successful.length > 0) {
+        clearUppyTusLocalStorage();
+        if (fetchGallery) {
+          fetchGallery();
+        }
       }
     });
   };
@@ -88,7 +87,7 @@ const UploadImage = ({ fetchGallery }) => {
           </DialogDescription>
           <Dashboard className="custom-width" uppy={uppy} hideUploadButton />
         </DialogHeader>
-        <Button onClick={handleUpload} variant="contained" className=" w-2/5">
+        <Button onClick={handleUpload} variant="contained" className="w-2/5">
           Upload
         </Button>
       </DialogContent>
