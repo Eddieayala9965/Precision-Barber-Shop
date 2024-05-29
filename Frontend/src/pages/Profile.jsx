@@ -191,9 +191,6 @@ const Profile = () => {
           <Gallery />
         </Container>
       ))}
-      <div className=" ml-7 flex self-start ml-">
-        <AddServiceButton />
-      </div>
 
       <Services />
     </Container>

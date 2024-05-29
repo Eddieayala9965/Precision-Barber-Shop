@@ -2,21 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Modal, Box, Button, TextField, Typography } from "@mui/material";
 import { supabase } from "../utils/Supabase";
 
-// Updated style for a more modern and minimalistic look
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "auto", // Adjust width to fit content
-  bgcolor: "white", // Lighter background
-  border: "1px solid #ccc", // Softer border
+  width: "auto",
+  bgcolor: "white",
+  border: "1px solid #ccc",
   boxShadow: 24,
   p: 4,
-  borderRadius: 2, // Rounded corners
+  borderRadius: 2,
 };
 
-const AddServiceButton = () => {
+const AddServiceButton = ({ refetch }) => {
   const [open, setOpen] = useState(false);
   const [service, setService] = useState("");
   const [price, setPrice] = useState("");
@@ -44,7 +43,7 @@ const AddServiceButton = () => {
       setError("User is not authenticated");
       return;
     }
-
+    // reason why we are using rpc is because we are calling a stored procedure, meaning we are calling a function that is stored in the database, was having issues with rls and the function was not able to be called from the front end
     const { data, error } = await supabase.rpc("insert_service", {
       p_price: price,
       p_service: service,
@@ -59,6 +58,7 @@ const AddServiceButton = () => {
       setService("");
       setPrice("");
       handleClose();
+      refetch();
     }
   };
 

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import UpdateServiceButton from "./UpdateServicesButton";
 import DeleteServiceButton from "./DeleteServiceButton";
+import AddServiceButton from "./AddServiceButton";
 
 const fetchServices = async () => {
   const response = await fetch("http://127.0.0.1:8000/services", {
@@ -55,6 +56,10 @@ const Services = () => {
 
   return (
     <Container sx={{ mt: 2, mb: 2 }}>
+      <div className="mb-4">
+        <AddServiceButton refetch={refetch} />
+      </div>
+
       <TableContainer
         component={Paper}
         sx={{ boxShadow: 3, borderRadius: 2, width: "100%", overflowX: "auto" }}
@@ -121,7 +126,10 @@ const Services = () => {
                       serviceId={service.id}
                       refetch={refetch}
                     />
-                    <DeleteServiceButton serviceId={service.id} />
+                    <DeleteServiceButton
+                      serviceId={service.id}
+                      refetch={refetch}
+                    />
                   </TableCell>
                 </TableRow>
               ))

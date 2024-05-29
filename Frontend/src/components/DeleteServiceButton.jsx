@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import { Alert, Snackbar } from "@mui/material";
 
-function DeleteServiceButton({ serviceId }) {
+function DeleteServiceButton({ serviceId, refetch }) {
   const [error, setError] = useState("");
   const [deleted, setDeleted] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -27,6 +27,7 @@ function DeleteServiceButton({ serviceId }) {
         );
       }
 
+      refetch();
       setDeleted(true);
       setOpenSnackbar(true);
       setError("");
