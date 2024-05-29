@@ -1,4 +1,5 @@
 import Tus from "@uppy/tus";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,12 +12,13 @@ import Uppy from "@uppy/core";
 import { Dashboard } from "@uppy/react";
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
-import Avatar from "@mui/material/Avatar";
+import Avatars from "./Avatars";
 import Button from "@mui/material/Button";
-import Avatars from "../components/Avatars";
+import { useAvatar } from "../context/AvatarContext";
 
-import { useState } from "react";
 const UploadAvatar = () => {
+  const { refetch } = useAvatar();
+
   const clearUppyTusLocalStorage = () => {
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith("tus::tus-uppy")) {
@@ -64,7 +66,7 @@ const UploadAvatar = () => {
     });
     uppy.upload().then(() => {
       clearUppyTusLocalStorage();
-      window.location.reload();
+      refetch();
     });
   };
 

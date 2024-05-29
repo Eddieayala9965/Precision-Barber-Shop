@@ -1,44 +1,10 @@
-import { supabase } from "../utils/Supabase";
+import { useAvatar } from "../context/AvatarContext";
 import Avatar from "@mui/material/Avatar";
-import { useState, useEffect } from "react";
 
 const Avatars = () => {
-  const [avatar, setAvatar] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { avatar, isLoading, error } = useAvatar();
 
-  useEffect(() => {
-    const fetchGallery = async () => {
-      const userId = localStorage.getItem("user_id");
-      const token = localStorage.getItem("access_token");
-      console.log("Fetching avatar for user:", userId);
-
-      try {
-        const { data, error } = await supabase.storage
-          .from("avatars")
-          .list(userId, {
-            limit: 1,
-            offset: 0,
-            sortBy: {
-              column: "name",
-              order: "desc",
-            },
-          });
-        console.log("Fetched data:", data);
-        if (error) throw error;
-        setAvatar(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching avatar:", error.message);
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-
-    fetchGallery();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   const userId = localStorage.getItem("user_id");

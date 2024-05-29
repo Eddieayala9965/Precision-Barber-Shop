@@ -13,6 +13,7 @@ import Barbers from "./pages/Barbers";
 import Profile from "./pages/Profile";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AvatarProvider } from "../src/context/AvatarContext";
 
 const queryClient = new QueryClient();
 
@@ -69,7 +70,9 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <AvatarProvider>
+        <RouterProvider router={router} />
+      </AvatarProvider>
     </QueryClientProvider>
   );
 };

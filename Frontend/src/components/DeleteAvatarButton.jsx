@@ -1,3 +1,4 @@
+import { useAvatar } from "../context/AvatarContext";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
@@ -7,7 +8,7 @@ const DeleteAvatarButton = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("info");
-  const [avatarDeleted, setAvatarDeleted] = useState(false);
+  const { refetch } = useAvatar();
 
   const handleDelete = async () => {
     const userId = localStorage.getItem("user_id");
@@ -42,10 +43,7 @@ const DeleteAvatarButton = () => {
       setSnackbarMessage("Avatar deleted successfully!");
       setSnackbarSeverity("success");
       setOpenSnackbar(true);
-      setAvatarDeleted(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      refetch();
     }
   };
 
