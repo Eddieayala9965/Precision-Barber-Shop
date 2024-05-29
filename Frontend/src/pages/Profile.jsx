@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import Container from "@mui/material/Container";
 import CardContent from "@mui/material/CardContent";
@@ -14,6 +15,8 @@ import UploadAvatar from "../components/UploadAvatar";
 import DeleteAvatarButton from "../components/DeleteAvatarButton";
 import UpdateBarberButton from "../components/UpdateProfileButton";
 import AddServiceButton from "../components/AddServiceButton";
+import GlobalLoadingSpinner from "../components/GlobalLoadingSpinner";
+import { useLoading } from "../context/LoadingContext";
 
 const fetchProfile = async () => {
   const response = await fetch("http://127.0.0.1:8000/barbers", {
@@ -28,6 +31,7 @@ const fetchProfile = async () => {
   }
   const data = await response.json();
   console.log("Fetched profile data:", data);
+
   return data;
 };
 
@@ -47,7 +51,8 @@ const Profile = () => {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  console.log("Is Loading:", isLoading);
+  if (isLoading) return;
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
@@ -144,6 +149,7 @@ const Profile = () => {
                 </CardContent>
               </CardActionArea>
             </Card>
+
             <Card
               sx={{
                 width: "100%",
@@ -156,34 +162,92 @@ const Profile = () => {
               <CardContent
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
                   flexDirection: "column",
+                  alignItems: "center",
                   textAlign: "center",
-                  padding: 2,
+                  padding: 3,
+                  maxWidth: "90%",
+                  margin: "auto",
                 }}
               >
-                <Typography
-                  gutterBottom
-                  variant="body2"
-                  component="p"
-                  sx={{ whiteSpace: "pre-line" }}
-                >
-                  Contact Information:
-                  <br />
-                  Email: {userInfo.email}
-                  <br />
-                  Phone: {userInfo.phone}
-                </Typography>
-                <Typography gutterBottom variant="h5" component="div">
-                  Bio:
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ overflow: "auto", maxHeight: "150px" }}
-                >
-                  {userInfo.bio}
-                </Typography>
+                {userInfo.email || userInfo.phone || userInfo.bio ? (
+                  <>
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{
+                        mb: 1,
+                        fontSize: "1.1rem",
+                        fontWeight: "bold",
+                        color: "#333",
+                      }}
+                    >
+                      Contact Information
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      component="p"
+                      sx={{
+                        mb: 2,
+                        fontSize: "0.9rem",
+                        color: "#555",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      Email: {userInfo.email}
+                      <br />
+                      Phone: {userInfo.phone}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{
+                        mb: 1,
+                        fontSize: "1.1rem",
+                        fontWeight: "bold",
+                        color: "#333",
+                      }}
+                    >
+                      About
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        overflow: "auto",
+                        maxHeight: "120px",
+                        padding: 2,
+                        width: "100%",
+                        fontSize: "0.85rem",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {userInfo.bio}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography
+                    variant="h4"
+                    component="div"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "100%",
+                      fontWeight: "bold",
+                      color: "#333",
+                      textAlign: "center",
+
+                      padding: 3,
+                      borderRadius: 1,
+
+                      letterSpacing: "0.05em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Update Barber Information
+                  </Typography>
+                )}
               </CardContent>
             </Card>
           </Container>

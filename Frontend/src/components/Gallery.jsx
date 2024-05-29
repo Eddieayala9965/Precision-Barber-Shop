@@ -1,11 +1,13 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UploadImage from "./UploadImage";
-import Box from "@mui/material/Box";
 import { supabase } from "../utils/Supabase";
 import { useState, useEffect, useCallback } from "react";
 
@@ -66,7 +68,7 @@ const Gallery = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div></div>;
   if (error) return <div>Error: {error}</div>;
 
   const userId = localStorage.getItem("user_id");
@@ -74,77 +76,71 @@ const Gallery = () => {
     "https://juowekkvvwyquoqoarfr.supabase.co/storage/v1/object/public/img";
 
   return (
-    <>
-      <Container
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          boxSizing: "border-box",
-          marginLeft: 1,
-          gap: 2,
-        }}
-        maxWidth="md"
-      >
-        <div className="flex self-start">
+    <Container
+      maxWidth="md"
+      sx={{ mt: 4, bgcolor: "white", boxShadow: 7, borderRadius: 10 }}
+    >
+      <Box sx={{ p: 3 }}>
+        <div className="flex self-start mb-4">
           <UploadImage fetchGallery={fetchGallery} />
         </div>
-
-        <Grid container spacing={2}>
-          {gallery.map((item, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              key={index}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                padding: 2,
-              }}
-            >
-              <Card sx={{ width: "100%", maxWidth: "100%" }}>
-                {" "}
-                <Box
-                  sx={{
-                    width: "100%",
-                    paddingTop: "100%",
-                    position: "relative",
-                  }}
+        {gallery.length > 0 ? (
+          <Grid container spacing={2}>
+            {gallery.map((item, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card
+                  sx={{ width: "100%", maxWidth: "100%", borderRadius: "15%" }}
                 >
-                  <CardMedia
-                    component="img"
+                  <Box
                     sx={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
                       width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
+                      paddingTop: "100%",
+                      position: "relative",
                     }}
-                    src={`${supbaseUrl}/${userId}/${item.name}`}
-                    alt={item.name || "Gallery image"}
-                  />
-                  <IconButton
-                    sx={{
-                      position: "absolute",
-                      top: 0,
-                      right: 0,
-                      color: "rgba(255, 255, 255, 0.54)",
-                    }}
-                    onClick={() => handleDelete(item.name)}
                   >
-                    <DeleteIcon />
-                  </IconButton>
-                </Box>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </>
+                    <CardMedia
+                      component="img"
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                      src={`${supbaseUrl}/${userId}/${item.name}`}
+                      alt={item.name || "Gallery image"}
+                    />
+                    <IconButton
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        color: "rgba(255, 255, 255, 0.54)",
+                      }}
+                      onClick={() => handleDelete(item.name)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Card sx={{ mt: 2, textAlign: "center", p: 3 }}>
+            <CardContent>
+              <Typography variant="h5" component="div">
+                No Images Found
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                Upload your images now
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
+      </Box>
+    </Container>
   );
 };
 

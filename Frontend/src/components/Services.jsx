@@ -136,7 +136,7 @@ const Services = () => {
             ) : (
               <TableRow>
                 <TableCell colSpan={3} align="center">
-                  No services available
+                  No services found
                 </TableCell>
               </TableRow>
             )}
