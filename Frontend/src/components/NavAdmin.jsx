@@ -11,14 +11,13 @@ import {
   Divider,
   Box,
   IconButton,
-  Container,
 } from "@mui/material";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 
 import MenuIcon from "@mui/icons-material/Menu";
 
 import BarberIcon from "./Icons/BarberIcon";
-import ServiceIcon from "./Icons/ServiceIcon";
+
 import AppointmentIcon from "./Icons/AppointmentIcon";
 import Logo from "../images/Logo.png";
 import LogoutButton from "./LogoutButton";
@@ -38,13 +37,13 @@ const NavAdmin = ({ navItems }) => {
       <IconButton
         sx={{
           position: "fixed",
+          zIndex: 1,
         }}
         onClick={toggleDrawer}
       >
         <MenuIcon />
       </IconButton>
 
-      {/* Drawer component */}
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
         <Box
           sx={{

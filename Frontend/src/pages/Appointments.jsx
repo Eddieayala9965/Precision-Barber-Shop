@@ -55,7 +55,6 @@ const Appointments = () => {
       ...clickInfo.event.extendedProps,
       title: clickInfo.event.title,
       start: clickInfo.event.start,
-      end: clickInfo.event.end,
     });
   };
 
@@ -66,7 +65,7 @@ const Appointments = () => {
   const [eventDetails, setEventDetails] = useState(null);
 
   return (
-    <Container maxWidth="md" style={{ padding: "10px" }}>
+    <Container maxWidth="lg" style={{ padding: "10px" }}>
       <div className="flex gap-5">
         <Button
           variant="contained"
