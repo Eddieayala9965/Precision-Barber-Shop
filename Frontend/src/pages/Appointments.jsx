@@ -16,17 +16,21 @@ const Appointments = () => {
   const [currentView, setCurrentView] = useState("dayGridMonth");
   const [events, setEvents] = useState([]);
 
+  // when doing the view vs the actual table we need to set row level secuirty on the tables to give the user access to thier own data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/appointments", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-          body: JSON.stringify(),
-        });
+        const response = await fetch(
+          "http://127.0.0.1:8000/appointments_details",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            },
+            body: JSON.stringify(),
+          }
+        );
         const data = await response.json();
         console.log("lets see if we are getting anything back", data);
         const formattedEvents = data.map((appointment) => ({

@@ -133,18 +133,31 @@ const Profile = () => {
                     justifyContent="center"
                   >
                     <UploadAvatar />
-
-                    <Typography
-                      variant="h5"
-                      component="div"
-                      sx={{
-                        margin: 0,
-                        textAlign: "center",
-                        "&.MuiTypography-root": { margin: 0, marginTop: 2 },
-                      }}
-                    >
-                      {userInfo.first_name} {userInfo.last_name}
-                    </Typography>
+                    {userInfo.first_name && userInfo.last_name ? (
+                      <Typography
+                        variant="h5"
+                        component="div"
+                        sx={{
+                          margin: 0,
+                          textAlign: "center",
+                          "&.MuiTypography-root": { margin: 0, marginTop: 2 },
+                        }}
+                      >
+                        {userInfo.first_name} {userInfo.last_name}
+                      </Typography>
+                    ) : (
+                      <Typography
+                        variant="h5"
+                        component="div"
+                        sx={{
+                          margin: 0,
+                          textAlign: "center",
+                          "&.MuiTypography-root": { margin: 0, marginTop: 2 },
+                        }}
+                      >
+                        No Name Provided
+                      </Typography>
+                    )}
                   </Stack>
                 </CardContent>
               </CardActionArea>
@@ -237,10 +250,8 @@ const Profile = () => {
                       fontWeight: "bold",
                       color: "#333",
                       textAlign: "center",
-
                       padding: 3,
                       borderRadius: 1,
-
                       letterSpacing: "0.05em",
                       textTransform: "uppercase",
                     }}
