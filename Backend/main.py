@@ -1,4 +1,3 @@
-import stripe
 import os
 from fastapi import FastAPI, Request, HTTPException, Depends, Response, status, File, UploadFile
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -6,15 +5,17 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Annotated
+from typing import List, Annotated, Optional
 from supabase import create_client, Client
 from models import Item, Barber, Barbers, Services
+from ics import Calendar, Event
+from datetime import datetime, timedelta
 
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(url, key) 
 
-stripe.api_key = os.getenv("STRIPE_APIKEY_BACKEND")
+
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -32,18 +33,10 @@ app.add_middleware(
 origins = [
     "http://localhost",
     "http://localhost:5137",
+    "http://192.168.1.228:5173/"
     ]
 
 
-auth_properties = dir(supabase.auth)
-
-
-public_properties  = [prop for prop in auth_properties if not prop.startswith("_")]
-
-public_properties.sort()
-
-print("Public properties and methods of auth objects: ")
-print(public_properties)
 
 def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user = supabase.auth.get_user()
@@ -72,10 +65,33 @@ def get_services():
     response = supabase.table("services").select("*").execute()
     return response
 
-@app.get("/appointments")
+
+# @app.get("/appointment_icalendar")
+# def create_ical_for_barber(barber_id: Optional[str] = None):
+#     calendar = Calendar()
+#     query = supabase.table("appointment_details").select("*")
+#     if barber_id:
+#         query = query.eq("barber_id", barber_id)
+#     appointments = query.execute().data
+#     for appointment in appointments:
+#         event = Event()
+#         event.name = "Appointment with " + appointment['client_name']
+#         event.begin = datetime.fromisoformat(appointment['start_time'])
+#         event.end = datetime.fromisoformat(appointment['end_time'])
+#         calendar.events.add(event)
+#     return Response(content=calendar.serialize(), media_type="text/calendar")
+
+
+# @app.get("/barber/{barber_id}/icalendar.ics")
+# def get_barber_icalendar(barber_id: str):
+#     return create_ical_for_barber(barber_id)
+
+
+@app.get("/appointments_details")
 def get_appointments():
     response = supabase.table("appointment_details").select("*").execute()
     return response.data
+
 
 @app.put("/update_service/{id}")
 def update_service(id: str, request: Services):
@@ -103,7 +119,6 @@ def delete_service(id: str):
     return data
 
 
-
 @app.put("/update_user/{id}")
 def update_user(id: str, request: Barbers):
     update_data = request.model_dump(exclude_unset=True, exclude_none=True)
@@ -119,12 +134,6 @@ def update_user(id: str, request: Barbers):
     return data
 
 
-
-
-
-
-
-
 @app.post("/register")
 def register_user(request: Barber):
     email = request.email
@@ -136,7 +145,7 @@ def register_user(request: Barber):
     return response
 
 @app.post("/login")
-def login_user(request: Barber):
+def login_user(request: Barber, response: Response):
     email = request.email
     password = request.password
     response = supabase.auth.sign_in_with_password({
@@ -145,18 +154,18 @@ def login_user(request: Barber):
     })
     return response
 
+
 @app.post("/logout")
 def logout_user():
     response = supabase.auth.sign_out()
     return response
 
 
-
 @app.post("/refresh")
 async def refresh_token(request: Request):
     data = await request.json()
-    token = data.get("refresh_token")
-    
+    token = data.get('refresh_token')
+
     session = supabase.auth.refresh_session(token)
     if session is None:
         raise HTTPException(
@@ -164,6 +173,7 @@ async def refresh_token(request: Request):
             detail="Invalid session",
         )
     return session
+
 
 @app.get("/protected")
 async def protected_route(user: Barber = Depends(get_current_user)):
@@ -175,7 +185,4 @@ async def protected_route(user: Barber = Depends(get_current_user)):
             detail="Unauthorized",
         )
 
-class ServiceUpdateRequest(BaseModel):
-    name: str
-    price: float
 
