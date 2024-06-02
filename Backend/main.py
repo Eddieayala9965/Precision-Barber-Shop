@@ -10,6 +10,9 @@ from supabase import create_client, Client
 from models import Item, Barber, Barbers, Services
 from ics import Calendar, Event
 from datetime import datetime, timedelta
+from sib_api_v3_sdk import ApiClient, Configuration, TransactionalEmailsApi
+from sib_api_v3_sdk.rest import ApiException
+from sib_api_v3_sdk.models import SendSmtpEmail, SendSmtpEmailSender, SendSmtpEmailTo
 
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
@@ -66,30 +69,10 @@ def get_services():
     return response
 
 
-# @app.get("/appointment_icalendar")
-# def create_ical_for_barber(barber_id: Optional[str] = None):
-#     calendar = Calendar()
-#     query = supabase.table("appointment_details").select("*")
-#     if barber_id:
-#         query = query.eq("barber_id", barber_id)
-#     appointments = query.execute().data
-#     for appointment in appointments:
-#         event = Event()
-#         event.name = "Appointment with " + appointment['client_name']
-#         event.begin = datetime.fromisoformat(appointment['start_time'])
-#         event.end = datetime.fromisoformat(appointment['end_time'])
-#         calendar.events.add(event)
-#     return Response(content=calendar.serialize(), media_type="text/calendar")
-
-
-# @app.get("/barber/{barber_id}/icalendar.ics")
-# def get_barber_icalendar(barber_id: str):
-#     return create_ical_for_barber(barber_id)
-
 
 @app.get("/appointments_details")
 def get_appointments():
-    response = supabase.table("appointment_details").select("*").execute()
+    response = supabase.table("enhanced_appointment_details").select("*").execute()
     return response.data
 
 
