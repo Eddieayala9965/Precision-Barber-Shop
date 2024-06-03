@@ -63,6 +63,7 @@ const NavAdmin = ({ navItems }) => {
                 <ListItem disablePadding>
                   <ListItemButton component={Link} to={link.path}>
                     <ListItemIcon>
+                      {link.title === "Bookings"}
                       {link.title === "Login" && <LoginOutlinedIcon />}
                       {link.title === "Barbers" && <BarberChair />}
                       {link.title === "Profile" && <BarberIcon />}
