@@ -10,6 +10,11 @@ import {
   Container,
   Box,
 } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers";
+import { TimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 function BookingForm() {
   const [formData, setFormData] = useState({
@@ -21,7 +26,8 @@ function BookingForm() {
     booking_date: "",
   });
 
-  const [bookingTime, setBookingTime] = useState("");
+  const [bookingTime, setBookingTime] = useState(null);
+  const [bookingDate, setBookingDate] = useState(null);
 
   const [barberServices, setBarberServices] = useState([]);
   const [barbers, setBarbers] = useState([]);
@@ -67,14 +73,21 @@ function BookingForm() {
     }
   };
 
-  const handleTimeChange = (e) => {
-    setBookingTime(e.target.value);
+  const handleDateChange = (newValue) => {
+    setBookingDate(newValue);
+  };
+
+  const handleTimeChange = (newValue) => {
+    setBookingTime(newValue);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Combine date and time
-    const combinedDateTime = `${formData.booking_date}T${bookingTime}`;
+    const combinedDateTime = dayjs(bookingDate)
+      .hour(dayjs(bookingTime).hour())
+      .minute(dayjs(bookingTime).minute())
+      .second(0)
+      .toISOString();
     const { data, error } = await supabase.rpc("insert_booking_appointment", {
       barber_id: formData.barber_id,
       service_id: formData.service_id,
@@ -91,65 +104,34 @@ function BookingForm() {
     }
   };
 
-  // Convert 24-hour time to 12-hour time with AM/PM
-  const convertTo12Hour = (time) => {
-    const [hours, minutes] = time.split(":");
-    const hour = parseInt(hours, 10);
-    const suffix = hour >= 12 ? "PM" : "AM";
-    const adjustedHour = hour % 12 || 12; // Converts "00" to "12"
-    return `${adjustedHour}:${minutes} ${suffix}`;
+  // Disable Mondays and other specific days
+  const shouldDisableDate = (date) => {
+    const day = date.day();
+    return day === 1; // Disable Mondays (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
   };
 
-  const timeOptions = [
-    "00:00",
-    "00:30",
-    "01:00",
-    "01:30",
-    "02:00",
-    "02:30",
-    "03:00",
-    "03:30",
-    "04:00",
-    "04:30",
-    "05:00",
-    "05:30",
-    "06:00",
-    "06:30",
-    "07:00",
-    "07:30",
-    "08:00",
-    "08:30",
-    "09:00",
-    "09:30",
-    "10:00",
-    "10:30",
-    "11:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "13:00",
-    "13:30",
-    "14:00",
-    "14:30",
-    "15:00",
-    "15:30",
-    "16:00",
-    "16:30",
-    "17:00",
-    "17:30",
-    "18:00",
-    "18:30",
-    "19:00",
-    "19:30",
-    "20:00",
-    "20:30",
-    "21:00",
-    "21:30",
-    "22:00",
-    "22:30",
-    "23:00",
-    "23:30",
-  ].map(convertTo12Hour); // Convert all time options to 12-hour format
+  // Set min and max time based on the selected date
+  const getMinTime = () => {
+    const day = bookingDate ? bookingDate.day() : null;
+    if (day === 5 || day === 6) {
+      // Friday, Saturday
+      return dayjs().hour(10).minute(0);
+    } else {
+      // Sunday, Tuesday, Wednesday, Thursday
+      return dayjs().hour(10).minute(0);
+    }
+  };
+
+  const getMaxTime = () => {
+    const day = bookingDate ? bookingDate.day() : null;
+    if (day === 5 || day === 6) {
+      // Friday, Saturday
+      return dayjs().hour(19).minute(0);
+    } else {
+      // Sunday, Tuesday, Wednesday, Thursday
+      return dayjs().hour(18).minute(0);
+    }
+  };
 
   return (
     <Container maxWidth="sm">
@@ -217,33 +199,28 @@ function BookingForm() {
             value={formData.customer_email}
             onChange={handleChange}
           />
-          <TextField
-            fullWidth
-            margin="normal"
-            type="date"
-            name="booking_date"
-            label="Booking Date"
-            InputLabelProps={{ shrink: true }}
-            value={formData.booking_date.split("T")[0]} // Only take the date part
-            onChange={(e) =>
-              setFormData({ ...formData, booking_date: e.target.value })
-            }
-          />
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Booking Time</InputLabel>
-            <Select
-              name="booking_time"
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Booking Date"
+              value={bookingDate}
+              onChange={handleDateChange}
+              shouldDisableDate={shouldDisableDate}
+              renderInput={(params) => (
+                <TextField fullWidth margin="normal" {...params} />
+              )}
+            />
+            <TimePicker
+              label="Booking Time"
               value={bookingTime}
               onChange={handleTimeChange}
-              label="Booking Time"
-            >
-              {timeOptions.map((time, index) => (
-                <MenuItem key={index} value={time}>
-                  {time}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              minTime={getMinTime()}
+              maxTime={getMaxTime()}
+              minutesStep={30}
+              renderInput={(params) => (
+                <TextField fullWidth margin="normal" {...params} />
+              )}
+            />
+          </LocalizationProvider>
           <Button type="submit" variant="contained" color="primary">
             Create Booking
           </Button>
