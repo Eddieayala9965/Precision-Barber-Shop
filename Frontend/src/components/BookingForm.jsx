@@ -100,36 +100,56 @@ function BookingForm() {
     return `${adjustedHour}:${minutes} ${suffix}`;
   };
 
-  const getTimeOptions = (date) => {
-    const dayOfWeek = new Date(date).getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
-    let startTime = 10; // Start time for all days except Monday
-    let endTime;
-
-    switch (dayOfWeek) {
-      case 1: // Monday
-        return []; // Closed on Mondays
-      case 2: // Tuesday
-      case 3: // Wednesday
-      case 4: // Thursday
-      case 0: // Sunday
-        endTime = 18; // 6 PM end time
-        break;
-      case 5: // Friday
-      case 6: // Saturday
-        endTime = 19; // 7 PM end time
-        break;
-      default:
-        endTime = 18; // Default end time
-    }
-
-    let times = [];
-    for (let hour = startTime; hour < endTime; hour++) {
-      times.push(`${hour}:00`, `${hour}:30`);
-    }
-    times.push(`${endTime}:00`); // Add the closing time slot
-
-    return times.map(convertTo12Hour);
-  };
+  const timeOptions = [
+    "00:00",
+    "00:30",
+    "01:00",
+    "01:30",
+    "02:00",
+    "02:30",
+    "03:00",
+    "03:30",
+    "04:00",
+    "04:30",
+    "05:00",
+    "05:30",
+    "06:00",
+    "06:30",
+    "07:00",
+    "07:30",
+    "08:00",
+    "08:30",
+    "09:00",
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "12:30",
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+    "20:00",
+    "20:30",
+    "21:00",
+    "21:30",
+    "22:00",
+    "22:30",
+    "23:00",
+    "23:30",
+  ].map(convertTo12Hour); // Convert all time options to 12-hour format
 
   return (
     <Container maxWidth="sm">
@@ -205,18 +225,9 @@ function BookingForm() {
             label="Booking Date"
             InputLabelProps={{ shrink: true }}
             value={formData.booking_date.split("T")[0]} // Only take the date part
-            onChange={(e) => {
-              const selectedDate = new Date(e.target.value);
-              const dayOfWeek = selectedDate.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
-
-              if (dayOfWeek === 1) {
-                // Check if the selected day is Monday
-                alert("Bookings are not available on Mondays.");
-                setFormData({ ...formData, booking_date: "" }); // Reset the date
-              } else {
-                setFormData({ ...formData, booking_date: e.target.value });
-              }
-            }}
+            onChange={(e) =>
+              setFormData({ ...formData, booking_date: e.target.value })
+            }
           />
           <FormControl fullWidth margin="normal">
             <InputLabel>Booking Time</InputLabel>
@@ -226,12 +237,11 @@ function BookingForm() {
               onChange={handleTimeChange}
               label="Booking Time"
             >
-              {formData.booking_date &&
-                getTimeOptions(formData.booking_date).map((time, index) => (
-                  <MenuItem key={index} value={time}>
-                    {time}
-                  </MenuItem>
-                ))}
+              {timeOptions.map((time, index) => (
+                <MenuItem key={index} value={time}>
+                  {time}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           <Button type="submit" variant="contained" color="primary">
