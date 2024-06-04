@@ -11,6 +11,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
+import BookingForm from "../components/BookingForm";
 
 const Appointments = () => {
   const [currentView, setCurrentView] = useState("dayGridMonth");
@@ -20,26 +21,24 @@ const Appointments = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/appointments_details",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-            },
-            body: JSON.stringify(),
-          }
-        );
+        const response = await fetch("http://127.0.0.1:8000/appointments", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+          body: JSON.stringify(),
+        });
         const data = await response.json();
+
         console.log("lets see if we are getting anything back", data);
-        const formattedEvents = data.map((appointment) => ({
+        const formattedEvents = data.data.map((appointment) => ({
           title: "Appointment",
           haircut: appointment.service_name,
           start: appointment.appointment_date,
-          name: appointment.client_name,
-          phone: appointment.client_phone,
-          email: appointment.client_email,
+          name: appointment.customer_name,
+          phone: appointment.customer_phone,
+          email: appointment.customer_email,
         }));
         setEvents(formattedEvents);
       } catch (error) {
@@ -129,6 +128,7 @@ const Appointments = () => {
           </DialogActions>
         </Dialog>
       )}
+      <BookingForm />
     </Container>
   );
 };

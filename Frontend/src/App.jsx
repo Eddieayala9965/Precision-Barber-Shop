@@ -9,7 +9,6 @@ import AdminLogin, { action as loginAction } from "./routes/AdminLogin";
 import AdminSignUp, { action as signUpAction } from "./routes/AdminSignUp";
 import Appointments from "./pages/Appointments";
 import Barbers from "./pages/Barbers";
-import Bookings from "./pages/Bookings";
 
 import Profile from "./pages/Profile";
 
@@ -55,10 +54,6 @@ const router = createBrowserRouter([
       {
         path: "/admin/appointments",
         element: <Appointments />,
-      },
-      {
-        path: "/admin/bookings",
-        element: <Bookings />,
       },
       {
         path: "/admin/barbers",
