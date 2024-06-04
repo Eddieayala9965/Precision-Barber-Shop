@@ -11,6 +11,7 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@date-io/dayjs": "^3.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.13",
@@ -21,7 +22,8 @@
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.13",
     "@mui/icons-material": "^5.15.15",
-    "@mui/material": "^5.15.15",
+    "@mui/material": "^5.15.19",
+    "@mui/x-date-pickers": "^7.6.1",
     "@radix-ui/react-dialog": "^1.0.5",
     "@shadcn/ui": "^0.0.4",
     "@stripe/react-stripe-js": "^2.7.0",
@@ -39,6 +41,7 @@
     "@uppy/tus": "^3.5.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.11",
     "flatpickr": "^4.6.13",
     "lucide-react": "^0.378.0",
     "react": "^18.2.0",

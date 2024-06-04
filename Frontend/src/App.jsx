@@ -14,6 +14,8 @@ import Profile from "./pages/Profile";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AvatarProvider } from "../src/context/AvatarContext";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const queryClient = new QueryClient();
 
@@ -71,7 +73,9 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AvatarProvider>
-        <RouterProvider router={router} />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <RouterProvider router={router} />
+        </LocalizationProvider>
       </AvatarProvider>
     </QueryClientProvider>
   );

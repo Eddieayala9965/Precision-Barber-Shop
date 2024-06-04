@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../utils/Supabase";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  Container,
+  Box,
+} from "@mui/material";
 
 function BookingForm() {
   const [formData, setFormData] = useState({
@@ -10,6 +20,8 @@ function BookingForm() {
     customer_email: "",
     booking_date: "",
   });
+
+  const [bookingTime, setBookingTime] = useState("");
 
   const [barberServices, setBarberServices] = useState([]);
   const [barbers, setBarbers] = useState([]);
@@ -48,7 +60,6 @@ function BookingForm() {
     });
 
     if (name === "barber_id") {
-      // Filter services based on selected barber
       const filteredServices = barberServices.filter(
         (bs) => bs.barber_id === value
       );
@@ -56,15 +67,21 @@ function BookingForm() {
     }
   };
 
+  const handleTimeChange = (e) => {
+    setBookingTime(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Combine date and time
+    const combinedDateTime = `${formData.booking_date}T${bookingTime}`;
     const { data, error } = await supabase.rpc("insert_booking_appointment", {
       barber_id: formData.barber_id,
       service_id: formData.service_id,
       customer_name: formData.customer_name,
       customer_phone: formData.customer_phone,
       customer_email: formData.customer_email,
-      booking_date: formData.booking_date,
+      booking_date: combinedDateTime,
     });
 
     if (error) {
@@ -74,62 +91,155 @@ function BookingForm() {
     }
   };
 
+  // Convert 24-hour time to 12-hour time with AM/PM
+  const convertTo12Hour = (time) => {
+    const [hours, minutes] = time.split(":");
+    const hour = parseInt(hours, 10);
+    const suffix = hour >= 12 ? "PM" : "AM";
+    const adjustedHour = hour % 12 || 12; // Converts "00" to "12"
+    return `${adjustedHour}:${minutes} ${suffix}`;
+  };
+
+  const getTimeOptions = (date) => {
+    const dayOfWeek = new Date(date).getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
+    let startTime = 10; // Start time for all days except Monday
+    let endTime;
+
+    switch (dayOfWeek) {
+      case 1: // Monday
+        return []; // Closed on Mondays
+      case 2: // Tuesday
+      case 3: // Wednesday
+      case 4: // Thursday
+      case 0: // Sunday
+        endTime = 18; // 6 PM end time
+        break;
+      case 5: // Friday
+      case 6: // Saturday
+        endTime = 19; // 7 PM end time
+        break;
+      default:
+        endTime = 18; // Default end time
+    }
+
+    let times = [];
+    for (let hour = startTime; hour < endTime; hour++) {
+      times.push(`${hour}:00`, `${hour}:30`);
+    }
+    times.push(`${endTime}:00`); // Add the closing time slot
+
+    return times.map(convertTo12Hour);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <select
-        name="barber_id"
-        value={formData.barber_id}
-        onChange={handleChange}
+    <Container maxWidth="sm">
+      <Box
+        sx={{ mt: 4, mb: 4, display: "flex", flexDirection: "column", gap: 2 }}
       >
-        <option value="">Select Barber</option>
-        {barbers.map((barber) => (
-          <option key={barber.barber_id} value={barber.barber_id}>
-            {barber.barber_name}
-          </option>
-        ))}
-      </select>
-      <select
-        name="service_id"
-        value={formData.service_id}
-        onChange={handleChange}
-      >
-        <option value="">Select Service</option>
-        {services.map((service) => (
-          <option key={service.service_id} value={service.service_id}>
-            {service.service_name}
-          </option>
-        ))}
-      </select>
-      <input
-        type="text"
-        name="customer_name"
-        placeholder="Customer Name"
-        value={formData.customer_name}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        name="customer_phone"
-        placeholder="Customer Phone"
-        value={formData.customer_phone}
-        onChange={handleChange}
-      />
-      <input
-        type="datetime-local"
-        name="booking_date"
-        placeholder="Booking Date"
-        value={formData.booking_date}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        name="customer_email"
-        placeholder="Customer Email"
-        value={formData.customer_email}
-        onChange={handleChange}
-      />
-      <button type="submit">Create Booking</button>
-    </form>
+        <form onSubmit={handleSubmit}>
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Barber</InputLabel>
+            <Select
+              name="barber_id"
+              value={formData.barber_id}
+              onChange={handleChange}
+              label="Barber"
+            >
+              <MenuItem value="">
+                <em>Select Barber</em>
+              </MenuItem>
+              {barbers.map((barber) => (
+                <MenuItem key={barber.barber_id} value={barber.barber_id}>
+                  {barber.barber_name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Service</InputLabel>
+            <Select
+              name="service_id"
+              value={formData.service_id}
+              onChange={handleChange}
+              label="Service"
+            >
+              <MenuItem value="">
+                <em>Select Service</em>
+              </MenuItem>
+              {services.map((service) => (
+                <MenuItem key={service.service_id} value={service.service_id}>
+                  {service.service_name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            fullWidth
+            margin="normal"
+            name="customer_name"
+            label="Customer Name"
+            value={formData.customer_name}
+            onChange={handleChange}
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            name="customer_phone"
+            label="Customer Phone"
+            value={formData.customer_phone}
+            onChange={handleChange}
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            name="customer_email"
+            label="Customer Email"
+            value={formData.customer_email}
+            onChange={handleChange}
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            type="date"
+            name="booking_date"
+            label="Booking Date"
+            InputLabelProps={{ shrink: true }}
+            value={formData.booking_date.split("T")[0]} // Only take the date part
+            onChange={(e) => {
+              const selectedDate = new Date(e.target.value);
+              const dayOfWeek = selectedDate.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
+
+              if (dayOfWeek === 1) {
+                // Check if the selected day is Monday
+                alert("Bookings are not available on Mondays.");
+                setFormData({ ...formData, booking_date: "" }); // Reset the date
+              } else {
+                setFormData({ ...formData, booking_date: e.target.value });
+              }
+            }}
+          />
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Booking Time</InputLabel>
+            <Select
+              name="booking_time"
+              value={bookingTime}
+              onChange={handleTimeChange}
+              label="Booking Time"
+            >
+              {formData.booking_date &&
+                getTimeOptions(formData.booking_date).map((time, index) => (
+                  <MenuItem key={index} value={time}>
+                    {time}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+          <Button type="submit" variant="contained" color="primary">
+            Create Booking
+          </Button>
+        </form>
+      </Box>
+    </Container>
   );
 }
 
