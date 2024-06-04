@@ -63,18 +63,39 @@ def get_barbers():
     response = supabase.table("barbers").select("*").execute()
     return response
 
+
+
 @app.get("/services")
 def get_services():
     response = supabase.table("services").select("*").execute()
     return response
 
+@app.get("/barber_service")
+def get_barber_service():
+  response = supabase.table("barber_service_view").select("*").execute()
+  return response
 
 
-@app.get("/appointments_details")
-def get_appointments():
-    response = supabase.table("enhanced_appointment_details").select("*").execute()
-    return response.data
-
+@app.get("/appointments")
+async def get_appointments():
+    query = """
+        SELECT 
+            a.id AS appointment_id,
+            b.customer_name,
+            b.customer_phone,
+            b.customer_email,
+            b.booking_date AS appointment_date,
+            s.service AS service_name,
+            a.appointment_date AS appointment_date_full
+        FROM 
+            appointments a
+        JOIN 
+            bookings b ON a.booking_id = b.id
+        JOIN 
+            services s ON a.service_id = s.id;
+    """
+    response = supabase.rpc('execute_query', {'query': query}).execute()
+    return response
 
 @app.put("/update_service/{id}")
 def update_service(id: str, request: Services):
