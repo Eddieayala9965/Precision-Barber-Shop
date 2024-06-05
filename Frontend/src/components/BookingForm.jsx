@@ -13,9 +13,8 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
-import { TimePicker } from "@mui/x-date-pickers";
-import dayjs from "dayjs";
 
+import dayjs from "dayjs";
 function BookingForm() {
   const [formData, setFormData] = useState({
     barber_id: "",
@@ -23,12 +22,11 @@ function BookingForm() {
     customer_name: "",
     customer_phone: "",
     customer_email: "",
-    booking_date: "",
+    booking_date: null,
   });
 
-  const [bookingTime, setBookingTime] = useState(null);
-  const [bookingDate, setBookingDate] = useState(null);
-
+  const [bookingTime, setBookingTime] = useState("");
+  const [availableTimes, setAvailableTimes] = useState([]);
   const [barberServices, setBarberServices] = useState([]);
   const [barbers, setBarbers] = useState([]);
   const [services, setServices] = useState([]);
@@ -74,18 +72,23 @@ function BookingForm() {
   };
 
   const handleDateChange = (newValue) => {
-    setBookingDate(newValue);
+    setFormData({
+      ...formData,
+      booking_date: newValue,
+    });
+    setBookingTime(""); // Reset booking time when the date changes
+    updateAvailableTimes(newValue); // Update available times when the date changes
   };
 
-  const handleTimeChange = (newValue) => {
-    setBookingTime(newValue);
+  const handleTimeChange = (e) => {
+    setBookingTime(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const combinedDateTime = dayjs(bookingDate)
-      .hour(dayjs(bookingTime).hour())
-      .minute(dayjs(bookingTime).minute())
+    const combinedDateTime = dayjs(formData.booking_date)
+      .hour(dayjs(bookingTime, "HH:mm").hour())
+      .minute(dayjs(bookingTime, "HH:mm").minute())
       .second(0)
       .toISOString();
     const { data, error } = await supabase.rpc("insert_booking_appointment", {
@@ -111,26 +114,42 @@ function BookingForm() {
   };
 
   // Set min and max time based on the selected date
-  const getMinTime = () => {
-    const day = bookingDate ? bookingDate.day() : null;
-    if (day === 5 || day === 6) {
-      // Friday, Saturday
-      return dayjs().hour(10).minute(0);
-    } else {
+  const getMinTime = (date) => {
+    const day = date.day();
+    if (day === 0 || (day >= 2 && day <= 4)) {
       // Sunday, Tuesday, Wednesday, Thursday
       return dayjs().hour(10).minute(0);
+    } else if (day === 5 || day === 6) {
+      // Friday, Saturday
+      return dayjs().hour(10).minute(0);
     }
+    return dayjs().hour(10).minute(0); // Default case
   };
 
-  const getMaxTime = () => {
-    const day = bookingDate ? bookingDate.day() : null;
-    if (day === 5 || day === 6) {
-      // Friday, Saturday
-      return dayjs().hour(19).minute(0);
-    } else {
+  const getMaxTime = (date) => {
+    const day = date.day();
+    if (day === 0 || (day >= 2 && day <= 4)) {
       // Sunday, Tuesday, Wednesday, Thursday
       return dayjs().hour(18).minute(0);
+    } else if (day === 5 || day === 6) {
+      // Friday, Saturday
+      return dayjs().hour(19).minute(0);
     }
+    return dayjs().hour(18).minute(0); // Default case
+  };
+
+  const updateAvailableTimes = (date) => {
+    const minTime = getMinTime(date);
+    const maxTime = getMaxTime(date);
+    let times = [];
+    let currentTime = minTime;
+
+    while (currentTime.isBefore(maxTime) || currentTime.isSame(maxTime)) {
+      times.push(currentTime.format("HH:mm"));
+      currentTime = currentTime.add(30, "minute");
+    }
+
+    setAvailableTimes(times);
   };
 
   return (
@@ -202,25 +221,30 @@ function BookingForm() {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Booking Date"
-              value={bookingDate}
+              value={formData.booking_date}
               onChange={handleDateChange}
               shouldDisableDate={shouldDisableDate}
-              renderInput={(params) => (
-                <TextField fullWidth margin="normal" {...params} />
-              )}
-            />
-            <TimePicker
-              label="Booking Time"
-              value={bookingTime}
-              onChange={handleTimeChange}
-              minTime={getMinTime()}
-              maxTime={getMaxTime()}
-              minutesStep={30}
-              renderInput={(params) => (
-                <TextField fullWidth margin="normal" {...params} />
-              )}
+              slotProps={{ textField: { fullWidth: true, margin: "normal" } }}
             />
           </LocalizationProvider>
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Booking Time</InputLabel>
+            <Select
+              name="booking_time"
+              value={bookingTime}
+              onChange={handleTimeChange}
+              label="Booking Time"
+            >
+              <MenuItem value="">
+                <em>Select Time</em>
+              </MenuItem>
+              {availableTimes.map((time) => (
+                <MenuItem key={time} value={time}>
+                  {dayjs(`1970-01-01T${time}`).format("hh:mm A")}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <Button type="submit" variant="contained" color="primary">
             Create Booking
           </Button>
