@@ -76,41 +76,6 @@ def get_barber_service():
   response = supabase.table("barber_service_view").select("*").execute()
   return response
 
-from fastapi import FastAPI, HTTPException
-from datetime import datetime, timedelta
-
-app = FastAPI()
-
-def get_supabase():
-    # Your connection logic here
-    pass
-
-@app.get("/available-times")
-async def get_available_times(barber_id: str, date: str):
-    supabase = get_supabase()
-    
-    booking_date = datetime.strptime(date, "%Y-%m-%d")
-    
-    start_time = booking_date.replace(hour=10, minute=0)
-    end_time = booking_date.replace(hour=19, minute=0)
-    time_slots = []
-    current_time = start_time
-    
-    while current_time < end_time:
-        time_slots.append(current_time.strftime("%H:%M"))
-        current_time += timedelta(minutes=30)
-    
-    response = supabase.table('bookings').select('booking_date').eq('barber_id', barber_id).gte('booking_date', start_time).lt('booking_date', end_time).execute()
-    
-    if response.error:
-        raise HTTPException(status_code=400, detail=response.error.message)
-    
-    booked_times = {datetime.strptime(booking['booking_date'], "%Y-%m-%dT%H:%M:%S").strftime("%H:%M") for booking in response.data}
-    
-    available_times = [time for time in time_slots if time not in booked_times]
-    
-    return {"available_times": available_times}
-
 
 @app.get("/appointments")
 async def get_appointments():
@@ -132,6 +97,11 @@ async def get_appointments():
     """
     response = supabase.rpc('execute_query', {'query': query}).execute()
     return response
+
+
+
+
+
 
 @app.put("/update_service/{id}")
 def update_service(id: str, request: Services):
