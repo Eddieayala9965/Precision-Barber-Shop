@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../utils/Supabase";
 import {
   TextField,
@@ -13,15 +14,16 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
-
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc"; // Import the UTC plugin
-import customParseFormat from "dayjs/plugin/customParseFormat"; // Import custom parse format plugin for parsing
+import utc from "dayjs/plugin/utc";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
-dayjs.extend(utc); // Extend dayjs with the UTC plugin
-dayjs.extend(customParseFormat); // Extend dayjs with the custom parse format plugin
+dayjs.extend(utc);
+dayjs.extend(customParseFormat);
 
 function BookingForm() {
+  const queryClient = useQueryClient();
+
   const [formData, setFormData] = useState({
     barber_id: "",
     service_id: "",
@@ -33,34 +35,24 @@ function BookingForm() {
 
   const [bookingTime, setBookingTime] = useState("");
   const [availableTimes, setAvailableTimes] = useState([]);
-  const [barberServices, setBarberServices] = useState([]);
-  const [barbers, setBarbers] = useState([]);
   const [services, setServices] = useState([]);
 
-  useEffect(() => {
-    const fetchBarberServices = async () => {
-      const url = "http://127.0.0.1:8000/barber_service";
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const response = await fetch(url, options);
+  const { data: barberServicesData, isLoading } = useQuery({
+    queryKey: ["barber_service"],
+    queryFn: async () => {
+      const response = await fetch("http://127.0.0.1:8000/barber_service");
       const data = await response.json();
-      console.log("Fetched barbers and services", data.data);
-      setBarberServices(data.data);
+      return data.data; // Assuming the correct data is in the `data` property
+    },
+  });
 
-      // Extract unique barbers and services
-      const uniqueBarbers = [
-        ...new Map(data.data.map((item) => [item.barber_id, item])).values(),
-      ];
-      setBarbers(uniqueBarbers);
-
-      return data.data;
-    };
-    fetchBarberServices();
-  }, []);
+  const barbers = barberServicesData
+    ? [
+        ...new Map(
+          barberServicesData.map((item) => [item.barber_id, item])
+        ).values(),
+      ]
+    : [];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,10 +62,15 @@ function BookingForm() {
     });
 
     if (name === "barber_id") {
-      const filteredServices = barberServices.filter(
+      const filteredServices = barberServicesData.filter(
         (bs) => bs.barber_id === value
       );
       setServices(filteredServices);
+    }
+
+    if (name === "service_id") {
+      setBookingTime("");
+      updateAvailableTimes(formData.booking_date, value);
     }
   };
 
@@ -83,7 +80,7 @@ function BookingForm() {
       booking_date: newValue,
     });
     setBookingTime(""); // Reset booking time when the date changes
-    updateAvailableTimes(newValue); // Update available times when the date changes
+    updateAvailableTimes(newValue, formData.service_id); // Update available times when the date changes
   };
 
   const handleTimeChange = (e) => {
@@ -117,6 +114,7 @@ function BookingForm() {
       console.error("Error creating booking:", error);
     } else {
       console.log("Booking created successfully:", data);
+      queryClient.invalidateQueries(["barber_service"]);
     }
   };
 
@@ -151,19 +149,28 @@ function BookingForm() {
     return dayjs().hour(18).minute(0); // Default case
   };
 
-  const updateAvailableTimes = (date) => {
+  const updateAvailableTimes = (date, serviceId) => {
     const minTime = getMinTime(date);
     const maxTime = getMaxTime(date);
+    const selectedService = services.find(
+      (service) => service.service_id === serviceId
+    );
+    const duration = selectedService ? selectedService.duration : 30;
+
     let times = [];
     let currentTime = minTime;
 
     while (currentTime.isBefore(maxTime) || currentTime.isSame(maxTime)) {
       times.push(currentTime.format("hh:mm A")); // Format as 12-hour time with AM/PM
-      currentTime = currentTime.add(30, "minute");
+      currentTime = currentTime.add(duration, "minute");
     }
 
     setAvailableTimes(times);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container maxWidth="sm">
@@ -202,7 +209,7 @@ function BookingForm() {
               </MenuItem>
               {services.map((service) => (
                 <MenuItem key={service.service_id} value={service.service_id}>
-                  {service.service_name}
+                  {service.service_name} - {service.duration} minutes
                 </MenuItem>
               ))}
             </Select>
