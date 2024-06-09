@@ -18,6 +18,8 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
+// we have to make sure we adjust the opening and closing times, a person cant make an appointment right as the store closes
+
 dayjs.extend(utc);
 dayjs.extend(customParseFormat);
 
