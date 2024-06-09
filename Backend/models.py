@@ -24,6 +24,7 @@ class Barbers(BaseModel):
 class Services(BaseModel):
     service: Optional[str] = Field(default=None, exclude_none=True)
     price: Optional[int] = Field(default=None, exclude_none=True)
+    duration: Optional[int] = Field(default=None, exclude_none=True)
 
 class Appointments(BaseModel):
     Barber_id: Optional[str] = Field(default=None, exclude_none=True)
