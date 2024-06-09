@@ -90,6 +90,12 @@ const Services = () => {
                 align="right"
                 sx={{ fontWeight: "bold", color: "#3f51b5" }}
               >
+                Duration
+              </TableCell>
+              <TableCell
+                align="right"
+                sx={{ fontWeight: "bold", color: "#3f51b5" }}
+              >
                 Actions
               </TableCell>
             </TableRow>
@@ -113,6 +119,9 @@ const Services = () => {
                       currency: "USD",
                     })}
                   </TableCell>
+                  <TableCell align="right" sx={{ color: "#333" }}>
+                    {service.duration} minutes
+                  </TableCell>
                   <TableCell
                     align="right"
                     sx={{
@@ -135,7 +144,7 @@ const Services = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={3} align="center">
+                <TableCell colSpan={4} align="center">
                   No services found
                 </TableCell>
               </TableRow>

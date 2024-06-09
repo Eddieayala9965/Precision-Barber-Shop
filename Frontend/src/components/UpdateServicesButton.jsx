@@ -13,6 +13,7 @@ import {
 const UpdateServiceButton = ({ serviceId, refetch }) => {
   const [service, setService] = useState("");
   const [price, setPrice] = useState("");
+  const [duration, setDuration] = useState("");
   const [open, setOpen] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -32,6 +33,7 @@ const UpdateServiceButton = ({ serviceId, refetch }) => {
     const serviceData = {};
     if (service) serviceData.service = service;
     if (price) serviceData.price = parseFloat(price);
+    if (duration) serviceData.duration = parseInt(duration); // Include duration data
 
     try {
       const response = await fetch(
@@ -42,7 +44,7 @@ const UpdateServiceButton = ({ serviceId, refetch }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
-          body: JSON.stringify(serviceData),
+          body: JSON.stringify(serviceData), // Include duration in the request body
         }
       );
 
@@ -95,6 +97,15 @@ const UpdateServiceButton = ({ serviceId, refetch }) => {
             fullWidth
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="duration"
+            label="Duration (in minutes)"
+            type="number"
+            fullWidth
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
           />
         </DialogContent>
         <DialogActions>

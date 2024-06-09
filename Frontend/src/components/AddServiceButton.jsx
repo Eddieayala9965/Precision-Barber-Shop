@@ -19,6 +19,7 @@ const AddServiceButton = ({ refetch }) => {
   const [open, setOpen] = useState(false);
   const [service, setService] = useState("");
   const [price, setPrice] = useState("");
+  const [duration, setDuration] = useState("");
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(null);
 
@@ -43,11 +44,12 @@ const AddServiceButton = ({ refetch }) => {
       setError("User is not authenticated");
       return;
     }
-    // reason why we are using rpc is because we are calling a stored procedure, meaning we are calling a function that is stored in the database, was having issues with rls and the function was not able to be called from the front end
-    const { data, error } = await supabase.rpc("insert_service", {
+
+    const { data, error } = await supabase.rpc("insert_service_with_duration", {
       p_price: price,
       p_service: service,
       p_barber_id: userId,
+      p_duration: duration,
     });
 
     if (error) {
@@ -57,6 +59,7 @@ const AddServiceButton = ({ refetch }) => {
       console.log("Data inserted successfully:", data);
       setService("");
       setPrice("");
+      setDuration("");
       handleClose();
       refetch();
     }
@@ -88,6 +91,15 @@ const AddServiceButton = ({ refetch }) => {
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            label="Duration (in minutes)"
+            type="number"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
           />
           {error && (
             <Typography color="error" variant="body2">
