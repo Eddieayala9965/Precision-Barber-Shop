@@ -15,6 +15,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers";
 
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc"; // Import the UTC plugin
+import customParseFormat from "dayjs/plugin/customParseFormat"; // Import custom parse format plugin for parsing
+
+dayjs.extend(utc); // Extend dayjs with the UTC plugin
+dayjs.extend(customParseFormat); // Extend dayjs with the custom parse format plugin
+
 function BookingForm() {
   const [formData, setFormData] = useState({
     barber_id: "",
@@ -86,11 +92,18 @@ function BookingForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const combinedDateTime = dayjs(formData.booking_date)
-      .hour(dayjs(bookingTime, "HH:mm").hour())
-      .minute(dayjs(bookingTime, "HH:mm").minute())
+
+    // Parse the booking time from the 12-hour format back to 24-hour format
+    const parsedTime = dayjs(bookingTime, "hh:mm A").format("HH:mm");
+
+    // Combine date and time while keeping the timezone in UTC
+    const combinedDateTime = dayjs
+      .utc(formData.booking_date)
+      .hour(dayjs(parsedTime, "HH:mm").hour())
+      .minute(dayjs(parsedTime, "HH:mm").minute())
       .second(0)
-      .toISOString();
+      .toISOString(); // Converts to ISO format in UTC
+
     const { data, error } = await supabase.rpc("insert_booking_appointment", {
       barber_id: formData.barber_id,
       service_id: formData.service_id,
@@ -145,7 +158,7 @@ function BookingForm() {
     let currentTime = minTime;
 
     while (currentTime.isBefore(maxTime) || currentTime.isSame(maxTime)) {
-      times.push(currentTime.format("HH:mm"));
+      times.push(currentTime.format("hh:mm A")); // Format as 12-hour time with AM/PM
       currentTime = currentTime.add(30, "minute");
     }
 
@@ -240,7 +253,7 @@ function BookingForm() {
               </MenuItem>
               {availableTimes.map((time) => (
                 <MenuItem key={time} value={time}>
-                  {dayjs(`1970-01-01T${time}`).format("hh:mm A")}
+                  {time}
                 </MenuItem>
               ))}
             </Select>
