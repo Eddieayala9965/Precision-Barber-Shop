@@ -128,6 +128,10 @@ function BookingForm() {
 
   // Set min and max time based on the selected date
   const getMinTime = (date) => {
+    if (!date) {
+      return dayjs().hour(10).minute(0); // Default case if date is null
+    }
+
     const day = date.day();
     if (day === 0 || (day >= 2 && day <= 4)) {
       // Sunday, Tuesday, Wednesday, Thursday
@@ -140,6 +144,10 @@ function BookingForm() {
   };
 
   const getMaxTime = (date) => {
+    if (!date) {
+      return dayjs().hour(18).minute(0); // Default case if date is null
+    }
+
     const day = date.day();
     if (day === 0 || (day >= 2 && day <= 4)) {
       // Sunday, Tuesday, Wednesday, Thursday
