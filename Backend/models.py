@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from uuid import UUID
+from datetime import datetime
 
 
 class Item(BaseModel):
@@ -35,7 +36,13 @@ class Appointments(BaseModel):
     client_phone: Optional[str] = Field(default=None, exclude_none=True)
     client_email: Optional[str] = Field(default=None, exclude_none=True)
     
-
+class BookingRequest(BaseModel):
+    barber_id: str
+    service_id: str
+    customer_name: str
+    customer_phone: str
+    customer_email: str
+    booking_date: datetime
 
 
     

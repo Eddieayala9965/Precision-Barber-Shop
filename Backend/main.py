@@ -8,20 +8,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Annotated, Optional
 from supabase import create_client, Client
-from models import Item, Barber, Barbers, Services
+from models import Item, Barber, Barbers, Services, BookingRequest
 from datetime import datetime, timedelta, date, time
-from ics import Calendar, Event
-from datetime import datetime, timedelta
-from sib_api_v3_sdk import ApiClient, Configuration, TransactionalEmailsApi
-from sib_api_v3_sdk.rest import ApiException
-from sib_api_v3_sdk.models import SendSmtpEmail, SendSmtpEmailSender, SendSmtpEmailTo
+# from square import Client as SquareClient
 
 
 load_dotenv()
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(url, key) 
-
+# square_client = SquareClient(access_token=os.getenv("SQUARE_ACCESS_TOKEN"), environment="sandbox")
 
 
 app = FastAPI()
@@ -107,6 +103,51 @@ async def get_appointments():
     return response
 
 
+# @app.get("/barbers_sqaure")
+# async def get_barbers():
+#     try:
+#         response = square_client.team_api.list_team_members()
+#         if response.is_success():
+#             return response.body['team_members']
+#         else:
+#             raise HTTPException(status_code=500, detail=response.errors)
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
+
+# @app.post("/book")
+# async def create_booking(request: BookingRequest):
+#     try:
+#         booking_body = {
+#             "booking": {
+#                 "customer_id": request.customer_email,
+#                 "start_at": request.booking_date.isoformat(),
+#                 "service_variation_id": request.service_id,
+#                 "team_member_id": request.barber_id,
+#                 "customer_note": f"Booking for {request.customer_name}"
+#             }
+#         }
+
+#         response = square_client.bookings.create_booking(booking_body)
+#         if response.is_success():
+#             # Insert booking into Supabase
+#             booking_date_str = request.booking_date.isoformat()
+#             response = supabase.rpc("insert_booking_appointment", {
+#                 "barber_id": request.barber_id,
+#                 "service_id": request.service_id,
+#                 "customer_name": request.customer_name,
+#                 "customer_phone": request.customer_phone,
+#                 "customer_email": request.customer_email,
+#                 "booking_date": booking_date_str,
+#             }).execute()
+
+#             if response.error:
+#                 raise HTTPException(status_code=500, detail=response.error.message)
+            
+#             return {"message": "Booking created successfully"}
+#         else:
+#             raise HTTPException(status_code=500, detail=response.errors)
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
 
 
 
@@ -202,5 +243,4 @@ async def protected_route(user: Barber = Depends(get_current_user)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Unauthorized",
         )
-
 
