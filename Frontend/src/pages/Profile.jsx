@@ -14,6 +14,7 @@ import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
 import DeleteAvatarButton from "../components/DeleteAvatarButton";
 import UpdateBarberButton from "../components/UpdateProfileButton";
+
 import AddServiceButton from "../components/AddServiceButton";
 import GlobalLoadingSpinner from "../components/GlobalLoadingSpinner";
 import { useLoading } from "../context/LoadingContext";
