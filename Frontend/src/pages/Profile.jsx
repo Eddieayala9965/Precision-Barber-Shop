@@ -9,7 +9,7 @@ import Logo2 from "../images/Logo2.png";
 import UploadImage from "../components/UploadImage";
 import { CardActionArea } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import Services from "../components/Services";
+
 import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
 import DeleteAvatarButton from "../components/DeleteAvatarButton";
@@ -267,8 +267,6 @@ const Profile = () => {
           <Gallery />
         </Container>
       ))}
-
-      <Services />
     </Container>
   );
 };

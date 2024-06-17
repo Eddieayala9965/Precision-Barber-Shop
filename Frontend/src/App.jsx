@@ -1,13 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./pages/Layout";
 import ErrorPage from "./pages/ErrorPage";
-import StripeTest from "./routes/StripeTest";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import AdminLogin, { action as loginAction } from "./routes/AdminLogin";
 import AdminSignUp, { action as signUpAction } from "./routes/AdminSignUp";
-import Appointments from "./pages/Appointments";
 import Barbers from "./pages/Barbers";
 
 import Profile from "./pages/Profile";
@@ -29,10 +27,6 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/stripe-test",
-        element: <StripeTest />,
-      },
-      {
         path: "/contact",
         element: <Contact />,
       },
@@ -52,10 +46,6 @@ const router = createBrowserRouter([
         path: "/admin/signup",
         element: <AdminSignUp />,
         action: signUpAction,
-      },
-      {
-        path: "/admin/appointments",
-        element: <Appointments />,
       },
       {
         path: "/admin/barbers",

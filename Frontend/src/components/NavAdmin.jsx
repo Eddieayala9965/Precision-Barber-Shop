@@ -9,8 +9,8 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-  Box,
   IconButton,
+  Box,
 } from "@mui/material";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 
@@ -18,7 +18,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import BarberIcon from "./Icons/BarberIcon";
 
-import AppointmentIcon from "./Icons/AppointmentIcon";
 import Logo from "../images/Logo.png";
 import LogoutButton from "./LogoutButton";
 import BarberChair from "./Icons/BarberChair";
@@ -63,12 +62,10 @@ const NavAdmin = ({ navItems }) => {
                 <ListItem disablePadding>
                   <ListItemButton component={Link} to={link.path}>
                     <ListItemIcon>
-                      {link.title === "Bookings"}
                       {link.title === "Login" && <LoginOutlinedIcon />}
                       {link.title === "Barbers" && <BarberChair />}
                       {link.title === "Profile" && <BarberIcon />}
                       {link.title === "Logout" && <LogoutButton />}
-                      {link.title === "Appointments" && <AppointmentIcon />}
                     </ListItemIcon>
                     <ListItemText primary={link.title} />
                   </ListItemButton>
