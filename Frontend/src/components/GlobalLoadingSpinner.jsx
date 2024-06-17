@@ -1,7 +1,6 @@
-import React from "react";
-import { Box } from "@mui/material";
 import BarberPoleSpinner from "./BarberSpinner";
 import { useLoading } from "../context/LoadingContext";
+import { Box } from "@mui/material";
 
 const GlobalLoadingSpinner = () => {
   const { isLoading } = useLoading();

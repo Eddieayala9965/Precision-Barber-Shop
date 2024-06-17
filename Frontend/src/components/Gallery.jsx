@@ -1,6 +1,5 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -10,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import UploadImage from "./UploadImage";
 import { supabase } from "../utils/Supabase";
 import { useState, useEffect, useCallback } from "react";
+import Box from "@mui/material/Box";
 
 const Gallery = () => {
   const [gallery, setGallery] = useState([]);

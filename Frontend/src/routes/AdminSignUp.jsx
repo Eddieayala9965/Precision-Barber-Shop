@@ -5,7 +5,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import GlobalLoadingSpinner from "../components/GlobalLoadingSpinner";
 import { useLoading } from "../context/LoadingContext";
-
 import Box from "@mui/material/Box";
 
 export const action = async ({ request }) => {
