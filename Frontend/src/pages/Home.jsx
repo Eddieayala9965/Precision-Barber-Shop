@@ -1,12 +1,24 @@
+import React from "react";
 import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
 const Home = () => {
   return (
-    <div>
+    <Container
+      sx={{
+        backgroundColor: "#1f1f1f",
+        color: "white",
+        minHeight: "100vh ",
+        minWidth: "100vw",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Button
         variant="contained"
-        style={{
-          backgroundColor: "#006aff",
+        sx={{
+          backgroundColor: "#f50057",
           color: "white",
           height: 40,
           textTransform: "uppercase",
@@ -24,7 +36,7 @@ const Home = () => {
       >
         Book Now
       </Button>
-    </div>
+    </Container>
   );
 };
 

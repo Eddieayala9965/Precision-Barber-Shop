@@ -123,3 +123,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.appBarOpacity {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Adjust this value for desired opacity */
+}

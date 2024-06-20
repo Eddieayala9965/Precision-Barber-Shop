@@ -7,9 +7,7 @@ import Admin from "./pages/Admin";
 import AdminLogin, { action as loginAction } from "./routes/AdminLogin";
 import AdminSignUp, { action as signUpAction } from "./routes/AdminSignUp";
 import Barbers from "./pages/Barbers";
-
 import Profile from "./pages/Profile";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AvatarProvider } from "../src/context/AvatarContext";
 import { LocalizationProvider } from "@mui/x-date-pickers";
