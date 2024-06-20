@@ -102,7 +102,7 @@ const Nav = ({ navItems }) => {
                   component={Link}
                   to={link.path}
                 >
-                  <Typography textAlign="center">{link.title}</Typograpy>
+                  <Typography textAlign="center">{link.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
