@@ -59,7 +59,7 @@ const Nav = ({ navItems }) => {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "white", // Change color to white
+              color: "white",
               textDecoration: "none",
             }}
           >
