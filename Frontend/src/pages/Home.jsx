@@ -6,8 +6,6 @@ const Home = () => {
   return (
     <Container
       sx={{
-        backgroundColor: "#1f1f1f",
-        color: "white",
         minHeight: "100vh ",
         minWidth: "100vw",
         display: "flex",
