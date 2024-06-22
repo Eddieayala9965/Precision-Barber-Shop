@@ -94,6 +94,10 @@ const Home = () => {
           Book Now
         </Button>
       </Box>
+      <Container>
+        <Box></Box>
+        <Box></Box>
+      </Container>
     </Container>
   );
 };
