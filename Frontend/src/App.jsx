@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./pages/Layout";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
-import Contact from "./pages/Contact";
+import About from "./pages/About";
 import Admin from "./pages/Admin";
 import AdminLogin, { action as loginAction } from "./routes/AdminLogin";
 import AdminSignUp, { action as signUpAction } from "./routes/AdminSignUp";
@@ -25,8 +25,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/contact",
-        element: <Contact />,
+        path: "/about",
+        element: <About />,
       },
     ],
   },

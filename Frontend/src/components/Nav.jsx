@@ -4,35 +4,40 @@ import PropTypes from "prop-types";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
+import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box"; // Ensure Box is imported at the bottom
 
 const Nav = ({ navItems }) => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerOpen(open);
   };
 
   return (
     <Box
       sx={{
         width: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.7)", // Adjust this value for desired opacity
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
         padding: 2,
-        position: "fixed", // Change to 'fixed' to keep it on top of other elements
-        zIndex: 1200, // Set a high z-index value
-        top: 0, // Ensure it stays at the top of the page
-        left: 0, // Ensure it stays at the left edge of the page
-        height: "70px", // Adjust the height as needed
+        position: "fixed",
+        zIndex: 1200,
+        top: 0,
+        left: 0,
+        height: "70px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -72,40 +77,34 @@ const Nav = ({ navItems }) => {
               aria-label="menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={toggleDrawer(true)}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
+            <Drawer
+              anchor="left"
+              open={drawerOpen}
+              onClose={toggleDrawer(false)}
             >
-              {navItems.map((link, index) => (
-                <MenuItem
-                  key={index}
-                  onClick={handleCloseNavMenu}
-                  component={Link}
-                  to={link.path}
-                >
-                  <Typography textAlign="center">{link.title}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              <Box
+                sx={{ width: 250 }}
+                role="presentation"
+                onClick={toggleDrawer(false)}
+                onKeyDown={toggleDrawer(false)}
+              >
+                <List>
+                  {navItems.map((link, index) => (
+                    <React.Fragment key={index}>
+                      <ListItem button component={Link} to={link.path}>
+                        <ListItemText primary={link.title} />
+                      </ListItem>
+                      {index < navItems.length - 1 && <Divider />}
+                    </React.Fragment>
+                  ))}
+                </List>
+              </Box>
+            </Drawer>
           </Box>
 
           <Box
