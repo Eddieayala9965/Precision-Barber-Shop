@@ -41,6 +41,9 @@ const Nav = ({ navItems }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        "&.MuiBox-root": {
+          padding: 0,
+        },
       }}
     >
       <Container maxWidth="xl">
@@ -53,67 +56,58 @@ const Nav = ({ navItems }) => {
             justifyContent: "space-between",
           }}
         >
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "white",
-              textDecoration: "none",
-            }}
-          >
-            Precision Barber Shop
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
               size="large"
               aria-label="menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={toggleDrawer(true)}
-              color="inherit"
+              sx={{
+                display: { md: "none" },
+                color: "white",
+                "&.MuiIconButton-root": {
+                  padding: 0, // Override IconButton padding
+                },
+                "&.MuiIconButton-sizeLarge": {
+                  padding: 0, // Override IconButton sizeLarge padding
+                },
+              }}
             >
               <MenuIcon />
             </IconButton>
-            <Drawer
-              anchor="left"
-              open={drawerOpen}
-              onClose={toggleDrawer(false)}
-            >
-              <Box
-                sx={{ width: 250 }}
-                role="presentation"
-                onClick={toggleDrawer(false)}
-                onKeyDown={toggleDrawer(false)}
-              >
-                <List>
-                  {navItems.map((link, index) => (
-                    <React.Fragment key={index}>
-                      <ListItem button component={Link} to={link.path}>
-                        <ListItemText primary={link.title} />
-                      </ListItem>
-                      {index < navItems.length - 1 && <Divider />}
-                    </React.Fragment>
-                  ))}
-                </List>
-              </Box>
-            </Drawer>
           </Box>
+
+          <Typography
+            variant="h6"
+            noWrap
+            component={Link}
+            to="/"
+            sx={{
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "white",
+              textDecoration: "none",
+              textAlign: "center",
+              flexGrow: 1,
+              mx: { xs: 0, md: "auto" },
+              whiteSpace: "normal", // Enable word wrap
+              wordBreak: "break-word", // Enable word wrap
+            }}
+          >
+            Precision Barber Shop
+          </Typography>
 
           <Box
             sx={{
-              flexGrow: 1,
               display: { xs: "none", md: "flex" },
               justifyContent: "center",
               alignItems: "center",
-              mr: 35,
+              flexGrow: 1,
+              "&.MuiBox-root": {
+                padding: 0,
+              },
             }}
           >
             {navItems.map((link, index) => (
@@ -121,7 +115,15 @@ const Nav = ({ navItems }) => {
                 key={`${link.title}-${index}`}
                 component={Link}
                 to={link.path}
-                sx={{ my: 2, color: "white", display: "block", ml: 1 }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  ml: 1,
+                  "&.MuiButtonBase-root": {
+                    padding: 0, // Override button padding
+                  },
+                }}
               >
                 {link.title}
               </Button>
@@ -129,6 +131,25 @@ const Nav = ({ navItems }) => {
           </Box>
         </Toolbar>
       </Container>
+      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Box
+          sx={{ width: 250, padding: 0 }}
+          role="presentation"
+          onClick={toggleDrawer(false)}
+          onKeyDown={toggleDrawer(false)}
+        >
+          <List>
+            {navItems.map((link, index) => (
+              <React.Fragment key={index}>
+                <ListItem button component={Link} to={link.path}>
+                  <ListItemText primary={link.title} />
+                </ListItem>
+                {index < navItems.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
     </Box>
   );
 };

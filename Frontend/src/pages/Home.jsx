@@ -58,16 +58,16 @@ const Home = () => {
             clipPath: "inset(0 0 20% 0)", // Reveal 10% more
           },
           "@media (min-width: 1000px)": {
-            clipPath: "inset(0 0 30% 0)", // Reveal 10% more
+            clipPath: "inset(0 0 25% 0)", // Reveal 10% more
           },
           "@media (min-width: 1200px)": {
-            clipPath: "inset(0 0 30% 0)", // Reveal 10% more
+            clipPath: "inset(0 0 25% 0)", // Reveal 10% more
           },
           "@media (min-width: 1400px)": {
-            clipPath: "inset(0 0 30% 0)", // Reveal 10% more
+            clipPath: "inset(0 0 25% 0)", // Reveal 10% more
           },
           "@media (min-width: 1600px)": {
-            clipPath: "inset(0 0 30% 0)", // Full image
+            clipPath: "inset(0 0 25% 0)", // Full image
           },
         }}
       >
