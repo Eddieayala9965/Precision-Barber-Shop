@@ -44,9 +44,6 @@ const Nav = ({ navItems }) => {
         "&.MuiBox-root": {
           padding: 0,
         },
-        "@media (max-width: 800px)": {
-          borderBottom: "2px solid white", // Add bottom border color white
-        },
       }}
     >
       <Container maxWidth="xl">

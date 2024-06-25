@@ -1,10 +1,10 @@
-import React from "react";
 import Hero from "../images/Hero.jpg";
 import Elbee from "../images/Elbee.png";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
+import Box from "@mui/material/Box";
 
 const Home = () => {
   return (
@@ -17,6 +17,7 @@ const Home = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
+          flexDirection: "column", // Arrange children vertically
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
@@ -32,10 +33,25 @@ const Home = () => {
           },
         }}
       >
+        <Typography
+          variant="h1"
+          sx={{
+            color: "white",
+            zIndex: 2,
+            fontWeight: 700,
+            textAlign: "center",
+            marginBottom: 4, // Add spacing below the text
+            fontSize: {
+              xs: "4rem", // Small screens
+              sm: "7rem", // Medium screens and above
+            },
+          }}
+        >
+          Precision Barbershop
+        </Typography>
         <Button
           variant="contained"
           sx={{
-            backgroundColor: "#f50057",
             color: "white",
             height: 40,
             textTransform: "uppercase",
@@ -78,16 +94,17 @@ const Home = () => {
         >
           <Box
             sx={{
-              width: { xs: "100%", md: "50%" },
+              width: { xs: "80%", md: "40%" }, // Adjust the width to make the image smaller on small and large screens
               padding: 2,
               display: "flex",
               justifyContent: "center",
             }}
           >
-            <img
-              src={Elbee}
+            <CardMedia
+              component="img"
+              image={Elbee}
               alt="Placeholder"
-              style={{
+              sx={{
                 maxWidth: "100%",
                 height: "auto",
                 borderRadius: 8,
@@ -100,20 +117,21 @@ const Home = () => {
               padding: 2,
               display: "flex",
               flexDirection: "column",
-              alignItems: { xs: "center", md: "flex-start" },
+              alignItems: { xs: "center", md: "center" }, // Center-align the text
+              textAlign: "center", // Center-align the text
             }}
           >
             <Typography variant="h4" component="h1" gutterBottom>
               Welcome to Precision Barbershop
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom sx={{ marginBottom: 2 }}>
               Since 2017, Precision Barbershop has been a cornerstone of our
               community, offering unparalleled grooming services with a
               commitment to excellence and precision. We pride ourselves on
               providing top-notch haircuts and a welcoming atmosphere where
               every client feels valued and appreciated.
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom sx={{ marginBottom: 2 }}>
               Our team of skilled barbers has years of experience in the
               industry. Each barber is trained in the latest techniques and
               trends, ensuring you receive a modern and stylish cut every time.
@@ -121,7 +139,7 @@ const Home = () => {
               take the time to listen to your needs and deliver exactly what you
               want with meticulous attention to detail.
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="body1" sx={{ marginBottom: 2 }}>
               Ready for your next haircut? Booking an appointment at Precision
               Barbershop is easy. Use our online booking system to select a time
               that works best for you, and we’ll take care of the rest.
