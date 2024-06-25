@@ -1,3 +1,4 @@
+import React from "react";
 import Hero from "../images/Hero.jpg";
 import Elbee from "../images/Elbee.png";
 import Button from "@mui/material/Button";
@@ -8,93 +9,63 @@ import Typography from "@mui/material/Typography";
 const Home = () => {
   return (
     <Container disableGutters maxWidth={false} sx={{ padding: 0, margin: 0 }}>
-      <Container
-        disableGutters
-        maxWidth={false}
+      <Box
         sx={{
-          minHeight: "100vh",
-          minWidth: "100vw",
+          width: "100%",
+          minHeight: "80vh",
+          backgroundImage: `url(${Hero})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: 0,
-          margin: 0,
-          clipPath: "inset(0 0 20% 0)", // Trim off the bottom part
-          "@media (min-width: 200px)": {
-            clipPath: "inset(0 0 10% 0)", // Adjust as needed
-          },
-          "@media (min-width: 400px)": {
-            clipPath: "inset(0 0 10% 0)", // Adjust as needed
-          },
-          "@media (min-width: 600px)": {
-            clipPath: "inset(0 0 15% 0)", // Adjust as needed
-          },
-          "@media (min-width: 800px)": {
-            clipPath: "inset(0 0 15% 0)", // Adjust as needed
-          },
-          "@media (min-width: 1000px)": {
-            clipPath: "inset(0 0 20% 0)", // Adjust as needed
-          },
-          "@media (min-width: 1200px)": {
-            clipPath: "inset(0 0 20% 0)", // Adjust as needed
-          },
-          "@media (min-width: 1400px)": {
-            clipPath: "inset(0 0 20% 0)", // Adjust as needed
-          },
-          "@media (min-width: 1600px)": {
-            clipPath: "inset(0 0 80% 0)", // Adjust as needed
+          position: "relative",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the color and opacity for your desired tint
+            zIndex: 1,
           },
         }}
       >
-        <Box
+        <Button
+          variant="contained"
           sx={{
-            width: "100%",
-            height: "100vh",
-            backgroundImage: `url(${Hero})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the color and opacity for your desired tint
-              zIndex: 1,
-            },
+            backgroundColor: "#f50057",
+            color: "white",
+            height: 40,
+            textTransform: "uppercase",
+            letterSpacing: 1,
+            lineHeight: 38,
+            padding: "0 28px",
+            borderRadius: 8,
+            fontWeight: 500,
+            fontSize: 14,
+            cursor: "pointer",
+            zIndex: 2, // Ensure the button is above the overlay
           }}
+          href="https://squareup.com/appointments/book/7djpzd51grujsb/LXEFMT6HSK5S4/start"
+          target="_top"
+          rel="nofollow"
         >
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#f50057",
-              color: "white",
-              height: 40,
-              textTransform: "uppercase",
-              letterSpacing: 1,
-              lineHeight: 38,
-              padding: "0 28px",
-              borderRadius: 8,
-              fontWeight: 500,
-              fontSize: 14,
-              cursor: "pointer",
-              zIndex: 2, // Ensure the button is above the overlay
-            }}
-            href="https://squareup.com/appointments/book/7djpzd51grujsb/LXEFMT6HSK5S4/start"
-            target="_top"
-            rel="nofollow"
-          >
-            Book Now
-          </Button>
-        </Box>
-      </Container>
-      <Container disableGutters maxWidth={false} sx={{ padding: 0, margin: 0 }}>
+          Book Now
+        </Button>
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          height: "20vh",
+        }}
+      />
+      <Container
+        disableGutters
+        maxWidth={false}
+        sx={{ padding: 0, margin: 0, mt: "-20vh" }}
+      >
         <Box
           sx={{
             display: "flex",
