@@ -62,7 +62,7 @@ const Home = () => {
           variant="contained"
           sx={{
             color: "white",
-            backgroundColor: "#f50057",
+            backgroundColor: "#1976d2",
             height: 40,
             textTransform: "uppercase",
             letterSpacing: 1,
@@ -74,7 +74,7 @@ const Home = () => {
             cursor: "pointer",
             zIndex: 2,
             "&:hover": {
-              backgroundColor: "#d4004f",
+              backgroundColor: "#1565c0",
             },
           }}
           href="https://squareup.com/appointments/book/7djpzd51grujsb/LXEFMT6HSK5S4/start"
@@ -145,22 +145,23 @@ const Home = () => {
               sx={{ marginBottom: 2, fontFamily: "'Montserrat', sans-serif" }}
             >
               Since 2017, Precision Barbershop has been a cornerstone of our
-              community, offering unparalleled grooming services with a
-              commitment to excellence and precision. We pride ourselves on
-              providing top-notch haircuts and a welcoming atmosphere where
-              every client feels valued and appreciated.
+              community.
             </Typography>
             <Typography
               variant="body1"
               gutterBottom
               sx={{ marginBottom: 2, fontFamily: "'Montserrat', sans-serif" }}
             >
-              Our team of skilled barbers has years of experience in the
-              industry. Each barber is trained in the latest techniques and
-              trends, ensuring you receive a modern and stylish cut every time.
-              We understand the importance of a perfect cut, and our barbers
-              take the time to listen to your needs and deliver exactly what you
-              want with meticulous attention to detail.
+              We offer unparalleled grooming services with a commitment to
+              excellence and precision.
+            </Typography>
+            <Typography
+              variant="body1"
+              gutterBottom
+              sx={{ marginBottom: 2, fontFamily: "'Montserrat', sans-serif" }}
+            >
+              We pride ourselves on providing top-notch haircuts and a welcoming
+              atmosphere where every client feels valued and appreciated.
             </Typography>
             <Typography
               variant="body1"
@@ -283,7 +284,7 @@ const Home = () => {
           <Button
             sx={{
               color: "white",
-              "&:hover": { color: "#f50057" },
+              "&:hover": { color: "#1976d2" },
               fontFamily: "'Montserrat', sans-serif",
             }}
             href="https://www.facebook.com"
@@ -297,7 +298,7 @@ const Home = () => {
             sx={{
               color: "white",
               ml: 2,
-              "&:hover": { color: "#f50057" },
+              "&:hover": { color: "#1976d2" },
               fontFamily: "'Montserrat', sans-serif",
             }}
             href="https://www.instagram.com"
