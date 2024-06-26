@@ -12,7 +12,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box"; // Ensure Box is imported at the bottom
+import Box from "@mui/material/Box";
 
 const Nav = ({ navItems }) => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -44,6 +44,7 @@ const Nav = ({ navItems }) => {
         "&.MuiBox-root": {
           padding: 0,
         },
+        borderBottom: { xs: "2px solid white", md: "none" }, // Border bottom for small screens only
       }}
     >
       <Container maxWidth="xl">
