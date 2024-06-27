@@ -85,7 +85,7 @@ const Nav = ({ navItems }) => {
             component={Link}
             to="/"
             sx={{
-              fontFamily: "monospace",
+              fontFamily: "'Montserrat', sans-serif",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "white",
@@ -121,6 +121,7 @@ const Nav = ({ navItems }) => {
                   color: "white",
                   display: "block",
                   ml: 1,
+                  fontFamily: "'Montserrat', sans-serif",
                   "&.MuiButtonBase-root": {
                     padding: 0, // Override button padding
                   },

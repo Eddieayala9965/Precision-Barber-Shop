@@ -4,19 +4,17 @@ import Elbee from "../images/Elbee.png";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import Box from "@mui/material/Box";
 
 const Home = () => {
   return (
-    <Container
-      disableGutters
-      maxWidth={false}
-      sx={{ padding: 0, margin: 0, fontFamily: "'Montserrat', sans-serif" }}
-    >
+    <Container disableGutters maxWidth={false} sx={{ padding: 0, margin: 0 }}>
       <Box
         sx={{
           width: "100%",
@@ -50,13 +48,14 @@ const Home = () => {
             textAlign: "center",
             marginBottom: 4,
             fontSize: {
-              xs: "4rem",
-              sm: "7rem",
+              xs: "3rem",
+              sm: "4rem",
+              md: "6rem",
+              lg: "7rem",
             },
-            fontFamily: "'Montserrat', sans-serif",
           }}
         >
-          Precision Barbershop
+          Precision BarberShop
         </Typography>
         <Button
           variant="contained"
@@ -88,91 +87,109 @@ const Home = () => {
       <Container
         disableGutters
         maxWidth={false}
-        sx={{ padding: 0, margin: 0, mt: "-20vh" }}
+        sx={{ padding: 2, margin: 0, mt: "-20vh" }}
       >
-        <Box
+        <Card
           sx={{
             display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 4,
-            width: "100%",
+            flexDirection: { xs: "column", sm: "column", md: "row" },
+            justifyContent: { md: "center" },
+            alignItems: { md: "center" },
+            boxShadow: 15,
+            borderRadius: 8,
+            px: {},
+            margin: 4,
+            overflow: "hidden",
+            height: "auto",
+            maxWidth: { lg: "80%", xl: "70%" },
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         >
-          <Box
+          <CardMedia
+            component="img"
             sx={{
-              width: { xs: "80%", md: "40%" },
-              padding: 2,
-              display: "flex",
-              justifyContent: "center",
+              width: { xs: "100%", md: "40%" },
+              "MuiCardMedia-media": {
+                objectFit: "cover",
+              },
+              height: { xs: "auto", md: "auto" },
             }}
-          >
-            <CardMedia
-              component="img"
-              image={Elbee}
-              alt="Barber"
-              sx={{
-                maxWidth: "100%",
-                height: "auto",
-                borderRadius: 8,
-                boxShadow: 3,
-              }}
-            />
-          </Box>
+            image={Elbee}
+            alt="Barber"
+          />
           <Box
             sx={{
-              width: { xs: "100%", md: "50%" },
-              padding: 2,
               display: "flex",
               flexDirection: "column",
+              width: { xs: "100%", md: "60%" },
+              justifyContent: { xs: "flex-start", md: "center" },
               alignItems: "center",
-              textAlign: "center",
-              fontFamily: "'Montserrat', sans-serif",
+              padding: 2,
             }}
           >
-            <Typography
-              variant="h4"
-              component="h1"
-              gutterBottom
-              sx={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Welcome to Precision Barbershop
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              sx={{ marginBottom: 2, fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Since 2017, Precision Barbershop has been a cornerstone of our
-              community.
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              sx={{ marginBottom: 2, fontFamily: "'Montserrat', sans-serif" }}
-            >
-              We offer unparalleled grooming services with a commitment to
-              excellence and precision.
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              sx={{ marginBottom: 2, fontFamily: "'Montserrat', sans-serif" }}
-            >
-              We pride ourselves on providing top-notch haircuts and a welcoming
-              atmosphere where every client feels valued and appreciated.
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{ marginBottom: 2, fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Ready for your next haircut? Booking an appointment at Precision
-              Barbershop is easy. Use our online booking system to select a time
-              that works best for you, and we’ll take care of the rest.
-            </Typography>
+            <CardContent sx={{ flex: "1 0 auto", textAlign: "center" }}>
+              <Typography
+                component="div"
+                variant="h4"
+                gutterBottom
+                sx={{
+                  fontSize: {
+                    xs: "1.5rem",
+                    sm: "2rem",
+                    md: "2.5rem",
+                  },
+                }}
+              >
+                Welcome
+              </Typography>
+              <Typography
+                variant="body1"
+                gutterBottom
+                sx={{
+                  fontSize: {
+                    xs: "0.875rem",
+                    sm: "1rem",
+                    md: "1.125rem",
+                  },
+                }}
+              >
+                Since 2017, Precision Barbershop has been a cornerstone of our
+                community, offering unparalleled grooming services with a
+                commitment to excellence and precision.
+              </Typography>
+              <Typography
+                variant="body1"
+                gutterBottom
+                sx={{
+                  fontSize: {
+                    xs: "0.875rem",
+                    sm: "1rem",
+                    md: "1.125rem",
+                  },
+                }}
+              >
+                We pride ourselves on providing top-notch haircuts and a
+                welcoming atmosphere where every client feels valued and
+                appreciated.
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: {
+                    xs: "0.875rem",
+                    sm: "1rem",
+                    md: "1.125rem",
+                  },
+                }}
+              >
+                Ready for your next haircut? Booking an appointment at Precision
+                Barbershop is easy. Use our online booking system to select a
+                time that works best for you, and we’ll take care of the rest.
+              </Typography>
+            </CardContent>
           </Box>
-        </Box>
+        </Card>
       </Container>
       <Divider sx={{ my: 4 }} />
       <Box
@@ -182,23 +199,13 @@ const Home = () => {
           alignItems: "center",
           justifyContent: "space-evenly",
           padding: 4,
-          fontFamily: "'Montserrat', sans-serif",
         }}
       >
         <Box sx={{ textAlign: "center" }}>
-          <Typography
-            variant="h4"
-            component="h2"
-            gutterBottom
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
+          <Typography variant="h4" component="h2" gutterBottom>
             Find Us
           </Typography>
-          <Typography
-            variant="body1"
-            gutterBottom
-            sx={{ marginBottom: 2, fontFamily: "'Montserrat', sans-serif" }}
-          >
+          <Typography variant="body1" gutterBottom sx={{ marginBottom: 2 }}>
             93 North St, Middletown, NY 10940
           </Typography>
           <Box
@@ -212,56 +219,16 @@ const Home = () => {
           ></Box>
         </Box>
         <Box sx={{ textAlign: "center", mt: { xs: 4, md: 0 } }}>
-          <Typography
-            variant="h4"
-            component="h2"
-            gutterBottom
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
+          <Typography variant="h4" component="h2" gutterBottom>
             Business Hours
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Tuesday: 10 AM–6 PM
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Wednesday: 10 AM–6 PM
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Thursday: 10 AM–6 PM
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Friday: 10 AM–7 PM
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Saturday: 10 AM–7 PM
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Sunday: 10 AM–6 PM
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "'Montserrat', sans-serif" }}
-          >
-            Monday: Closed
-          </Typography>
+          <Typography variant="body1">Tuesday: 10 AM–6 PM</Typography>
+          <Typography variant="body1">Wednesday: 10 AM–6 PM</Typography>
+          <Typography variant="body1">Thursday: 10 AM–6 PM</Typography>
+          <Typography variant="body1">Friday: 10 AM–7 PM</Typography>
+          <Typography variant="body1">Saturday: 10 AM–7 PM</Typography>
+          <Typography variant="body1">Sunday: 10 AM–6 PM</Typography>
+          <Typography variant="body1">Monday: Closed</Typography>
         </Box>
       </Box>
       <Divider sx={{ my: 4 }} />
@@ -271,13 +238,9 @@ const Home = () => {
           color: "white",
           padding: 4,
           textAlign: "center",
-          fontFamily: "'Montserrat', sans-serif",
         }}
       >
-        <Typography
-          variant="body1"
-          sx={{ fontFamily: "'Montserrat', sans-serif" }}
-        >
+        <Typography variant="body1">
           © 2024 Precision Barbershop. All Rights Reserved.
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
@@ -285,7 +248,6 @@ const Home = () => {
             sx={{
               color: "white",
               "&:hover": { color: "#1976d2" },
-              fontFamily: "'Montserrat', sans-serif",
             }}
             href="https://www.facebook.com"
             target="_blank"
@@ -299,7 +261,6 @@ const Home = () => {
               color: "white",
               ml: 2,
               "&:hover": { color: "#1976d2" },
-              fontFamily: "'Montserrat', sans-serif",
             }}
             href="https://www.instagram.com"
             target="_blank"
