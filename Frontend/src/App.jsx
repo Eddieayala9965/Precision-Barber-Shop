@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <StripeTest />,
       },
       {
-        path: "/contac",
+        path: "/contact",
         element: <Contact />,
       },
     ],
