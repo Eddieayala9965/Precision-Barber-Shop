@@ -250,7 +250,7 @@ const Home = () => {
           <Box
             component="iframe"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3031.825735601089!2d-74.42293268429173!3d41.4485024792594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89dd3c2a57f5b1db%3A0x256df8c2c8a6a7c1!2s93%20North%20St%2C%20Middletown%2C%20NY%2010940%2C%20USA!5e0!3m2!1sen!2sin!4v1629876679188!5m2!1sen!2sin"
-            sx={{ border: 0, width: "100%", height: "350px" }}
+            sx={{ border: 0, width: "100%", height: "225px" }}
             style={{ border: 0 }}
             allowFullScreen=""
             loading="lazy"
