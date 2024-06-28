@@ -87,7 +87,52 @@ const Home = () => {
       <Container
         disableGutters
         maxWidth={false}
-        sx={{ padding: 2, margin: 0, mt: "-20vh" }}
+        sx={{
+          padding: 2,
+          margin: 0,
+          mt: "-20vh",
+
+          "@media (max-width: 1199px)": {
+            width: "80%", // Set width to 70% for screens 899px and below
+            marginLeft: "auto", // Center the container
+            marginRight: "auto", // Center the container
+          },
+          "@media (max-width: 1175px)": {
+            width: "85%", // Set width to 70% for screens 899px and below
+            marginLeft: "auto", // Center the container
+            marginRight: "auto", // Center the container
+          },
+          "@media (max-width: 1095px)": {
+            width: "92%", // Set width to 70% for screens 899px and below
+            marginLeft: "auto", // Center the container
+            marginRight: "auto", // Center the container
+          },
+          "@media (max-width: 1016px)": {
+            width: "97%", // Set width to 70% for screens 899px and below
+            marginLeft: "auto", // Center the container
+            marginRight: "auto", // Center the container
+          },
+          "@media (max-width: 960px)": {
+            width: "100%", // Set width to 70% for screens 899px and below
+            marginLeft: "auto", // Center the container
+            marginRight: "auto", // Center the container
+          },
+          "@media (max-width: 899px)": {
+            width: "75%", // Set width to 70% for screens 899px and below
+            marginLeft: "auto", // Center the container
+            marginRight: "auto", // Center the container
+          },
+          "@media (max-width: 700px)": {
+            width: "80%", // Set width to 70% for screens 899px and below
+            marginLeft: "auto", // Center the container
+            marginRight: "auto", // Center the container
+          },
+          "@media (max-width: 600px)": {
+            width: "85%", // Set width to 70% for screens 899px and below
+            marginLeft: "auto", // Center the container
+            marginRight: "auto", // Center the container
+          },
+        }}
       >
         <Card
           sx={{
@@ -113,7 +158,6 @@ const Home = () => {
               "MuiCardMedia-media": {
                 objectFit: "cover",
               },
-              height: { xs: "auto", md: "auto" },
             }}
             image={Elbee}
             alt="Barber"
@@ -141,7 +185,7 @@ const Home = () => {
                   },
                 }}
               >
-                Welcome
+                Welcome to Precision BarberShop
               </Typography>
               <Typography
                 variant="body1"
@@ -154,9 +198,7 @@ const Home = () => {
                   },
                 }}
               >
-                Since 2017, Precision Barbershop has been a cornerstone of our
-                community, offering unparalleled grooming services with a
-                commitment to excellence and precision.
+                Established in 2017, we offer top-quality grooming services.
               </Typography>
               <Typography
                 variant="body1"
@@ -169,9 +211,7 @@ const Home = () => {
                   },
                 }}
               >
-                We pride ourselves on providing top-notch haircuts and a
-                welcoming atmosphere where every client feels valued and
-                appreciated.
+                Enjoy a premium haircut in a friendly environment.
               </Typography>
               <Typography
                 variant="body1"
@@ -183,9 +223,8 @@ const Home = () => {
                   },
                 }}
               >
-                Ready for your next haircut? Booking an appointment at Precision
-                Barbershop is easy. Use our online booking system to select a
-                time that works best for you, and we’ll take care of the rest.
+                Book your appointment easily online and experience our expert
+                service.
               </Typography>
             </CardContent>
           </Box>
@@ -203,7 +242,7 @@ const Home = () => {
       >
         <Box sx={{ textAlign: "center" }}>
           <Typography variant="h4" component="h2" gutterBottom>
-            Find Us
+            Our Location
           </Typography>
           <Typography variant="body1" gutterBottom sx={{ marginBottom: 2 }}>
             93 North St, Middletown, NY 10940
@@ -211,8 +250,7 @@ const Home = () => {
           <Box
             component="iframe"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3031.825735601089!2d-74.42293268429173!3d41.4485024792594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89dd3c2a57f5b1db%3A0x256df8c2c8a6a7c1!2s93%20North%20St%2C%20Middletown%2C%20NY%2010940%2C%20USA!5e0!3m2!1sen!2sin!4v1629876679188!5m2!1sen!2sin"
-            width="600"
-            height="450"
+            sx={{ border: 0, width: "100%", height: "350px" }}
             style={{ border: 0 }}
             allowFullScreen=""
             loading="lazy"
@@ -262,7 +300,7 @@ const Home = () => {
               ml: 2,
               "&:hover": { color: "#1976d2" },
             }}
-            href="https://www.instagram.com"
+            href="https://www.instagram.com/anthony_r480?igsh=MXhzemJhcXM0emhjag=="
             target="_blank"
             rel="noopener"
             startIcon={<InstagramIcon />}
