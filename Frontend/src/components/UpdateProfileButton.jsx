@@ -16,6 +16,7 @@ const UpdateBarberButton = ({ refetch }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [bio, setBio] = useState("");
+  const [instagramLink, setInstagramLink] = useState(""); // New state for Instagram link
   const [open, setOpen] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -38,6 +39,7 @@ const UpdateBarberButton = ({ refetch }) => {
     if (email.trim()) barberData.email = email;
     if (phone.trim()) barberData.phone = phone;
     if (bio.trim()) barberData.bio = bio;
+    if (instagramLink.trim()) barberData.instagram_link = instagramLink; // Add Instagram link to barberData
 
     const user_id = localStorage.getItem("user_id");
 
@@ -132,6 +134,15 @@ const UpdateBarberButton = ({ refetch }) => {
             rows={4}
             value={bio}
             onChange={(e) => setBio(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="instagramLink"
+            label="Instagram URL"
+            type="url"
+            fullWidth
+            value={instagramLink}
+            onChange={(e) => setInstagramLink(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
