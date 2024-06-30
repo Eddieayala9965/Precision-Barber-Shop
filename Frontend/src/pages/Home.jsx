@@ -1,4 +1,3 @@
-import React from "react";
 import Hero from "../images/Hero.jpg";
 import Elbee from "../images/Elbee.png";
 import Button from "@mui/material/Button";
@@ -287,7 +286,7 @@ const Home = () => {
               color: "white",
               "&:hover": { color: "#1976d2" },
             }}
-            href="https://www.facebook.com"
+            href="https://www.facebook.com/elbee.ayala?mibextid=kFxxJD"
             target="_blank"
             rel="noopener"
             startIcon={<FacebookIcon />}
