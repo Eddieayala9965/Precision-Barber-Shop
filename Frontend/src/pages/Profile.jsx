@@ -6,18 +6,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Logo2 from "../images/Logo2.png";
-import UploadImage from "../components/UploadImage";
 import { CardActionArea } from "@mui/material";
 import Stack from "@mui/material/Stack";
-
 import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
 import DeleteAvatarButton from "../components/DeleteAvatarButton";
 import UpdateBarberButton from "../components/UpdateProfileButton";
-
-import AddServiceButton from "../components/AddServiceButton";
-import GlobalLoadingSpinner from "../components/GlobalLoadingSpinner";
-import { useLoading } from "../context/LoadingContext";
 
 const fetchProfile = async () => {
   const response = await fetch("http://127.0.0.1:8000/barbers", {

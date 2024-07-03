@@ -5,6 +5,7 @@ import Divider from "@mui/material/Divider";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import BgTools from "../images/bg-tools.jpeg";
+import BarberGallery from "../components/BarberGallery";
 import Box from "@mui/material/Box";
 
 const About = () => {
@@ -77,6 +78,8 @@ const About = () => {
       </Box>
       <Box sx={{ width: "100%", height: "20vh" }} />
       <Divider sx={{ my: 4 }} />
+      <BarberGallery />
+      <Divider sx={{ my: 4 }} />
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -96,7 +99,7 @@ const About = () => {
           width="100%"
           height="600px"
           frameBorder="0"
-          style={{ border: "none" }} // Removes the border from the iframe itself
+          style={{ border: "none" }}
         ></iframe>
       </Box>
       <Divider sx={{ my: 4 }} />
