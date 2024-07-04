@@ -77,7 +77,6 @@ const About = () => {
         </Typography>
       </Box>
       <Box sx={{ width: "100%", height: "20vh" }} />
-      <Divider sx={{ my: 4 }} />
       <BarberGallery />
       <Divider sx={{ my: 4 }} />
       <Box

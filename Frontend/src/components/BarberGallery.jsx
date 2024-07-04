@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { supabase } from "../utils/Supabase"; // Import the Supabase client
+import { supabase } from "../utils/Supabase";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Box,
+  IconButton,
+} from "@mui/material";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const BarberGallery = () => {
   const [barberData, setBarberData] = useState([]);
@@ -12,13 +23,12 @@ const BarberGallery = () => {
           "http://127.0.0.1:8000/barber_details"
         );
         const barberData = barberResponse.data.data;
-        console.log("Fetched barber details:", barberData);
 
         const combinedData = await Promise.all(
           barberData.map(async (barber) => {
             const { data: files, error } = await supabase.storage
               .from("img")
-              .list(barber.id); // Fetch all images for each barber
+              .list(barber.id);
 
             if (error) {
               console.error(
@@ -27,23 +37,24 @@ const BarberGallery = () => {
                 ":",
                 error.message
               );
-              return { ...barber, images: [] };
+              return { ...barber, images: [], avatar_url: null };
             }
 
             const image_urls = files.map((file) => {
               const publicURL = `https://juowekkvvwyquoqoarfr.supabase.co/storage/v1/object/public/img/${barber.id}/${file.name}`;
-              console.log(`Image URL for barber ${barber.id}:`, publicURL);
               return publicURL;
             });
+
+            const avatarUrl = `https://juowekkvvwyquoqoarfr.supabase.co/storage/v1/object/public/avatars/${barber.id}/avatar.jpg`;
 
             return {
               ...barber,
               images: image_urls,
+              avatar_url: avatarUrl,
             };
           })
         );
 
-        console.log("Combined Data:", combinedData);
         setBarberData(combinedData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -54,22 +65,76 @@ const BarberGallery = () => {
   }, []);
 
   return (
-    <div>
+    <Box display="flex" flexDirection="column" alignItems="center" p={2}>
       {barberData.map((barber) => (
-        <div key={barber.id}>
-          <h2>{barber.name}</h2>
-          {barber.images.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              alt={`${barber.name} image ${index + 1}`}
-            />
-          ))}
-          <p>{barber.bio}</p>
-          <p>{barber.instagram_link}</p>
-        </div>
+        <Card
+          key={barber.id}
+          style={{
+            marginBottom: "20px",
+            width: "100%",
+            maxWidth: "900px",
+            borderRadius: "15px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+          }}
+        >
+          <CardMedia
+            component="img"
+            alt={`${barber.name} avatar`}
+            height="auto"
+            image={barber.avatar_url}
+            style={{ width: "50%", objectFit: "cover" }}
+          />
+          <CardContent style={{ flex: 1, padding: "20px" }}>
+            <Typography variant="h5" component="div" gutterBottom>
+              {barber.name}
+            </Typography>
+            <Typography
+              variant="body1"
+              color="textSecondary"
+              component="p"
+              gutterBottom
+            >
+              {barber.bio}
+            </Typography>
+            <Box display="flex" justifyContent="center" mb={2}>
+              <IconButton
+                aria-label="instagram"
+                component="a"
+                href={barber.instagram_link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <InstagramIcon />
+              </IconButton>
+            </Box>
+            <Carousel
+              showThumbs={false}
+              showStatus={false}
+              infiniteLoop
+              useKeyboardArrows
+            >
+              {barber.images.map((url, index) => (
+                <div key={index}>
+                  <img
+                    src={url}
+                    alt={`${barber.name} image ${index + 1}`}
+                    style={{
+                      width: "100%",
+                      height: "300px", // Set a fixed height for consistency
+                      objectFit: "cover",
+                      borderRadius: "10px",
+                    }}
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </CardContent>
+        </Card>
       ))}
-    </div>
+    </Box>
   );
 };
 
