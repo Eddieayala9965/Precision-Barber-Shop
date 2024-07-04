@@ -16,10 +16,9 @@ const BarberGallery = () => {
 
         const combinedData = await Promise.all(
           barberData.map(async (barber) => {
-            const { data, error } = await supabase.storage
+            const { data: files, error } = await supabase.storage
               .from("img")
-              .list(barber.id, { limit: 9 });
-            console.log("Fetched data for Barber ID", barber.id, ":", data);
+              .list(barber.id); // Fetch all images for each barber
 
             if (error) {
               console.error(
@@ -28,11 +27,18 @@ const BarberGallery = () => {
                 ":",
                 error.message
               );
+              return { ...barber, images: [] };
             }
+
+            const image_urls = files.map((file) => {
+              const publicURL = `https://juowekkvvwyquoqoarfr.supabase.co/storage/v1/object/public/img/${barber.id}/${file.name}`;
+              console.log(`Image URL for barber ${barber.id}:`, publicURL);
+              return publicURL;
+            });
 
             return {
               ...barber,
-              image_url: data.length > 0 ? data[0].url : null,
+              images: image_urls,
             };
           })
         );
@@ -52,7 +58,13 @@ const BarberGallery = () => {
       {barberData.map((barber) => (
         <div key={barber.id}>
           <h2>{barber.name}</h2>
-          {barber.image_url && <img src={barber.image_url} alt={barber.name} />}
+          {barber.images.map((url, index) => (
+            <img
+              key={index}
+              src={url}
+              alt={`${barber.name} image ${index + 1}`}
+            />
+          ))}
           <p>{barber.bio}</p>
           <p>{barber.instagram_link}</p>
         </div>
