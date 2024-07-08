@@ -8,9 +8,7 @@ const Layout = () => {
 
   const primaryNav = [
     { title: "Home", path: "/" },
-    { title: "Contact", path: "/contact" },
     { title: "About", path: "/about" },
-    { title: "stripe-test", path: "/stripe-test" },
   ];
   return (
     <>

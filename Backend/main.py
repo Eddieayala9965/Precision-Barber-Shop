@@ -74,9 +74,10 @@ def get_barber_service():
   response = supabase.table("barber_service_view").select("*").execute()
   return response
 
-@app.get("/barber_bookings")
-def get_barber_bookings():
-    response = supabase.table("barber_bookings").select("*").execute()
+
+@app.get("/barber_details")
+def get_barber_details():
+    response = supabase.table("barber_details").select("*").execute()
     return response
 
 
@@ -101,54 +102,6 @@ async def get_appointments():
     """
     response = supabase.rpc('execute_query', {'query': query}).execute()
     return response
-
-
-# @app.get("/barbers_sqaure")
-# async def get_barbers():
-#     try:
-#         response = square_client.team_api.list_team_members()
-#         if response.is_success():
-#             return response.body['team_members']
-#         else:
-#             raise HTTPException(status_code=500, detail=response.errors)
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-
-# @app.post("/book")
-# async def create_booking(request: BookingRequest):
-#     try:
-#         booking_body = {
-#             "booking": {
-#                 "customer_id": request.customer_email,
-#                 "start_at": request.booking_date.isoformat(),
-#                 "service_variation_id": request.service_id,
-#                 "team_member_id": request.barber_id,
-#                 "customer_note": f"Booking for {request.customer_name}"
-#             }
-#         }
-
-#         response = square_client.bookings.create_booking(booking_body)
-#         if response.is_success():
-#             # Insert booking into Supabase
-#             booking_date_str = request.booking_date.isoformat()
-#             response = supabase.rpc("insert_booking_appointment", {
-#                 "barber_id": request.barber_id,
-#                 "service_id": request.service_id,
-#                 "customer_name": request.customer_name,
-#                 "customer_phone": request.customer_phone,
-#                 "customer_email": request.customer_email,
-#                 "booking_date": booking_date_str,
-#             }).execute()
-
-#             if response.error:
-#                 raise HTTPException(status_code=500, detail=response.error.message)
-            
-#             return {"message": "Booking created successfully"}
-#         else:
-#             raise HTTPException(status_code=500, detail=response.errors)
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-
 
 
 

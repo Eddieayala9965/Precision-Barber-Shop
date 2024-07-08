@@ -5,7 +5,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import GlobalLoadingSpinner from "../components/GlobalLoadingSpinner";
 import { useLoading } from "../context/LoadingContext";
-
 import Box from "@mui/material/Box";
 
 export const action = async ({ request }) => {
@@ -35,6 +34,7 @@ export const action = async ({ request }) => {
     localStorage.setItem("first_name", user.first_name);
     if (response.ok) {
       window.alert("Login Succesful");
+      redirect("/admin/profile");
       return true;
     } else {
       window.alert("Login Failed");

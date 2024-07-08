@@ -20,6 +20,7 @@ class Barbers(BaseModel):
     email: Optional[str] = Field(default=None, exclude_none=True)
     phone: Optional[str] = Field(default=None, exclude_none=True)
     bio: Optional[str] = Field(default=None, exclude_none=True)
+    instagram_link: Optional[str] = Field(default=None, exclude_none=True)
     
 
 class Services(BaseModel):
