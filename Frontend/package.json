@@ -21,13 +21,8 @@
     "@fullcalendar/multimonth": "^6.1.13",
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.13",
-<<<<<<< HEAD
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.20",
-=======
-    "@mui/icons-material": "^5.15.20",
-    "@mui/material": "^5.15.19",
->>>>>>> sqaure-intergration
     "@mui/x-date-pickers": "^7.6.1",
     "@radix-ui/react-dialog": "^1.0.5",
     "@shadcn/ui": "^0.0.4",
@@ -58,8 +53,10 @@
     "react-redux": "^9.1.2",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.23.0",
+    "react-slick": "^0.30.2",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
+    "slick-carousel": "^1.8.1",
     "stripe": "^15.3.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

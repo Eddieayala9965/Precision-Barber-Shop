@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { supabase } from "../utils/Supabase";
 import {
@@ -136,42 +136,49 @@ const BarberGallery = () => {
               <Box
                 sx={{
                   width: "100%",
-                  height: "300px", // Set a fixed height for the carousel container
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  position: "relative",
+                  paddingTop: "150%", // 16:9 aspect ratio
                   overflow: "hidden",
                   mt: 2,
                 }}
               >
-                <Carousel
-                  showThumbs={false}
-                  showStatus={false}
-                  infiniteLoop
-                  useKeyboardArrows
-                  style={{ width: "100%", height: "100%" }}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
                 >
-                  {barber.images.map((url, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        maxHeight: "300px",
-                      }}
-                    >
-                      <img
-                        src={url}
-                        alt={`${barber.name} image ${index + 1}`}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover", // Ensure the image covers the container without being cut off
-                        }}
-                      />
-                    </div>
-                  ))}
-                </Carousel>
+                  <Carousel
+                    showThumbs={false}
+                    showStatus={false}
+                    infiniteLoop
+                    useKeyboardArrows
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    {barber.images.map((url, index) => (
+                      <div
+                        key={index}
+                        style={{ width: "100%", height: "100%" }}
+                      >
+                        <img
+                          src={url}
+                          alt={`${barber.name} image ${index + 1}`}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
+                </Box>
               </Box>
               <Box mt={2} display="flex" justifyContent="center">
                 <Button variant="contained" color="primary" href="#">
