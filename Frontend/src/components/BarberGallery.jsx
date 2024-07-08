@@ -122,11 +122,11 @@ const BarberGallery = () => {
             }}
           >
             <CardContent>
-              <Typography variant="h5" component="div" gutterBottom>
-                {barber.name}
+              <Typography variant="h4" component="div" gutterBottom>
+                About Barber
               </Typography>
               <Typography
-                variant="body1"
+                variant={isMobile ? "body1" : "body2"}
                 color="textSecondary"
                 component="p"
                 gutterBottom
@@ -181,8 +181,30 @@ const BarberGallery = () => {
                 </Box>
               </Box>
               <Box mt={2} display="flex" justifyContent="center">
-                <Button variant="contained" color="primary" href="#">
-                  Start Now
+                <Button
+                  variant="contained"
+                  sx={{
+                    color: "white",
+                    backgroundColor: "#1976d2",
+                    height: 40,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    lineHeight: 38,
+                    padding: "0 28px",
+                    borderRadius: 8,
+                    fontWeight: 500,
+                    fontSize: 14,
+                    cursor: "pointer",
+                    zIndex: 2,
+                    "&:hover": {
+                      backgroundColor: "#1565c0",
+                    },
+                  }}
+                  href="https://squareup.com/appointments/book/7djpzd51grujsb/LXEFMT6HSK5S4/start"
+                  target="_top"
+                  rel="nofollow"
+                >
+                  Book Now
                 </Button>
               </Box>
             </CardContent>
