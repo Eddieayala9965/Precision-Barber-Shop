@@ -81,7 +81,7 @@ const BarberGallery = () => {
             width: isMobile ? "80%" : "100%",
             maxWidth: "900px",
             borderRadius: 2,
-            boxShadow: 3,
+            boxShadow: 7,
             overflow: "hidden",
             marginBottom: 4,
             backgroundColor: "white",
