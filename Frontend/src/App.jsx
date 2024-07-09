@@ -41,22 +41,22 @@ const router = createBrowserRouter([
         element: <ProtectedRoute />, // Protect admin routes
         children: [
           {
-            path: "profile",
+            path: "/admin/profile",
             element: <Profile />,
           },
           {
-            path: "barbers",
+            path: "/admin/barbers",
             element: <Barbers />,
           },
         ],
       },
       {
-        path: "login",
+        path: "/admin/login",
         element: <AdminLogin />,
         action: loginAction,
       },
       {
-        path: "signup",
+        path: "/admin/signup",
         element: <AdminSignUp />,
         action: signUpAction,
       },

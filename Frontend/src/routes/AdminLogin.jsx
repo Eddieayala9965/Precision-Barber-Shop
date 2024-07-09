@@ -40,6 +40,7 @@ export const action = async ({ request }) => {
 
       // Clear cookies first
       Cookies.remove("user_id");
+      Cookies.remove("role");
       Cookies.remove("access_token");
       Cookies.remove("refresh_token");
       Cookies.remove("expires_at");
@@ -52,6 +53,7 @@ export const action = async ({ request }) => {
       };
 
       Cookies.set("user_id", user.id, secureOptions);
+      Cookies.set("role", user.role, secureOptions);
       Cookies.set("access_token", session.access_token, secureOptions);
       Cookies.set("refresh_token", session.refresh_token, secureOptions);
       Cookies.set("expires_at", session.expires_at, secureOptions);
