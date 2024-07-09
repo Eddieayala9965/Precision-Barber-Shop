@@ -12,12 +12,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AvatarProvider } from "../src/context/AvatarContext";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AuthProvider } from "../src/context/AuthContext";
+import ProtectedRoute from "../src/context/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <Layout />, // Public layout for public-facing pages
     errorElement: <ErrorPage />,
     children: [
       {
@@ -32,26 +34,31 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: <Admin />, // Admin layout for admin pages
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/admin/login",
+        element: <ProtectedRoute />, // Protect admin routes
+        children: [
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "barbers",
+            element: <Barbers />,
+          },
+        ],
+      },
+      {
+        path: "login",
         element: <AdminLogin />,
         action: loginAction,
       },
       {
-        path: "/admin/signup",
+        path: "signup",
         element: <AdminSignUp />,
         action: signUpAction,
-      },
-      {
-        path: "/admin/barbers",
-        element: <Barbers />,
-      },
-      {
-        path: "/admin/profile",
-        element: <Profile />,
       },
     ],
   },
@@ -60,11 +67,13 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AvatarProvider>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <RouterProvider router={router} />
-        </LocalizationProvider>
-      </AvatarProvider>
+      <AuthProvider>
+        <AvatarProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <RouterProvider router={router} />
+          </LocalizationProvider>
+        </AvatarProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };

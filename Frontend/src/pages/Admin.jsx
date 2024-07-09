@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
 const Admin = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(Cookies.get("access_token"));
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    Boolean(Cookies.get("access_token"))
+  );
 
   useEffect(() => {
     const updateLoginStatus = () => {
-      setIsLoggedIn(Cookies.get("access_token"));
+      setIsLoggedIn(Boolean(Cookies.get("access_token")));
     };
 
     window.addEventListener("storage", updateLoginStatus);
@@ -21,7 +23,9 @@ const Admin = () => {
   const primaryNav = [
     { title: "Profile", path: "/admin/profile" },
     { title: "Barbers", path: "/admin/barbers" },
-    ...(isLoggedIn ? [] : [{ title: "Login", path: "/admin/login" }]),
+    ...(isLoggedIn
+      ? [{ title: "Logout", path: "/admin/logout" }]
+      : [{ title: "Login", path: "/admin/login" }]),
   ];
 
   return (

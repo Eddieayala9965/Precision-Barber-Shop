@@ -68,10 +68,10 @@ const Nav = ({ navItems }) => {
                 display: { md: "none" },
                 color: "white",
                 "&.MuiIconButton-root": {
-                  padding: 0, // Override IconButton padding
+                  padding: 0,
                 },
                 "&.MuiIconButton-sizeLarge": {
-                  padding: 0, // Override IconButton sizeLarge padding
+                  padding: 0,
                 },
               }}
             >
