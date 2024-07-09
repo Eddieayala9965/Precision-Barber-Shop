@@ -1,5 +1,6 @@
 import { Form, redirect } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import { InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
@@ -36,12 +37,26 @@ export const action = async ({ request }) => {
       }
       const data = await response.json();
       const { session, user } = data;
-      localStorage.clear();
-      localStorage.setItem("user_id", user.id);
-      localStorage.setItem("access_token", session.access_token);
-      localStorage.setItem("refresh_token", session.refresh_token);
-      localStorage.setItem("expires_at", session.expires_at);
-      localStorage.setItem("first_name", user.first_name);
+
+      // Clear cookies first
+      Cookies.remove("user_id");
+      Cookies.remove("access_token");
+      Cookies.remove("refresh_token");
+      Cookies.remove("expires_at");
+      Cookies.remove("first_name");
+
+      const secureOptions = {
+        expires: 1 / 24,
+        secure: true,
+        sameSite: "Strict",
+      };
+
+      Cookies.set("user_id", user.id, secureOptions);
+      Cookies.set("access_token", session.access_token, secureOptions);
+      Cookies.set("refresh_token", session.refresh_token, secureOptions);
+      Cookies.set("expires_at", session.expires_at, secureOptions);
+      Cookies.set("first_name", user.first_name, secureOptions);
+
       return { success: true, message: "Login Successful" };
     } catch (error) {
       return { success: false, message: "Invalid password or email" };

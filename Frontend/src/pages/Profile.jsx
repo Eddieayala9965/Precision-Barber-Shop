@@ -11,13 +11,14 @@ import Gallery from "../components/Gallery";
 import UploadAvatar from "../components/UploadAvatar";
 import DeleteAvatarButton from "../components/DeleteAvatarButton";
 import UpdateBarberButton from "../components/UpdateProfileButton";
+import Cookies from "js-cookie";
 
 const fetchProfile = async () => {
   const response = await fetch(import.meta.env.VITE_BARBER_DETAILS, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      Authorization: `Bearer ${Cookies.get("access_token")}`,
     },
   });
   if (!response.ok) {
