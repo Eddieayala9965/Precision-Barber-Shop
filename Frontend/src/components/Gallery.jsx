@@ -44,8 +44,8 @@ const Gallery = () => {
   const handleDelete = async (imageName) => {
     const userId = localStorage.getItem("user_id");
     const url = `${
-      import.meta.env.VITE_SUPABASE_BUCKET_IMG
-    }/${userId}/${imageName}`;
+      import.meta.env.VITE_SUPABASE_URL
+    }/storage/v1/object/img/${userId}/${imageName}`;
 
     try {
       const response = await fetch(url, {
