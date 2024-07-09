@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import Cookies from "js-cookie";
 
 const clearUppyTusLocalStorage = () => {
   Object.keys(localStorage).forEach((key) => {
@@ -42,7 +43,7 @@ const UploadImage = ({ fetchGallery }) => {
         "cacheControl",
       ],
       onBeforeRequest: async (req) => {
-        const token = localStorage.getItem("access_token");
+        const token = Cookies.get("access_token");
         req.setHeader("Authorization", `Bearer ${token}`);
       },
     })
@@ -52,7 +53,7 @@ const UploadImage = ({ fetchGallery }) => {
     uppy.setFileMeta(file.id, {
       bucketName: "img",
       contentType: file.type,
-      objectName: `${localStorage.getItem("user_id")}/${file.name}`,
+      objectName: `${Cookies.get("user_id")}/${file.name}`,
     });
   });
 
