@@ -1,15 +1,14 @@
 import { Outlet } from "react-router-dom";
 import NavAdmin from "../components/NavAdmin";
 import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 const Admin = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("access_token")
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(Cookies.get("access_token"));
 
   useEffect(() => {
     const updateLoginStatus = () => {
-      setIsLoggedIn(localStorage.getItem("access_token"));
+      setIsLoggedIn(Cookies.get("access_token"));
     };
 
     window.addEventListener("storage", updateLoginStatus);
