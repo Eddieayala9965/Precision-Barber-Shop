@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
@@ -9,7 +9,7 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      const url = `http://127.0.0.1:8000/logout`;
+      const url = import.meta.env.VITE_BARBER_LOGOUT;
       const access_token = localStorage.getItem("access_token");
 
       const response = await fetch(url, {
