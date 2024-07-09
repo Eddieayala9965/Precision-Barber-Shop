@@ -58,7 +58,6 @@ const AddServiceButton = ({ refetch }) => {
       console.error("Error:", error);
       setError(error.message);
     } else {
-      console.log("Data inserted successfully:", data);
       setService("");
       setPrice("");
       setDuration("");

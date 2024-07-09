@@ -57,9 +57,7 @@ const UploadAvatar = () => {
     });
   });
 
-  uppy.on("upload-progress", (file, progress) => {
-    console.log(`File ${file.name} is ${progress}% uploaded`);
-  });
+  uppy.on("upload-progress", (file, progress) => {});
 
   const handleUpload = () => {
     uppy.setFileMeta(uppy.getFiles()[0].id, {

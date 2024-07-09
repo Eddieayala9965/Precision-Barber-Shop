@@ -28,7 +28,7 @@ export const action = async ({ request }) => {
         throw new Error(`Server responded with status code ${response.status}`);
       }
       const responseData = await response.json();
-      console.log(responseData);
+
       window.alert("User created successfully");
       return true;
     } catch (error) {

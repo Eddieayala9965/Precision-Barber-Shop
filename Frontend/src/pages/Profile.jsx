@@ -25,7 +25,6 @@ const fetchProfile = async () => {
     throw new Error("Network response was not ok");
   }
   const data = await response.json();
-  console.log("Fetched profile data:", data);
 
   return data;
 };
@@ -41,12 +40,10 @@ const Profile = () => {
     queryKey: ["barbers"],
     queryFn: fetchProfile,
     select: (data) => {
-      console.log("Selecting profile data:", data);
       return Array.isArray(data.data) ? data.data : [];
     },
   });
 
-  console.log("Is Loading:", isLoading);
   if (isLoading) return;
   if (isError) return <div>Error: {error.message}</div>;
 
