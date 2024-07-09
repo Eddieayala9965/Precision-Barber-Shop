@@ -21,9 +21,7 @@ const DeleteAvatarButton = () => {
     }
 
     const filePath = `${userId}/avatar.jpg`;
-    const url = `${
-      import.meta.env.VITE_SUPABASE_URL
-    }/storage/v1/object/avatars/${filePath}`;
+    const url = `${import.meta.env.VITE_SUPERBASE_BUCKET_AVATARS}/${filePath}`;
 
     const response = await fetch(url, {
       method: "DELETE",
