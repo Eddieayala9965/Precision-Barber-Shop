@@ -1,8 +1,15 @@
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { TextField, Button, Container, Typography } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import GlobalLoadingSpinner from "../components/GlobalLoadingSpinner";
 import { useLoading } from "../context/LoadingContext";
 import Box from "@mui/material/Box";
@@ -12,7 +19,7 @@ export const action = async ({ request }) => {
   const email = formData.get("email");
   const password = formData.get("password");
   const data = { email, password };
-  const url = `http://127.0.0.1:8000/login`;
+  const url = import.meta.env.VITE_BARBER_LOGIN;
 
   const userLogin = async (data) => {
     const options = {
@@ -22,38 +29,49 @@ export const action = async ({ request }) => {
       },
       body: JSON.stringify(data),
     };
-    const response = await fetch(url, options);
-    data = await response.json();
-    const { session, user } = data;
-    console.log(data);
-    localStorage.clear();
-    localStorage.setItem("user_id", user.id);
-    localStorage.setItem("access_token", session.access_token);
-    localStorage.setItem("refresh_token", session.refresh_token);
-    localStorage.setItem("expires_at", session.expires_at);
-    localStorage.setItem("first_name", user.first_name);
-    if (response.ok) {
-      window.alert("Login Succesful");
-      redirect("/admin/profile");
-      return true;
-    } else {
-      window.alert("Login Failed");
-      return false;
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Invalid Password or Email");
+      }
+      const data = await response.json();
+      const { session, user } = data;
+      localStorage.clear();
+      localStorage.setItem("user_id", user.id);
+      localStorage.setItem("access_token", session.access_token);
+      localStorage.setItem("refresh_token", session.refresh_token);
+      localStorage.setItem("expires_at", session.expires_at);
+      localStorage.setItem("first_name", user.first_name);
+      return { success: true, message: "Login Successful" };
+    } catch (error) {
+      return { success: false, message: "Invalid password or email" };
     }
   };
 
-  // need to figure out the flow of the redirects and also figure out to change the local storage becuase we cant store data like that in the local storage for security reasons so we need to put it in the context api and then use it from there.
-  const loginSuccesful = await userLogin(data);
-  return loginSuccesful && redirect("/admin/login");
+  const result = await userLogin(data);
+  if (result.success) {
+    redirect("/admin/profile");
+  }
+  return result;
 };
 
 const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { isLoading, setIsLoading } = useLoading();
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const handleClick = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
   useEffect(() => {
     setIsLoading(true);
 
@@ -63,6 +81,26 @@ const AdminLogin = () => {
 
     return () => clearTimeout(timeout);
   }, [setIsLoading]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const data = { email, password };
+
+    const result = await action({ request: { formData: () => formData } });
+    setSnackbar({
+      open: true,
+      message: result.message,
+      severity: result.success ? "success" : "error",
+    });
+
+    if (result.success) {
+      redirect("/admin/profile");
+    }
+  };
+
   return (
     <>
       <Container maxWidth="lg">
@@ -77,7 +115,7 @@ const AdminLogin = () => {
             Login
           </Typography>
 
-          <Form method="POST">
+          <Form method="POST" onSubmit={handleSubmit}>
             <TextField
               label="Email"
               name="email"
@@ -108,12 +146,22 @@ const AdminLogin = () => {
             <Button type="submit" variant="contained" color="primary" fullWidth>
               Login
             </Button>
-            <Button component={Link} to="/admin/signup" variant="text">
-              Dont have an account? Sign Up here
-            </Button>
           </Form>
         </Box>
       </Container>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

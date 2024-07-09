@@ -8,9 +8,7 @@ const Avatars = () => {
   if (error) return <div>Error: {error}</div>;
 
   const userId = localStorage.getItem("user_id");
-  const supbaseUrl =
-    "https://juowekkvvwyquoqoarfr.supabase.co/storage/v1/object/public/avatars";
-  console.log("Gallery State:", avatar);
+  const supbaseUrl = import.meta.env.VITE_SUPERBASE_BUCKET_AVATARS;
 
   return (
     <>

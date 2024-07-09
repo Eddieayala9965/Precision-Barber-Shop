@@ -3,7 +3,6 @@ import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 
-// this is going to be hidden till sign in is implemented
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
@@ -33,7 +32,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export default function BadgeAvatars() {
+const BadgeAvatars = () => {
   return (
     <Stack direction="row" spacing={2}>
       <StyledBadge
@@ -41,8 +40,9 @@ export default function BadgeAvatars() {
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         variant="dot"
       >
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        <Avatar alt="A" src="/static/images/avatar/1.jpg" />
       </StyledBadge>
     </Stack>
   );
-}
+};
+export default BadgeAvatars;
