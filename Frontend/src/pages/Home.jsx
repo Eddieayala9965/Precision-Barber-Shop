@@ -92,44 +92,44 @@ const Home = () => {
           mt: "-20vh",
 
           "@media (max-width: 1199px)": {
-            width: "80%", // Set width to 70% for screens 899px and below
-            marginLeft: "auto", // Center the container
-            marginRight: "auto", // Center the container
+            width: "80%",
+            marginLeft: "auto",
+            marginRight: "auto",
           },
           "@media (max-width: 1175px)": {
-            width: "85%", // Set width to 70% for screens 899px and below
-            marginLeft: "auto", // Center the container
-            marginRight: "auto", // Center the container
+            width: "85%",
+            marginLeft: "auto",
+            marginRight: "auto",
           },
           "@media (max-width: 1095px)": {
-            width: "92%", // Set width to 70% for screens 899px and below
-            marginLeft: "auto", // Center the container
-            marginRight: "auto", // Center the container
+            width: "92%",
+            marginLeft: "auto",
+            marginRight: "auto",
           },
           "@media (max-width: 1016px)": {
-            width: "97%", // Set width to 70% for screens 899px and below
-            marginLeft: "auto", // Center the container
-            marginRight: "auto", // Center the container
+            width: "97%",
+            marginLeft: "auto",
+            marginRight: "auto",
           },
           "@media (max-width: 960px)": {
-            width: "100%", // Set width to 70% for screens 899px and below
-            marginLeft: "auto", // Center the container
-            marginRight: "auto", // Center the container
+            width: "100%",
+            marginLeft: "auto",
+            marginRight: "auto",
           },
           "@media (max-width: 899px)": {
-            width: "75%", // Set width to 70% for screens 899px and below
-            marginLeft: "auto", // Center the container
-            marginRight: "auto", // Center the container
+            width: "75%",
+            marginLeft: "auto",
+            marginRight: "auto",
           },
           "@media (max-width: 700px)": {
-            width: "80%", // Set width to 70% for screens 899px and below
-            marginLeft: "auto", // Center the container
-            marginRight: "auto", // Center the container
+            width: "80%",
+            marginLeft: "auto",
+            marginRight: "auto",
           },
           "@media (max-width: 600px)": {
-            width: "85%", // Set width to 70% for screens 899px and below
-            marginLeft: "auto", // Center the container
-            marginRight: "auto", // Center the container
+            width: "85%",
+            marginLeft: "auto",
+            marginRight: "auto",
           },
         }}
       >
