@@ -44,7 +44,7 @@ const Nav = ({ navItems }) => {
         "&.MuiBox-root": {
           padding: 0,
         },
-        borderBottom: { xs: "2px solid white", md: "none" }, // Border bottom for small screens only
+        borderBottom: { xs: "2px solid white", md: "none" },
       }}
     >
       <Container maxWidth="xl">
@@ -93,8 +93,8 @@ const Nav = ({ navItems }) => {
               textAlign: "center",
               flexGrow: 1,
               mx: { xs: 0, md: "auto" },
-              whiteSpace: "normal", // Enable word wrap
-              wordBreak: "break-word", // Enable word wrap
+              whiteSpace: "normal",
+              wordBreak: "break-word",
             }}
           >
             Precision Barber Shop
@@ -123,7 +123,7 @@ const Nav = ({ navItems }) => {
                   ml: 1,
                   fontFamily: "'Montserrat', sans-serif",
                   "&.MuiButtonBase-root": {
-                    padding: 0, // Override button padding
+                    padding: 0,
                   },
                 }}
               >
