@@ -72,8 +72,7 @@ const Gallery = () => {
   if (error) return <div>Error: {error}</div>;
 
   const userId = localStorage.getItem("user_id");
-  const supbaseUrl =
-    "https://juowekkvvwyquoqoarfr.supabase.co/storage/v1/object/public/img";
+  const supbaseUrl = import.meta.env.VITE_SUPABASE_BUCKET_IMG;
 
   return (
     <Container
