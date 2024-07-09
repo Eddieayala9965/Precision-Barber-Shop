@@ -9,6 +9,7 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
+import PropTypes from "prop-types";
 
 const UpdateBarberButton = ({ refetch }) => {
   const [firstName, setFirstName] = useState("");
@@ -169,6 +170,10 @@ const UpdateBarberButton = ({ refetch }) => {
       </Snackbar>
     </>
   );
+};
+
+UpdateBarberButton.propTypes = {
+  refetch: PropTypes.func.isRequired,
 };
 
 export default UpdateBarberButton;
