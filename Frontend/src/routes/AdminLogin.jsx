@@ -29,7 +29,7 @@ export const action = async ({ request }) => {
       },
       body: JSON.stringify(data),
     };
-    try {
+    try 
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error("Invalid Password or Email");

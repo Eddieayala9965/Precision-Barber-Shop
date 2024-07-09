@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Box, Button, TextField, Typography } from "@mui/material";
 import { supabase } from "../utils/Supabase";
+import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -113,6 +114,10 @@ const AddServiceButton = ({ refetch }) => {
       </Modal>
     </div>
   );
+};
+
+AddServiceButton.propTypes = {
+  refetch: PropTypes.func.isRequired,
 };
 
 export default AddServiceButton;
