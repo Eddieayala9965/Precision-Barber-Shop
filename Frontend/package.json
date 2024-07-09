@@ -44,6 +44,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
     "flatpickr": "^4.6.13",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.378.0",
     "react": "^18.2.0",
     "react-big-calendar": "^1.12.2",
