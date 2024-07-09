@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Modal, Box, Button, TextField, Typography } from "@mui/material";
 import { supabase } from "../utils/Supabase";
 import PropTypes from "prop-types";
+import Cookies from "js-cookie";
 
 const style = {
   position: "absolute",
@@ -25,8 +26,8 @@ const AddServiceButton = ({ refetch }) => {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    const userId = localStorage.getItem("user_id");
+    const accessToken = Cookies.get("access_token");
+    const userId = Cookies.get("user_id");
     if (accessToken && userId) {
       supabase.auth.setSession({
         access_token: accessToken,
