@@ -14,6 +14,7 @@ import "@uppy/dashboard/dist/style.min.css";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const clearUppyTusLocalStorage = () => {
   Object.keys(localStorage).forEach((key) => {
@@ -92,6 +93,10 @@ const UploadImage = ({ fetchGallery }) => {
       </DialogContent>
     </Dialog>
   );
+};
+
+UploadImage.propTypes = {
+  fetchGallery: PropTypes.func.isRequired,
 };
 
 export default UploadImage;
