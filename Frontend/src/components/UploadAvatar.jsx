@@ -15,6 +15,7 @@ import "@uppy/dashboard/dist/style.min.css";
 import Avatars from "./Avatars";
 import Button from "@mui/material/Button";
 import { useAvatar } from "../context/AvatarContext";
+import Cookies from "js-cookie";
 
 const UploadAvatar = () => {
   const { refetch } = useAvatar();
@@ -44,7 +45,7 @@ const UploadAvatar = () => {
         "cacheControl",
       ],
       onBeforeRequest: async (req) => {
-        const token = localStorage.getItem("access_token");
+        const token = Cookies.get("access_token");
         req.setHeader("Authorization", `Bearer ${token}`);
       },
     })
@@ -62,7 +63,7 @@ const UploadAvatar = () => {
 
   const handleUpload = () => {
     uppy.setFileMeta(uppy.getFiles()[0].id, {
-      objectName: `${localStorage.getItem("user_id")}` + "/" + "avatar.jpg",
+      objectName: `${Cookies.get("user_id")}` + "/" + "avatar.jpg",
     });
     uppy.upload().then(() => {
       clearUppyTusLocalStorage();

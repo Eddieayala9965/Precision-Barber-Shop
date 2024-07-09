@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Cookies from "js-cookie";
 
 const DeleteAvatarButton = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -11,7 +12,7 @@ const DeleteAvatarButton = () => {
   const { refetch } = useAvatar();
 
   const handleDelete = async () => {
-    const userId = localStorage.getItem("user_id");
+    const userId = Cookies.get("user_id");
     if (!userId) {
       console.error("User ID is missing.");
       setSnackbarMessage("User ID is missing.");
@@ -28,7 +29,7 @@ const DeleteAvatarButton = () => {
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        Authorization: `Bearer ${Cookies.get("access_token")}`,
         apiKey: import.meta.env.VITE_SUPABASE_KEY,
       },
     });

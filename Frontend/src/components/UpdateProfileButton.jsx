@@ -10,6 +10,7 @@ import {
   Alert,
 } from "@mui/material";
 import PropTypes from "prop-types";
+import Cookies from "js-cookie";
 
 const UpdateBarberButton = ({ refetch }) => {
   const [firstName, setFirstName] = useState("");
@@ -42,7 +43,7 @@ const UpdateBarberButton = ({ refetch }) => {
     if (bio.trim()) barberData.bio = bio;
     if (instagramLink.trim()) barberData.instagram_link = instagramLink; // Add Instagram link to barberData
 
-    const user_id = localStorage.getItem("user_id");
+    const user_id = Cookies.get("user_id");
 
     try {
       const response = await fetch(
@@ -51,7 +52,7 @@ const UpdateBarberButton = ({ refetch }) => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            Authorization: `Bearer ${Cookies.get("access_token")}`,
           },
           body: JSON.stringify(barberData),
         }

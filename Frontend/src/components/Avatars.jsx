@@ -1,5 +1,6 @@
 import { useAvatar } from "../context/AvatarContext";
 import Avatar from "@mui/material/Avatar";
+import Cookies from "js-cookie";
 
 const Avatars = () => {
   const { avatar, isLoading, error } = useAvatar();
@@ -7,7 +8,7 @@ const Avatars = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  const userId = localStorage.getItem("user_id");
+  const userId = Cookies.get("user_id");
   const supbaseUrl = import.meta.env.VITE_SUPERBASE_BUCKET_AVATARS;
 
   return (

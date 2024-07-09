@@ -1,16 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import Cookies from "js-cookie";
 
 const LogoutButton = () => {
   const navigate = useNavigate();
 
-  const isLoggedIn = !!localStorage.getItem("access_token");
+  const isLoggedIn = !!Cookies.get("access_token");
 
   const handleLogout = async () => {
     try {
       const url = import.meta.env.VITE_BARBER_LOGOUT;
-      const access_token = localStorage.getItem("access_token");
+      const access_token = Cookies.get("access_token");
 
       const response = await fetch(url, {
         method: "POST",
@@ -21,7 +22,7 @@ const LogoutButton = () => {
       });
 
       if (response.ok) {
-        localStorage.clear();
+        Cookies.remove();
         navigate("/admin/login");
       } else {
         alert("Problem logging out");

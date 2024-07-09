@@ -9,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import UploadImage from "./UploadImage";
 import { supabase } from "../utils/Supabase";
 import { useState, useEffect, useCallback } from "react";
+import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
 
 const Gallery = () => {
@@ -17,7 +18,7 @@ const Gallery = () => {
   const [error, setError] = useState(null);
 
   const fetchGallery = useCallback(async () => {
-    const userId = localStorage.getItem("user_id");
+    const userId = Cookies.get("user_id");
     try {
       const { data, error } = await supabase.storage.from("img").list(userId, {
         limit: 9,
@@ -42,7 +43,7 @@ const Gallery = () => {
   }, [fetchGallery]);
 
   const handleDelete = async (imageName) => {
-    const userId = localStorage.getItem("user_id");
+    const userId = Cookies.get("user_id");
     const url = `${
       import.meta.env.VITE_SUPABASE_URL
     }/storage/v1/object/img/${userId}/${imageName}`;
@@ -51,7 +52,7 @@ const Gallery = () => {
       const response = await fetch(url, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          Authorization: `Bearer ${Cookies.get("access_token")}`,
           apiKey: import.meta.env.VITE_SUPABASE_KEY,
         },
       });
@@ -71,7 +72,7 @@ const Gallery = () => {
   if (loading) return <div></div>;
   if (error) return <div>Error: {error}</div>;
 
-  const userId = localStorage.getItem("user_id");
+  const userId = Cookies.get("user_id");
   const supbaseUrl = import.meta.env.VITE_SUPABASE_BUCKET_IMG;
 
   return (
