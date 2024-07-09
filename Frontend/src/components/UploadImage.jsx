@@ -56,7 +56,6 @@ const UploadImage = ({ fetchGallery }) => {
   });
 
   const handleUpload = () => {
-    // Upload all files at once
     uppy.upload().then((result) => {
       if (result.successful.length > 0) {
         clearUppyTusLocalStorage();
