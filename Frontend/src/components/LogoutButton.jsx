@@ -22,7 +22,11 @@ const LogoutButton = () => {
       });
 
       if (response.ok) {
-        Cookies.remove();
+        Cookies.remove("user_id");
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+        Cookies.remove("expires_at");
+        Cookies.remove("first_name");
         navigate("/admin/login");
       } else {
         alert("Problem logging out");
