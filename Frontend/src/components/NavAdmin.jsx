@@ -63,7 +63,6 @@ const NavAdmin = ({ navItems }) => {
                   <ListItemButton component={Link} to={link.path}>
                     <ListItemIcon>
                       {link.title === "Login" && <LoginOutlinedIcon />}
-                      {link.title === "Barbers" && <BarberChair />}
                       {link.title === "Profile" && <BarberIcon />}
                       {link.title === "Logout" && <LogoutButton />}
                     </ListItemIcon>

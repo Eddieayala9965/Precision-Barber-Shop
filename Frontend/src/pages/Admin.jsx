@@ -22,7 +22,6 @@ const Admin = () => {
 
   const primaryNav = [
     { title: "Profile", path: "/admin/profile" },
-    { title: "Barbers", path: "/admin/barbers" },
     ...(isLoggedIn ? [] : [{ title: "Login", path: "/admin/login" }]),
   ];
 

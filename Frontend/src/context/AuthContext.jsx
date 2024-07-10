@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const userId = Cookies.get("user_id");
     if (userId) {
-      // Simulate fetching user data, replace with actual data fetching if necessary
       setAuth({ user: { id: userId }, loading: false });
     } else {
       setAuth({ user: null, loading: false });
@@ -24,7 +23,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Add prop types validation for children
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
